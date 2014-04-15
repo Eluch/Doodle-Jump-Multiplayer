@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 public class YellowFloor extends Floor {
 
 	private int lifeSpan;
-	
+
 	public YellowFloor(int x, int y) {
 		super(x, y);
 		lifeSpan = 500;
