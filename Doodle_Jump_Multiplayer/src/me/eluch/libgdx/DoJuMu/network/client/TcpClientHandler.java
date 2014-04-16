@@ -65,7 +65,7 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 				client.getPlayers().removeByID(OnePlayerDisconnected.decoode(iPacket));
 				break;
 			case GAME_STARTING:
-				client.getGame().setScreen(new GameScreen(client.getGame(), client.getCamera(), client.getBatch(), GameRole.CLIENT));
+				client.getGame().setScreen(new GameScreen(client.getGame(), client.getCamera(), client.getBatch(), GameRole.CLIENT, client));
 				break;
 			default:
 				break;
