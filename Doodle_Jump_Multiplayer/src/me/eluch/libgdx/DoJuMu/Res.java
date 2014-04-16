@@ -8,57 +8,50 @@ import me.eluch.libgdx.DoJuMu.gfx.AnimatedImage;
 import me.eluch.libgdx.DoJuMu.gfx.LoadedFont;
 import me.eluch.libgdx.DoJuMu.gfx.LoadedImage;
 
-public class Resources {
+public class Res {
 
-	// Making it singleton
-	public static final Resources i; // As instance
-	public static final Random rand;
-
-	static {
-		i = new Resources();
-		rand = new Random();
-	}
+	public static final Random rand = new Random();
 
 	// Resources:
 
-	public final LoadedFont _startScreenFont;
-	public final LoadedFont _buttonFont;
-	public final LoadedFont _optionsFont;
-	public final LoadedFont _serverListFont;
+	public static final LoadedFont _startScreenFont;
+	public static final LoadedFont _buttonFont;
+	public static final LoadedFont _optionsFont;
+	public static final LoadedFont _serverListFont;
 
-	public final LoadedImage _madnessMe;
-	public final LoadedImage _blackhole;
-	public final LoadedImage _mob1;
-	public final LoadedImage _mob2;
-	public final LoadedImage _mob3;
-	public final LoadedImage _logo;
-	public final LoadedImage _pattern;
-	public final LoadedImage _clearpattern;
-	public final LoadedImage _jetpackfull;
-	public final LoadedImage _protectionbubbleitem;
-	public final LoadedImage _transpartentPixel;
-	public final LoadedImage _serverPicker;
-	public final LoadedImage _spacerPixel;
+	public static final LoadedImage _madnessMe;
+	public static final LoadedImage _blackhole;
+	public static final LoadedImage _mob1;
+	public static final LoadedImage _mob2;
+	public static final LoadedImage _mob3;
+	public static final LoadedImage _logo;
+	public static final LoadedImage _pattern;
+	public static final LoadedImage _clearpattern;
+	public static final LoadedImage _jetpackfull;
+	public static final LoadedImage _protectionbubbleitem;
+	public static final LoadedImage _transpartentPixel;
+	public static final LoadedImage _serverPicker;
+	public static final LoadedImage _spacerPixel;
 
-	public final AnimatedImage _button;
-	public final AnimatedImage _floorSprite;
-	public final AnimatedImage _jetpackhalf;
-	public final AnimatedImage _magicfloor;
-	public final AnimatedImage _portal_blue;
-	public final AnimatedImage _portal_orange;
-	public final AnimatedImage _propellerhat;
-	public final AnimatedImage _protectionbubbleactive;
-	public final AnimatedImage _reverse;
-	public final AnimatedImage _spring;
-	public final AnimatedImage _springshoe;
-	public final AnimatedImage _swamp;
-	public final AnimatedImage _trampoline;
-	public final AnimatedImage _characters;
-	public final AnimatedImage _shoot;
-	public final AnimatedImage _posArrow_large;
-	public final AnimatedImage _posArrow_small;
+	public static final AnimatedImage _button;
+	public static final AnimatedImage _floorSprite;
+	public static final AnimatedImage _jetpackhalf;
+	public static final AnimatedImage _magicfloor;
+	public static final AnimatedImage _portal_blue;
+	public static final AnimatedImage _portal_orange;
+	public static final AnimatedImage _propellerhat;
+	public static final AnimatedImage _protectionbubbleactive;
+	public static final AnimatedImage _reverse;
+	public static final AnimatedImage _spring;
+	public static final AnimatedImage _springshoe;
+	public static final AnimatedImage _swamp;
+	public static final AnimatedImage _trampoline;
+	public static final AnimatedImage _characters;
+	public static final AnimatedImage _shoot;
+	public static final AnimatedImage _posArrow_large;
+	public static final AnimatedImage _posArrow_small;
 
-	private Resources() {
+	static {
 		_startScreenFont = new LoadedFont("fonts/ARIALBD.TTF", 24, Color.RED);
 		_buttonFont = new LoadedFont("fonts/ARIAL.TTF", 24, Color.BLACK);
 		_optionsFont = new LoadedFont("fonts/ARIAL.TTF", 28, Color.BLUE);
@@ -97,7 +90,7 @@ public class Resources {
 		_posArrow_small = new AnimatedImage("images/etc/posarrow_small.png", 1, 2, 10);
 	}
 
-	public void load() {
+	public static void load() {
 		System.out.println("Resources loaded");
 	}
 }

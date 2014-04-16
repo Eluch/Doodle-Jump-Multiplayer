@@ -1,6 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.floors;
 
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.Effect;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -29,7 +29,7 @@ public class YellowFloor extends Floor {
 
 	@Override
 	protected void render(SpriteBatch batch, Rectangle scrR) {
-		batch.draw(Resources.i._floorSprite.getSpecificImage(2), rec.x, rec.y - scrR.y);
+		batch.draw(Res._floorSprite.getSpecificImage(2), rec.x, rec.y - scrR.y);
 	}
 
 }

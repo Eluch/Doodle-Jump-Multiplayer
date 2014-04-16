@@ -1,6 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.doodle;
 
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.GameObject;
 import me.eluch.libgdx.DoJuMu.gfx.AnimatedImage;
 
@@ -9,23 +9,28 @@ import com.badlogic.gdx.math.Rectangle;
 
 public final class Doodle extends GameObject {
 
-	private static final AnimatedImage DOODLE_IMAGE = Resources.i._characters;
+	private static final AnimatedImage DOODLE_IMAGE = Res._characters;
 
+	private int id;
 	private DoodleGenderType character;
 	private Rectangle doodleLegRect;
-	private boolean facingRight;
-	private boolean jumping;
+	private boolean facingRight = true;
+	private boolean jumping = true;
+	private boolean alive = true;
 
-	public Doodle(int startX, int startY, DoodleGenderType genderType) {
+	public Doodle(int id, int startX, int startY, DoodleGenderType genderType) {
+		this.id = id;
 		this.character = genderType;
-		jumping = true;
-		facingRight = true;
 		rec = new Rectangle(startX, startY, DOODLE_IMAGE.getWidth(), DOODLE_IMAGE.getHeight());
 		doodleLegRect = new Rectangle(startX, startY, DOODLE_IMAGE.getWidth(), 5);
 	}
-	
-	public Rectangle getFootRect(){
+
+	public Rectangle getFootRect() {
 		return doodleLegRect;
+	}
+
+	public Rectangle getDoodleRect() {
+		return rec;
 	}
 
 	public void setX(int x) {
@@ -47,6 +52,14 @@ public final class Doodle extends GameObject {
 
 	public void setJumping(boolean jumping) {
 		this.jumping = jumping;
+	}
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
 	}
 
 	public void draw(SpriteBatch batch, Rectangle scrR) {

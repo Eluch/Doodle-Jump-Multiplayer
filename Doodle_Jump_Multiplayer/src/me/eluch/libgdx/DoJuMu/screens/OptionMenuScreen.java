@@ -5,7 +5,7 @@ import me.eluch.libgdx.DoJuMu.MenuHandler.Handle;
 import me.eluch.libgdx.DoJuMu.MenuHandler.Layout;
 import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Options.OptionProperty;
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -19,7 +19,6 @@ public class OptionMenuScreen implements Screen {
 	// private Game game;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Resources res;
 	private MenuHandler menu;
 
 	private int dividedWidth;
@@ -29,25 +28,24 @@ public class OptionMenuScreen implements Screen {
 		// this.game = game;
 		this.camera = camera;
 		this.batch = batch;
-		res = Resources.i;
 
-		dividedWidth = (int) (camera.viewportWidth / res._pattern.getWidth()) + 1;
-		dividedHeight = (int) (camera.viewportHeight / res._pattern.getHeight()) + 1;
+		dividedWidth = (int) (camera.viewportWidth / Res._pattern.getWidth()) + 1;
+		dividedHeight = (int) (camera.viewportHeight / Res._pattern.getHeight()) + 1;
 
-		menu = new MenuHandler(Layout.Vertical, Handle.KeyboardAndMouse, (int) (camera.viewportWidth / 2) - res._button.getWidth() / 2, (int) (camera.viewportHeight - res._logo.getHeight() - 100));
-		menu.addMenuItem("Player name", res._button, res._buttonFont, () -> {
+		menu = new MenuHandler(Layout.Vertical, Handle.KeyboardAndMouse, (int) (camera.viewportWidth / 2) - Res._button.getWidth() / 2, (int) (camera.viewportHeight - Res._logo.getHeight() - 100));
+		menu.addMenuItem("Player name", Res._button, Res._buttonFont, () -> {
 			Options.changeName();
 		});
-		menu.addMenuItem("Sound", res._button, res._buttonFont, () -> {
+		menu.addMenuItem("Sound", Res._button, Res._buttonFont, () -> {
 			Options.setProperty(OptionProperty.sound);
 		});
-		menu.addMenuItem("UPnP", res._button, res._buttonFont, () -> {
+		menu.addMenuItem("UPnP", Res._button, Res._buttonFont, () -> {
 			Options.setProperty(OptionProperty.upnp);
 		});
-		menu.addMenuItem("Character", res._button, res._buttonFont, () -> {
+		menu.addMenuItem("Character", Res._button, Res._buttonFont, () -> {
 			Options.setProperty(OptionProperty.character);
 		});
-		menu.addMenuItem("Back", res._button, res._buttonFont, () -> {
+		menu.addMenuItem("Back", Res._button, Res._buttonFont, () -> {
 			game.setScreen(new MainMenuScreen(game, camera, batch));
 		});
 	}
@@ -68,8 +66,8 @@ public class OptionMenuScreen implements Screen {
 
 		batch.begin();
 		{
-			batch.draw(res._pattern.getTexture(), 0, 0, res._pattern.getWidth() * dividedWidth, res._pattern.getHeight() * dividedHeight, 0, dividedHeight, dividedWidth, 0); // Pattern_fulltexture
-			batch.draw(res._logo.getTexture(), camera.viewportWidth / 2 - res._logo.getWidth() / 2, camera.viewportHeight - res._logo.getHeight() - 20);
+			batch.draw(Res._pattern.getTexture(), 0, 0, Res._pattern.getWidth() * dividedWidth, Res._pattern.getHeight() * dividedHeight, 0, dividedHeight, dividedWidth, 0); // Pattern_fulltexture
+			batch.draw(Res._logo.getTexture(), camera.viewportWidth / 2 - Res._logo.getWidth() / 2, camera.viewportHeight - Res._logo.getHeight() - 20);
 			drawCurrentOption();
 			menu.draw(batch);
 		}
@@ -78,15 +76,15 @@ public class OptionMenuScreen implements Screen {
 
 	private void drawCurrentOption() {
 		if (menu.getSelectedName().equals("Player name")) {
-			res._optionsFont.drawLeft(batch, "Current name (max length: 15 char): " + Options.getName(), 25f, 25f);
+			Res._optionsFont.drawLeft(batch, "Current name (max length: 15 char): " + Options.getName(), 25f, 25f);
 		} else if (menu.getSelectedName().equals("Sound")) {
-			res._optionsFont.drawLeft(batch, "Sound: " + (Options.isSoundEnabled() ? "Enabled" : "Disabled"), 25f, 25f);
+			Res._optionsFont.drawLeft(batch, "Sound: " + (Options.isSoundEnabled() ? "Enabled" : "Disabled"), 25f, 25f);
 		} else if (menu.getSelectedName().equals("UPnP")) {
-			res._optionsFont.drawLeft(batch, "This needs to be enable if you are behind a home router", 25f, 25f);
-			res._optionsFont.drawLeft(batch, "UPnP: " + (Options.isUpnpEnabled() ? "Enabled" : "Disabled"), 25f, 30f + res._optionsFont.getSize());
+			Res._optionsFont.drawLeft(batch, "This needs to be enable if you are behind a home router", 25f, 25f);
+			Res._optionsFont.drawLeft(batch, "UPnP: " + (Options.isUpnpEnabled() ? "Enabled" : "Disabled"), 25f, 30f + Res._optionsFont.getSize());
 		} else if (menu.getSelectedName().equals("Character")) {
-			batch.draw(res._characters.getSpecificImage(Options.getCharacter().ordinal() * 2), 50f, 25f);
-			res._optionsFont.drawLeft(batch, "Current Character:", 25f, 35f + res._characters.getHeight());
+			batch.draw(Res._characters.getSpecificImage(Options.getCharacter().ordinal() * 2), 50f, 25f);
+			Res._optionsFont.drawLeft(batch, "Current Character:", 25f, 35f + Res._characters.getHeight());
 		}
 	}
 

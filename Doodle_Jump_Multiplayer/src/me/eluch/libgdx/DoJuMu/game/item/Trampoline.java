@@ -1,6 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.item;
 
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.Effect;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
 import me.eluch.libgdx.DoJuMu.gfx.AnimatedImage;
@@ -15,7 +15,7 @@ public class Trampoline extends Item {
 
 	public Trampoline(Floor bindedFloor) {
 		super(bindedFloor);
-		this.texture = Resources.i._trampoline;
+		this.texture = Res._trampoline;
 		this.rec = new Rectangle(bindedFloor.getRec().x, bindedFloor.getRec().y, texture.getWidth(), texture.getHeight());
 	}
 

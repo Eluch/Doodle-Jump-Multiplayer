@@ -1,6 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.item;
 
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.Effect;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
 import me.eluch.libgdx.DoJuMu.gfx.LoadedImage;
@@ -14,7 +14,7 @@ public class Shield extends Item {
 
 	public Shield(Floor bindedFloor) {
 		super(bindedFloor);
-		texture = Resources.i._protectionbubbleitem;
+		texture = Res._protectionbubbleitem;
 	}
 
 	@Override

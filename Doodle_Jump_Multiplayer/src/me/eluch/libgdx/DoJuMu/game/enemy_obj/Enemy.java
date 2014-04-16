@@ -3,7 +3,7 @@ package me.eluch.libgdx.DoJuMu.game.enemy_obj;
 import java.util.Random;
 
 import me.eluch.libgdx.DoJuMu.Options;
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.Effect;
 import me.eluch.libgdx.DoJuMu.game.GameObject;
 import me.eluch.libgdx.DoJuMu.gfx.LoadedImage;
@@ -29,13 +29,13 @@ public class Enemy extends GameObject {
 	private void pharseType(EnemyType type) {
 		switch (type) {
 		case FATTY:
-			texture = Resources.i._mob1;
+			texture = Res._mob1;
 			break;
 		case THREE_EYE:
-			texture = Resources.i._mob2;
+			texture = Res._mob2;
 			break;
 		case FLYING_VAMPIRE:
-			texture = Resources.i._mob3;
+			texture = Res._mob3;
 			break;
 		}
 	}

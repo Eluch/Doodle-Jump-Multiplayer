@@ -3,7 +3,7 @@ package me.eluch.libgdx.DoJuMu.game.item;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.Effect;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
 import me.eluch.libgdx.DoJuMu.gfx.AnimatedImage;
@@ -14,7 +14,7 @@ public class PortalBlue extends Item {
 
 	public PortalBlue(Floor bindedFloor) {
 		super(bindedFloor);
-		this.texture = Resources.i._portal_blue;
+		this.texture = Res._portal_blue;
 		this.rec = new Rectangle(bindedFloor.getRec().x, bindedFloor.getRec().y, texture.getWidth(), texture.getHeight());
 	}
 

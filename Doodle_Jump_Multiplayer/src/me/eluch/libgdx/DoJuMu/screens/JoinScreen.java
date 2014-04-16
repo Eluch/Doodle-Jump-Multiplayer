@@ -5,7 +5,7 @@ import me.eluch.libgdx.DoJuMu.MenuHandler.Handle;
 import me.eluch.libgdx.DoJuMu.MenuHandler.Layout;
 import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.PopupForString;
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.ServerMenuListHandler;
 import me.eluch.libgdx.DoJuMu.network.client.Client;
@@ -25,7 +25,6 @@ public class JoinScreen implements Screen {
 
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Resources res;
 	private MenuHandler menu;
 
 	private int dividedWidth;
@@ -42,26 +41,25 @@ public class JoinScreen implements Screen {
 		this.game = game;
 		this.camera = camera;
 		this.batch = batch;
-		res = Resources.i;
 
-		dividedWidth = (int) (camera.viewportWidth / res._pattern.getWidth()) + 1;
-		dividedHeight = (int) (camera.viewportHeight / res._pattern.getHeight()) + 1;
+		dividedWidth = (int) (camera.viewportWidth / Res._pattern.getWidth()) + 1;
+		dividedHeight = (int) (camera.viewportHeight / Res._pattern.getHeight()) + 1;
 
 		serverList = new ServerMenuListHandler(110, 410, 760, 350);
 		ipPopup = new PopupForString();
 
-		menu = new MenuHandler(Layout.Horizonal, Handle.KeyboardAndMouse, 10, (int) (camera.viewportHeight - res._logo.getHeight() - 100));
-		menu.addMenuItem("Join Selected", res._button, res._buttonFont, () -> {
+		menu = new MenuHandler(Layout.Horizonal, Handle.KeyboardAndMouse, 10, (int) (camera.viewportHeight - Res._logo.getHeight() - 100));
+		menu.addMenuItem("Join Selected", Res._button, Res._buttonFont, () -> {
 			ipPopup.setValForced(serverList.getSelectedIp());
 		});
-		menu.addMenuItem("Join by IP", res._button, res._buttonFont, () -> {
+		menu.addMenuItem("Join by IP", Res._button, Res._buttonFont, () -> {
 			ipPopup.call("Enter that IP what you want to connect to:", serverList.getSelectedIp());
 		});
-		menu.addMenuItem("Search on LAN", res._button, res._buttonFont, () -> {
+		menu.addMenuItem("Search on LAN", Res._button, Res._buttonFont, () -> {
 			serverList.clearServerItems();
 			new UdpDiscover(16160, serverList).run();
 		});
-		menu.addMenuItem("Back", res._button, res._buttonFont, () -> {
+		menu.addMenuItem("Back", Res._button, Res._buttonFont, () -> {
 			if (client != null) {
 				client.stop();
 			}
@@ -110,14 +108,14 @@ public class JoinScreen implements Screen {
 
 		batch.begin();
 		{
-			batch.draw(res._pattern.getTexture(), 0, 0, res._pattern.getWidth() * dividedWidth, res._pattern.getHeight() * dividedHeight, 0, dividedHeight, dividedWidth, 0);
-			batch.draw(res._logo.getTexture(), camera.viewportWidth / 2 - res._logo.getWidth() / 2, camera.viewportHeight - res._logo.getHeight() - 20);
+			batch.draw(Res._pattern.getTexture(), 0, 0, Res._pattern.getWidth() * dividedWidth, Res._pattern.getHeight() * dividedHeight, 0, dividedHeight, dividedWidth, 0);
+			batch.draw(Res._logo.getTexture(), camera.viewportWidth / 2 - Res._logo.getWidth() / 2, camera.viewportHeight - Res._logo.getHeight() - 20);
 			menu.draw(batch);
-			res._buttonFont.drawLeft(batch, "Host name", 100, 400);
-			res._buttonFont.drawLeft(batch, "IP Address", 400, 400);
-			res._buttonFont.drawLeft(batch, "Players", 750, 400);
-			batch.draw(res._transpartentPixel.getTexture(), 100, 390, camera.viewportWidth - 200, -350);
-			res._startScreenFont.drawCenter(batch, Client.getErrorMsg(), camera.viewportWidth / 2, 450);
+			Res._buttonFont.drawLeft(batch, "Host name", 100, 400);
+			Res._buttonFont.drawLeft(batch, "IP Address", 400, 400);
+			Res._buttonFont.drawLeft(batch, "Players", 750, 400);
+			batch.draw(Res._transpartentPixel.getTexture(), 100, 390, camera.viewportWidth - 200, -350);
+			Res._startScreenFont.drawCenter(batch, Client.getErrorMsg(), camera.viewportWidth / 2, 450);
 			serverList.draw(batch);
 		}
 		batch.end();

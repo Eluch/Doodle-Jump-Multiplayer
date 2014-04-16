@@ -1,6 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.floors;
 
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.GameObject;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 public abstract class Floor extends GameObject {
 	
 	public Floor(int x, int y) {
-		rec = new Rectangle(x, y, Resources.i._floorSprite.getWidth(), Resources.i._floorSprite.getHeight());
+		rec = new Rectangle(x, y, Res._floorSprite.getWidth(), Res._floorSprite.getHeight());
 	}
 
 	public final void update(Rectangle scrR, Rectangle doodleFootRectangle, boolean doodleFalling) {

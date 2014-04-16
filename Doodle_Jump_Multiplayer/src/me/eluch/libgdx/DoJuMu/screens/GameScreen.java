@@ -1,7 +1,7 @@
 package me.eluch.libgdx.DoJuMu.screens;
 
 import me.eluch.libgdx.DoJuMu.Options;
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
 
 import com.badlogic.gdx.Game;
@@ -15,7 +15,6 @@ public class GameScreen implements Screen {
 
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Resources res;
 	//private Game game;
 
 	private int dividedWidthPP; // PlayerPlace
@@ -32,16 +31,15 @@ public class GameScreen implements Screen {
 		//this.game = game;
 		this.camera = camera;
 		this.batch = batch;
-		res = Resources.i;
 
-		dividedWidthPP = (int) (camera.viewportWidth / 2 / res._pattern.getWidth()) + 1;
-		dividedHeightPP = (int) (camera.viewportHeight / res._pattern.getHeight()) + 1;
-		dividedWidthSP = (int) (camera.viewportHeight / res._clearpattern.getWidth()) + 1;
-		dividedHeightSP = (int) (camera.viewportHeight / res._clearpattern.getHeight()) + 1;
+		dividedWidthPP = (int) (camera.viewportWidth / 2 / Res._pattern.getWidth()) + 1;
+		dividedHeightPP = (int) (camera.viewportHeight / Res._pattern.getHeight()) + 1;
+		dividedWidthSP = (int) (camera.viewportHeight / Res._clearpattern.getWidth()) + 1;
+		dividedHeightSP = (int) (camera.viewportHeight / Res._clearpattern.getHeight()) + 1;
 	}
 
 	private void update(float delta) {
-		patternSliding = (patternSliding + 1) % (int) res._pattern.getHeight();
+		patternSliding = (patternSliding + 1) % (int) Res._pattern.getHeight();
 	}
 
 	@Override
@@ -56,10 +54,10 @@ public class GameScreen implements Screen {
 
 		batch.begin();
 		{
-			batch.draw(res._pattern.getTexture(), 0, 0 - patternSliding, res._pattern.getWidth() * dividedWidthPP, res._pattern.getHeight() * dividedHeightPP, 0, dividedHeightPP, dividedWidthPP, 0);
-			batch.draw(res._clearpattern.getTexture(), camera.viewportWidth / 2, 0, res._clearpattern.getWidth() * dividedWidthSP, res._clearpattern.getHeight() * dividedHeightSP, 0, dividedHeightSP,
+			batch.draw(Res._pattern.getTexture(), 0, 0 - patternSliding, Res._pattern.getWidth() * dividedWidthPP, Res._pattern.getHeight() * dividedHeightPP, 0, dividedHeightPP, dividedWidthPP, 0);
+			batch.draw(Res._clearpattern.getTexture(), camera.viewportWidth / 2, 0, Res._clearpattern.getWidth() * dividedWidthSP, Res._clearpattern.getHeight() * dividedHeightSP, 0, dividedHeightSP,
 					dividedWidthSP, 0);
-			batch.draw(res._spacerPixel.getTexture(), camera.viewportWidth / 2, 0, 10, camera.viewportHeight, 0, 1, 1, 0);
+			batch.draw(Res._spacerPixel.getTexture(), camera.viewportWidth / 2, 0, 10, camera.viewportHeight, 0, 1, 1, 0);
 		}
 		batch.end();
 	}

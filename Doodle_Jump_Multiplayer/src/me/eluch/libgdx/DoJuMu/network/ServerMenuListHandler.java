@@ -2,7 +2,7 @@ package me.eluch.libgdx.DoJuMu.network;
 
 import java.util.ArrayList;
 
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.network.packets.ServerItem;
 
 import com.badlogic.gdx.Gdx;
@@ -52,11 +52,11 @@ public class ServerMenuListHandler {
 			ServerItemPos pos = itemsPos.get(i);
 
 			if (item.equals(items.get(selected))) {
-				batch.draw(Resources.i._serverPicker.getTexture(), pos.hosterX - 45, pos.allY);
+				batch.draw(Res._serverPicker.getTexture(), pos.hosterX - 45, pos.allY);
 			}
-			Resources.i._serverListFont.drawLeft(batch, item.hoster, pos.hosterX, pos.allY);
-			Resources.i._serverListFont.drawLeft(batch, item.ip, pos.ipX, pos.allY);
-			Resources.i._serverListFont.drawLeft(batch, item.players, pos.playersX, pos.allY);
+			Res._serverListFont.drawLeft(batch, item.hoster, pos.hosterX, pos.allY);
+			Res._serverListFont.drawLeft(batch, item.ip, pos.ipX, pos.allY);
+			Res._serverListFont.drawLeft(batch, item.players, pos.playersX, pos.allY);
 		}
 	}
 
@@ -96,7 +96,7 @@ public class ServerMenuListHandler {
 			this.ipX = ipX;
 			this.playersX = playersX;
 			this.allY = allY;
-			this.rect = new Rectangle(hosterX, allY, 760, Resources.i._buttonFont.getSize());
+			this.rect = new Rectangle(hosterX, allY, 760, Res._buttonFont.getSize());
 		}
 	}
 

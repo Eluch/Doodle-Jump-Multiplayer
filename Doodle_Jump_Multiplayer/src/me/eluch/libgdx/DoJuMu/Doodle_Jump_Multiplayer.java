@@ -19,7 +19,7 @@ public class Doodle_Jump_Multiplayer extends Game {
 		Options.ScreenRes.initRes((int) camera.viewportWidth, (int) camera.viewportHeight);
 		batch = new SpriteBatch();
 
-		Resources.i.load();
+		Res.load();
 	}
 
 	@Override

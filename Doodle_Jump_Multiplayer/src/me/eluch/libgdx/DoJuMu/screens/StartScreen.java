@@ -1,7 +1,7 @@
 package me.eluch.libgdx.DoJuMu.screens;
 
 import me.eluch.libgdx.DoJuMu.Options;
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -16,7 +16,6 @@ public class StartScreen implements Screen {
 	private Game game;
 	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Resources res;
 
 	private float elapsed;
 	private final StartType st;
@@ -26,7 +25,6 @@ public class StartScreen implements Screen {
 		this.game = game;
 		this.camera = camera;
 		this.batch = batch;
-		res = Resources.i;
 		elapsed = 0;
 		this.st = st;
 		escPressed = false;
@@ -62,17 +60,17 @@ public class StartScreen implements Screen {
 
 		batch.begin();
 		{
-			batch.draw(res._madnessMe.getImage(), 10, 10);
-			res._startScreenFont.drawRight(batch, "by Eluch", camera.viewportWidth - 10, 10);
+			batch.draw(Res._madnessMe.getImage(), 10, 10);
+			Res._startScreenFont.drawRight(batch, "by Eluch", camera.viewportWidth - 10, 10);
 
-			res._startScreenFont.drawCenter(batch, "E-mail:", camera.viewportWidth / 2, 10 + res._startScreenFont.getSize() + res._startScreenFont.getSize() / 2);
-			res._startScreenFont.drawCenter(batch, "pkferi@gmail.com", camera.viewportWidth / 2, 10 + res._startScreenFont.getSize() / 2);
+			Res._startScreenFont.drawCenter(batch, "E-mail:", camera.viewportWidth / 2, 10 + Res._startScreenFont.getSize() + Res._startScreenFont.getSize() / 2);
+			Res._startScreenFont.drawCenter(batch, "pkferi@gmail.com", camera.viewportWidth / 2, 10 + Res._startScreenFont.getSize() / 2);
 
-			res._startScreenFont.drawCenter(batch, "Doodle Jump Multiplayer (v" + Options.VERSION + ")", camera.viewportWidth / 2, camera.viewportHeight - 50);
+			Res._startScreenFont.drawCenter(batch, "Doodle Jump Multiplayer (v" + Options.VERSION + ")", camera.viewportWidth / 2, camera.viewportHeight - 50);
 			if (st.equals(StartType.programstart))
-				res._startScreenFont.drawCenter(batch, "Game is starting...", camera.viewportWidth / 2, camera.viewportHeight - 100);
+				Res._startScreenFont.drawCenter(batch, "Game is starting...", camera.viewportWidth / 2, camera.viewportHeight - 100);
 			else if (st.equals(StartType.credits))
-				res._startScreenFont.drawCenter(batch, "Press esc to go back to mainmenu", camera.viewportWidth / 2, camera.viewportHeight - 100);
+				Res._startScreenFont.drawCenter(batch, "Press esc to go back to mainmenu", camera.viewportWidth / 2, camera.viewportHeight - 100);
 		}
 		batch.end();
 	}

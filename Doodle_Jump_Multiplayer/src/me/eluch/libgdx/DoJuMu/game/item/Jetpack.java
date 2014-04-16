@@ -1,6 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.item;
 
-import me.eluch.libgdx.DoJuMu.Resources;
+import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.Effect;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
 import me.eluch.libgdx.DoJuMu.gfx.LoadedImage;
@@ -14,7 +14,7 @@ public class Jetpack extends Item {
 
 	public Jetpack(Floor bindedFloor) {
 		super(bindedFloor);
-		this.texture = Resources.i._jetpackfull;
+		this.texture = Res._jetpackfull;
 		this.rec = new Rectangle(bindedFloor.getRec().x, bindedFloor.getRec().y, texture.getWidth(), texture.getHeight());
 	}
 
