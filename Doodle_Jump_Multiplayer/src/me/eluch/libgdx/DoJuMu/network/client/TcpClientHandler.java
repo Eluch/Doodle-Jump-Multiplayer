@@ -5,6 +5,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.data.CorePlayer;
+import me.eluch.libgdx.DoJuMu.game.GameRole;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.packets.AllPlayers;
 import me.eluch.libgdx.DoJuMu.network.packets.OnePlayerConnected;
@@ -12,6 +13,7 @@ import me.eluch.libgdx.DoJuMu.network.packets.OnePlayerDisconnected;
 import me.eluch.libgdx.DoJuMu.network.packets.PingDatas;
 import me.eluch.libgdx.DoJuMu.network.packets.ReadOnlyPacket;
 import me.eluch.libgdx.DoJuMu.network.packets.Validation;
+import me.eluch.libgdx.DoJuMu.screens.GameScreen;
 
 public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 
@@ -61,6 +63,9 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 				break;
 			case ONE_PLAYER_DISCONNECTED:
 				client.getPlayers().removeByID(OnePlayerDisconnected.decoode(iPacket));
+				break;
+			case GAME_STARTING:
+				client.getGame().setScreen(new GameScreen(client.getGame(), client.getCamera(), client.getBatch(), GameRole.CLIENT));
 				break;
 			default:
 				break;

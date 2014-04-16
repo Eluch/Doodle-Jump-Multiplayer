@@ -41,13 +41,9 @@ public class LobbyScreen implements Screen {
 		dividedHeight = (int) (camera.viewportHeight / res._pattern.getHeight()) + 1;
 
 		menu = new MenuHandler(Layout.Horizonal, Handle.KeyboardAndMouse, 10, (int) (camera.viewportHeight - res._logo.getHeight() - 100));
-		menu.addMenuItem("Exit Lobby", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				client.stop();
-				game.setScreen(new JoinScreen(game, camera, batch));
-			}
+		menu.addMenuItem("Exit Lobby", res._button, res._buttonFont, () -> {
+			client.stop();
+			game.setScreen(new JoinScreen(game, camera, batch));
 		});
 
 		// request for all players

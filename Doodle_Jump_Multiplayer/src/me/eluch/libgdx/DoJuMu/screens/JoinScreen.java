@@ -51,39 +51,23 @@ public class JoinScreen implements Screen {
 		ipPopup = new PopupForString();
 
 		menu = new MenuHandler(Layout.Horizonal, Handle.KeyboardAndMouse, 10, (int) (camera.viewportHeight - res._logo.getHeight() - 100));
-		menu.addMenuItem("Join Selected", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				ipPopup.setValForced(serverList.getSelectedIp());
-			}
+		menu.addMenuItem("Join Selected", res._button, res._buttonFont, () -> {
+			ipPopup.setValForced(serverList.getSelectedIp());
 		});
-		menu.addMenuItem("Join by IP", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				ipPopup.call("Enter that IP what you want to connect to:", serverList.getSelectedIp());
-			}
+		menu.addMenuItem("Join by IP", res._button, res._buttonFont, () -> {
+			ipPopup.call("Enter that IP what you want to connect to:", serverList.getSelectedIp());
 		});
-		menu.addMenuItem("Search on LAN", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				serverList.clearServerItems();
-				new UdpDiscover(16160, serverList).run();
-			}
+		menu.addMenuItem("Search on LAN", res._button, res._buttonFont, () -> {
+			serverList.clearServerItems();
+			new UdpDiscover(16160, serverList).run();
 		});
-		menu.addMenuItem("Back", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				if (client != null) {
-					client.stop();
-				}
-				game.setScreen(new MainMenuScreen(game, camera, batch));
-				if (client != null) {
-					client.stop();
-				}
+		menu.addMenuItem("Back", res._button, res._buttonFont, () -> {
+			if (client != null) {
+				client.stop();
+			}
+			game.setScreen(new MainMenuScreen(game, camera, batch));
+			if (client != null) {
+				client.stop();
 			}
 		});
 
@@ -105,7 +89,7 @@ public class JoinScreen implements Screen {
 			System.out.println("GOT IP TO CONNECT TO: " + host);
 			if (host.matches(ipRegex) || host.matches(hostRegex)) {
 				// MATCHES!!
-				client = new Client(host, 16160, true);
+				client = new Client(game, camera, batch, host, Options.SERVER_PORT, true);
 
 			} else
 				System.out.println("Wrong IP Address");

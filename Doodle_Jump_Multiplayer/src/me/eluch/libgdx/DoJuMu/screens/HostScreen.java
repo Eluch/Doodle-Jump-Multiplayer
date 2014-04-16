@@ -8,6 +8,8 @@ import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Resources;
 import me.eluch.libgdx.DoJuMu.data.ServerPlayer;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
+import me.eluch.libgdx.DoJuMu.network.packets.PacketType;
+import me.eluch.libgdx.DoJuMu.network.packets.WriteOnlyPacket;
 import me.eluch.libgdx.DoJuMu.network.server.Server;
 
 import com.badlogic.gdx.Game;
@@ -39,24 +41,13 @@ public class HostScreen implements Screen {
 		dividedHeight = (int) (camera.viewportHeight / res._pattern.getHeight()) + 1;
 
 		menu = new MenuHandler(Layout.Horizonal, Handle.KeyboardAndMouse, 10, (int) (camera.viewportHeight - res._logo.getHeight() - 100));
-		menu.addMenuItem("Start", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					game.setScreen(new GameScreen(game, camera, batch, GameRole.SERVER));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+		menu.addMenuItem("Start", res._button, res._buttonFont, () -> {
+			server.sendToAllPlayersWithTCP(new WriteOnlyPacket(PacketType.GAME_STARTING).getByteBuf());
+			game.setScreen(new GameScreen(game, camera, batch, GameRole.SERVER));
 		});
-		menu.addMenuItem("Back", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				server.stop();
-				game.setScreen(new MainMenuScreen(game, camera, batch));
-			}
+		menu.addMenuItem("Back", res._button, res._buttonFont, () -> {
+			server.stop();
+			game.setScreen(new MainMenuScreen(game, camera, batch));
 		});
 
 		server = new Server(16160, true);

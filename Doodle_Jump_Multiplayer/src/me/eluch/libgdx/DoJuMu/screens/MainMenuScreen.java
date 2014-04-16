@@ -35,40 +35,20 @@ public class MainMenuScreen implements Screen {
 		dividedHeight = (int) (camera.viewportHeight / res._pattern.getHeight()) + 1;
 
 		menu = new MenuHandler(Layout.Vertical, Handle.KeyboardAndMouse, (int) (camera.viewportWidth / 2) - res._button.getWidth() / 2, (int) (camera.viewportHeight - res._logo.getHeight() - 100));
-		menu.addMenuItem("Join Game", res._button, res._buttonFont, new Runnable() {
-			
-			@Override
-			public void run() {
-				game.setScreen(new JoinScreen(game, camera, batch));
-			}
+		menu.addMenuItem("Join Game", res._button, res._buttonFont, () -> {
+			game.setScreen(new JoinScreen(game, camera, batch));
 		});
-		menu.addMenuItem("Host Game", res._button, res._buttonFont, new Runnable() {
-			
-			@Override
-			public void run() {
-				game.setScreen(new HostScreen(game, camera, batch));
-			}
+		menu.addMenuItem("Host Game", res._button, res._buttonFont, () -> {
+			game.setScreen(new HostScreen(game, camera, batch));
 		});
-		menu.addMenuItem("Options", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				game.setScreen(new OptionMenuScreen(game, camera, batch));
-			}
+		menu.addMenuItem("Options", res._button, res._buttonFont, () -> {
+			game.setScreen(new OptionMenuScreen(game, camera, batch));
 		});
-		menu.addMenuItem("Credits", res._button, res._buttonFont, new Runnable() {
-			
-			@Override
-			public void run() {
-				game.setScreen(new StartScreen(game, camera, batch, StartType.credits));
-			}
+		menu.addMenuItem("Credits", res._button, res._buttonFont, () -> {
+			game.setScreen(new StartScreen(game, camera, batch, StartType.credits));
 		}); // TODO to_loading_screen
-		menu.addMenuItem("Exit", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				Gdx.app.exit();
-			}
+		menu.addMenuItem("Exit", res._button, res._buttonFont, () -> {
+			Gdx.app.exit();
 		});
 	}
 

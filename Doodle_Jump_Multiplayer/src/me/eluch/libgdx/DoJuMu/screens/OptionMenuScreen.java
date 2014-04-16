@@ -35,40 +35,20 @@ public class OptionMenuScreen implements Screen {
 		dividedHeight = (int) (camera.viewportHeight / res._pattern.getHeight()) + 1;
 
 		menu = new MenuHandler(Layout.Vertical, Handle.KeyboardAndMouse, (int) (camera.viewportWidth / 2) - res._button.getWidth() / 2, (int) (camera.viewportHeight - res._logo.getHeight() - 100));
-		menu.addMenuItem("Player name", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				Options.changeName();
-			}
+		menu.addMenuItem("Player name", res._button, res._buttonFont, () -> {
+			Options.changeName();
 		});
-		menu.addMenuItem("Sound", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				Options.setProperty(OptionProperty.sound);
-			}
+		menu.addMenuItem("Sound", res._button, res._buttonFont, () -> {
+			Options.setProperty(OptionProperty.sound);
 		});
-		menu.addMenuItem("UPnP", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				Options.setProperty(OptionProperty.upnp);
-			}
+		menu.addMenuItem("UPnP", res._button, res._buttonFont, () -> {
+			Options.setProperty(OptionProperty.upnp);
 		});
-		menu.addMenuItem("Character", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				Options.setProperty(OptionProperty.character);
-			}
+		menu.addMenuItem("Character", res._button, res._buttonFont, () -> {
+			Options.setProperty(OptionProperty.character);
 		});
-		menu.addMenuItem("Back", res._button, res._buttonFont, new Runnable() {
-
-			@Override
-			public void run() {
-				game.setScreen(new MainMenuScreen(game, camera, batch));
-			}
+		menu.addMenuItem("Back", res._button, res._buttonFont, () -> {
+			game.setScreen(new MainMenuScreen(game, camera, batch));
 		});
 	}
 

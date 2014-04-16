@@ -1,5 +1,9 @@
 package me.eluch.libgdx.DoJuMu.network.client;
 
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
 import io.netty.channel.Channel;
 import me.eluch.libgdx.DoJuMu.data.CorePlayer;
 import me.eluch.libgdx.DoJuMu.data.CorePlayerContainer;
@@ -11,11 +15,18 @@ public class Client {
 	private final UdpClient udp;
 	private ConnectionStatus connectionStatus;
 
+	private final Game game;
+	private final OrthographicCamera camera;
+	private final SpriteBatch batch;
+
 	private final CorePlayerContainer<CorePlayer> players;
 
 	private static String errorMsg;
 
-	public Client(String host, int port, boolean startNow) {
+	public Client(Game game, OrthographicCamera camera, SpriteBatch batch, String host, int port, boolean startNow) {
+		this.game = game;
+		this.camera = camera;
+		this.batch = batch;
 		Client.errorMsg = null;
 		this.connectionStatus = ConnectionStatus.NOT_CONNECTED;
 		players = new CorePlayerContainer<CorePlayer>();
@@ -72,5 +83,17 @@ public class Client {
 
 	public boolean isRunning() {
 		return tcp.thread.isAlive();
+	}
+
+	public Game getGame() {
+		return game;
+	}
+
+	public OrthographicCamera getCamera() {
+		return camera;
+	}
+
+	public SpriteBatch getBatch() {
+		return batch;
 	}
 }
