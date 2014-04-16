@@ -12,7 +12,7 @@ public class Options {
 
 	public static final int SERVER_PORT = 16160;
 	public static final int CLIENT_PORT = 16161;
-	public static final int VERSION = 7;
+	public static final int VERSION = 8; //Not released
 	public static final int MAXPLAYERS = 13;
 	public static final long DISCOVER_TIMEOUT = 1000;
 	public static final int PING_FREQUENCY = 3000;

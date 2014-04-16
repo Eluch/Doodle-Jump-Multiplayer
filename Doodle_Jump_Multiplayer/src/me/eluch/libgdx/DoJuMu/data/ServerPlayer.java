@@ -5,6 +5,7 @@ import io.netty.channel.Channel;
 import java.net.InetSocketAddress;
 
 import me.eluch.libgdx.DoJuMu.Options;
+import me.eluch.libgdx.DoJuMu.game.doodle.DoodleGenderType;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 
 public class ServerPlayer extends CorePlayer {
@@ -21,8 +22,8 @@ public class ServerPlayer extends CorePlayer {
 		this.pingSent = this.pingReceived = 0;
 	}
 
-	public ServerPlayer(String hash, int id, String name, Channel channel) {
-		super(id, name);
+	public ServerPlayer(String hash, int id, String name, DoodleGenderType genderType, Channel channel) {
+		super(id, name, genderType);
 		this.hash = hash;
 		this.channelToPlayer = channel;
 	}

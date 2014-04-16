@@ -15,6 +15,7 @@ public class ServerPlayerContainer extends CorePlayerContainer<ServerPlayer> {
 		ServerPlayer me = new ServerPlayer(Options.getHash());
 		me.setName(Options.getName());
 		me.setId(getAvailableMinId());
+		me.setGenderType(Options.getCharacter());
 		me.setPing(0);
 		try {
 			me.setIp(new InetSocketAddress(InetAddress.getLocalHost(), Options.SERVER_PORT));

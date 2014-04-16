@@ -32,10 +32,7 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 				ctx.writeAndFlush(Validation.encodeStep1());
 				break;
 			case ACCEPTED_VALIDATING:
-				CorePlayer player = new CorePlayer(Validation.decodeStep2(iPacket), Options.getName() + "_VALID"); // TODO
-																													// remove
-																													// the
-																													// suffix
+				CorePlayer player = new CorePlayer(Validation.decodeStep2(iPacket), Options.getName() + "_VALID", Options.getCharacter()); // TODO remove the suffix
 				client.getPlayers().addPlayer(player);
 				client.getPlayers().setMySelf(player);
 				client.setConnectionStatus(ConnectionStatus.CONNECTED);

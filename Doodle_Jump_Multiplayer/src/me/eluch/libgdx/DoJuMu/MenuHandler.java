@@ -102,22 +102,44 @@ public class MenuHandler {
 
 	private void keyboardHandler() {
 		handling: {
-			if (Gdx.input.isKeyPressed(Keys.DOWN)) {
-				if (keyPressed)
-					break handling;
-				if (++selected > items.size() - 1) {
-					selected = items.size() - 1;
+			if (layout == Layout.Vertical || layout == Layout.Unformatted) {
+				if (Gdx.input.isKeyPressed(Keys.DOWN)) {
+					if (keyPressed)
+						break handling;
+					if (++selected > items.size() - 1) {
+						selected = items.size() - 1;
+					}
+					keyPressed = true;
+				} else if (Gdx.input.isKeyPressed(Keys.UP)) {
+					if (keyPressed)
+						break handling;
+					if (--selected < 0) {
+						selected = 0;
+					}
+					keyPressed = true;
+				} else {
+					keyPressed = false;
 				}
-				keyPressed = true;
-			} else if (Gdx.input.isKeyPressed(Keys.UP)) {
-				if (keyPressed)
-					break handling;
-				if (--selected < 0) {
-					selected = 0;
+			}
+
+			if (layout == Layout.Horizonal || layout == Layout.Unformatted) {
+				if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+					if (keyPressed)
+						break handling;
+					if (++selected > items.size() - 1) {
+						selected = items.size() - 1;
+					}
+					keyPressed = true;
+				} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+					if (keyPressed)
+						break handling;
+					if (--selected < 0) {
+						selected = 0;
+					}
+					keyPressed = true;
+				} else {
+					keyPressed = false;
 				}
-				keyPressed = true;
-			} else {
-				keyPressed = false;
 			}
 		}
 

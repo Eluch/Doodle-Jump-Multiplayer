@@ -60,8 +60,8 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 					}
 				} else {
 					// Add to players id_general - eltarol - kikuld
-					ServerPlayer player = new ServerPlayer(datas.hash, server.getPlayers().getAvailableMinId(), datas.name, ctx.channel());
-					server.sendToAllPlayersWithTCP(OnePlayerConnected.encode(player.getId(), player.getName()));
+					ServerPlayer player = new ServerPlayer(datas.hash, server.getPlayers().getAvailableMinId(), datas.name, datas.genderType, ctx.channel());
+					server.sendToAllPlayersWithTCP(OnePlayerConnected.encode(player.getId(), player.getName(), player.getGenderType()));
 					server.getPlayers().addPlayer(player);
 					player.setConnectionStatus(ConnectionStatus.CONNECTED);
 					ctx.writeAndFlush(Validation.encodeStep2(player.getId()));

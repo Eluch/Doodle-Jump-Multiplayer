@@ -1,6 +1,7 @@
 package me.eluch.libgdx.DoJuMu.network.packets;
 
 import me.eluch.libgdx.DoJuMu.Options;
+import me.eluch.libgdx.DoJuMu.game.doodle.DoodleGenderType;
 import io.netty.buffer.ByteBuf;
 
 public abstract class Validation {
@@ -10,6 +11,7 @@ public abstract class Validation {
 		op.writeString(Options.getHash());
 		op.writeInt(Options.VERSION);
 		op.writeString(Options.getName() + "_VALID"); //TODO remove the suffix
+		op.writeInt(Options.getCharacter().ordinal());
 		return op.getByteBuf();
 	}
 
@@ -17,16 +19,17 @@ public abstract class Validation {
 		String hash = readOnlyPacket.readString();
 		int version = readOnlyPacket.readInt();
 		String name = readOnlyPacket.readString();
-		return new ValidationDatas(hash, version, name);
+		DoodleGenderType genderType = DoodleGenderType.values()[readOnlyPacket.readInt()];
+		return new ValidationDatas(hash, version, name, genderType);
 	}
-	
-	public static ByteBuf encodeStep2(int id){
+
+	public static ByteBuf encodeStep2(int id) {
 		WriteOnlyPacket op = new WriteOnlyPacket(PacketType.ACCEPTED_VALIDATING);
 		op.writeInt(id);
 		return op.getByteBuf();
 	}
-	
-	public static int decodeStep2(ReadOnlyPacket iPacket){
+
+	public static int decodeStep2(ReadOnlyPacket iPacket) {
 		return iPacket.readInt();
 	}
 

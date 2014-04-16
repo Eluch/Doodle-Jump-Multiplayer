@@ -68,7 +68,7 @@ public class StartScreen implements Screen {
 			res._startScreenFont.drawCenter(batch, "E-mail:", camera.viewportWidth / 2, 10 + res._startScreenFont.getSize() + res._startScreenFont.getSize() / 2);
 			res._startScreenFont.drawCenter(batch, "pkferi@gmail.com", camera.viewportWidth / 2, 10 + res._startScreenFont.getSize() / 2);
 
-			res._startScreenFont.drawCenter(batch, "Doodle Jump Multiplayer", camera.viewportWidth / 2, camera.viewportHeight - 50);
+			res._startScreenFont.drawCenter(batch, "Doodle Jump Multiplayer (v" + Options.VERSION + ")", camera.viewportWidth / 2, camera.viewportHeight - 50);
 			if (st.equals(StartType.programstart))
 				res._startScreenFont.drawCenter(batch, "Game is starting...", camera.viewportWidth / 2, camera.viewportHeight - 100);
 			else if (st.equals(StartType.credits))
