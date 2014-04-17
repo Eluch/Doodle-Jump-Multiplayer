@@ -1,10 +1,16 @@
 package me.eluch.libgdx.DoJuMu.screens;
 
+import java.net.InetSocketAddress;
+
+import io.netty.channel.socket.DatagramPacket;
 import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.GameObjectContainer;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
+import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.client.Client;
+import me.eluch.libgdx.DoJuMu.network.packets.AllDoodleDatas;
+import me.eluch.libgdx.DoJuMu.network.packets.MyDoodleDatas;
 import me.eluch.libgdx.DoJuMu.network.server.Server;
 
 import com.badlogic.gdx.Game;
@@ -58,6 +64,12 @@ public class GameScreen implements Screen {
 	}
 
 	private void update(float delta) {
+		if (role == GameRole.CLIENT) {
+			if (client.getConnectionStatus() == ConnectionStatus.NOT_CONNECTED) {
+				client.stop();
+				client.getGame().setScreen(new MainMenuScreen(client.getGame(), client.getCamera(), client.getBatch()));
+			}
+		}
 		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
 			switch (role) {
 			case CLIENT:
@@ -69,7 +81,17 @@ public class GameScreen implements Screen {
 			}
 			game.setScreen(new MainMenuScreen(game, camera, batch));
 		}
-		gameObjects.update();
+		gameObjects.update(delta);
+
+		switch (role) {
+		case SERVER:
+			server.sendToAllPlayersWithUDP(AllDoodleDatas.encode(server.getPlayers().getPlayers()));
+			break;
+		case CLIENT:
+			client.getUdpChannel().writeAndFlush(new DatagramPacket(MyDoodleDatas.encode(gameObjects.getMyDoodle()), (InetSocketAddress) client.getTcpChannel().remoteAddress()));
+			break;
+		}
+
 	}
 
 	@Override
@@ -84,13 +106,12 @@ public class GameScreen implements Screen {
 
 		batch.begin();
 		{
-			batch.draw(Res._pattern.getTexture(), 0, 0 - gameObjects.getPatternSliding(), Res._pattern.getWidth() * dividedWidthPP, Res._pattern.getHeight() * dividedHeightPP, 0, dividedHeightPP,
-					dividedWidthPP, 0);
-			batch.draw(Res._clearpattern.getTexture(), camera.viewportWidth / 2, 0, Res._clearpattern.getWidth() * dividedWidthSP, Res._clearpattern.getHeight() * dividedHeightSP, 0, dividedHeightSP,
-					dividedWidthSP, 0);
-			batch.draw(Res._spacerPixel.getTexture(), camera.viewportWidth / 2, 0, 10, camera.viewportHeight, 0, 1, 1, 0);
-
+			batch.draw(Res._pattern.getTexture(), 0, 0 - gameObjects.getPatternSliding(), Res._pattern.getWidth() * dividedWidthPP, Res._pattern.getHeight() * dividedHeightPP, 0,
+					dividedHeightPP, dividedWidthPP, 0);
 			gameObjects.render(batch);
+			batch.draw(Res._clearpattern.getTexture(), camera.viewportWidth / 2, 0, Res._clearpattern.getWidth() * dividedWidthSP, Res._clearpattern.getHeight() * dividedHeightSP,
+					0, dividedHeightSP, dividedWidthSP, 0);
+			batch.draw(Res._spacerPixel.getTexture(), camera.viewportWidth / 2, 0, 10, camera.viewportHeight, 0, 1, 1, 0);
 		}
 		batch.end();
 	}

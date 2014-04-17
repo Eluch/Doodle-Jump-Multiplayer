@@ -39,6 +39,10 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 				client.getPlayers().setMySelf(player);
 				client.setConnectionStatus(ConnectionStatus.CONNECTED);
 				break;
+			case GAME_HAS_ALREADY_STARTED:
+				Client.setErrorMsg("The game has already started");
+				client.setConnectionStatus(ConnectionStatus.ERROR);
+				break;
 			case WRONG_VERSION:
 				Client.setErrorMsg("The server has different version!");
 				client.setConnectionStatus(ConnectionStatus.ERROR);

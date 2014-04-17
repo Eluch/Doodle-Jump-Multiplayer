@@ -40,6 +40,7 @@ public class HostScreen implements Screen {
 
 		menu = new MenuHandler(Layout.Horizonal, Handle.KeyboardAndMouse, 10, (int) (camera.viewportHeight - Res._logo.getHeight() - 100));
 		menu.addMenuItem("Start", Res._button, Res._buttonFont, () -> {
+			server.setGameState(GameState.IN_GAME);
 			server.sendToAllPlayersWithTCP(new WriteOnlyPacket(PacketType.GAME_STARTING).getByteBuf());
 			game.setScreen(new GameScreen(game, camera, batch, GameRole.SERVER, server));
 		});

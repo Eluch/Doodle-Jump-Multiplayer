@@ -2,6 +2,7 @@ package me.eluch.libgdx.DoJuMu.network.server;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import io.netty.channel.socket.DatagramPacket;
 import me.eluch.libgdx.DoJuMu.GameState;
 import me.eluch.libgdx.DoJuMu.data.ServerPlayer;
 import me.eluch.libgdx.DoJuMu.data.ServerPlayerContainer;
@@ -68,6 +69,14 @@ public class Server {
 		for (ServerPlayer player : players.getPlayers()) {
 			if (player != players.getMySelf()) {
 				player.getChannelToPlayer().writeAndFlush(byteBuf);
+			}
+		}
+	}
+
+	public void sendToAllPlayersWithUDP(ByteBuf byteBuf) { //except the server
+		for (ServerPlayer player : players.getPlayers()) {
+			if (player != players.getMySelf()) {
+				getUdpChannel().writeAndFlush(new DatagramPacket(byteBuf, player.getIp()));
 			}
 		}
 	}

@@ -47,6 +47,7 @@ public class Res {
 	public static final AnimatedImage _swamp;
 	public static final AnimatedImage _trampoline;
 	public static final AnimatedImage _characters;
+	public static final AnimatedImage _characters_t; //transparent
 	public static final AnimatedImage _shoot;
 	public static final AnimatedImage _posArrow_large;
 	public static final AnimatedImage _posArrow_small;
@@ -85,6 +86,7 @@ public class Res {
 		_swamp = new AnimatedImage("images/objects/swamp.png", 5, 4, 1);
 		_trampoline = new AnimatedImage("images/objects/trampoline.png", 2, 1, 10);
 		_characters = new AnimatedImage("images/player/Characters.png", 2, 2, 10);
+		_characters_t = new AnimatedImage("images/player/Characters_transparent.png", 2, 2, 10);
 		_shoot = new AnimatedImage("images/player/shoot.png", 2, 2, 10);
 		_posArrow_large = new AnimatedImage("images/etc/posarrow_large.png", 1, 2, 10);
 		_posArrow_small = new AnimatedImage("images/etc/posarrow_small.png", 1, 2, 10);

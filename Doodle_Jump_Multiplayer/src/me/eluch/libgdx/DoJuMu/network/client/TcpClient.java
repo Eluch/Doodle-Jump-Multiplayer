@@ -10,6 +10,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import me.eluch.libgdx.DoJuMu.Options;
+import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.NetworkThread;
 
 public class TcpClient implements Runnable, NetworkThread {
@@ -20,7 +21,7 @@ public class TcpClient implements Runnable, NetworkThread {
 	private Channel channel;
 
 	public final Thread thread;
-	
+
 	private final Client client;
 
 	public TcpClient(String host, Client client) {
@@ -55,6 +56,8 @@ public class TcpClient implements Runnable, NetworkThread {
 			client.stop();
 		} finally {
 			workerGroup.shutdownGracefully();
+			client.stopUDP();
+			client.setConnectionStatus(ConnectionStatus.NOT_CONNECTED);
 		}
 		System.out.println("Client stopped.");
 	}

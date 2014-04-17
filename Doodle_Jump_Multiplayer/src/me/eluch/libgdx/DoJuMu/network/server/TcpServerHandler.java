@@ -27,7 +27,11 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		System.out.println("Client try to connecting with: " + ctx.channel().remoteAddress().toString());
-		if (server.getPlayers().getNumberOfPlayers() >= Options.MAXPLAYERS) {
+		if (server.getGameState() == GameState.IN_GAME) {
+			WriteOnlyPacket op = new WriteOnlyPacket(PacketType.GAME_HAS_ALREADY_STARTED);
+			ctx.writeAndFlush(op.getByteBuf());
+			ctx.close();
+		} else if (server.getPlayers().getNumberOfPlayers() >= Options.MAXPLAYERS) {
 			WriteOnlyPacket op = new WriteOnlyPacket(PacketType.SERVER_IS_FULL);
 			ctx.writeAndFlush(op.getByteBuf());
 			ctx.close();
@@ -90,6 +94,8 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 				server.getPlayers().removePlayer(player);
 				server.sendToAllPlayersWithTCP(OnePlayerDisconnected.encode(player.getId()));
 				// TODO Send to all client that one of them dcd..
+			} else if (server.getGameState() == GameState.IN_GAME) {
+				player.getDoodle().setAlive(false);
 			}
 		}
 	}

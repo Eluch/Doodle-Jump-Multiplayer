@@ -1,5 +1,6 @@
 package me.eluch.libgdx.DoJuMu.network.client;
 
+import me.eluch.libgdx.DoJuMu.network.packets.AllDoodleDatas;
 import me.eluch.libgdx.DoJuMu.network.packets.PacketType;
 import me.eluch.libgdx.DoJuMu.network.packets.ReadOnlyPacket;
 import me.eluch.libgdx.DoJuMu.network.packets.WriteOnlyPacket;
@@ -25,7 +26,9 @@ public class UdpClientHandler extends SimpleChannelInboundHandler<DatagramPacket
 			WriteOnlyPacket op = new WriteOnlyPacket(PacketType.PONG);
 			ctx.writeAndFlush(new DatagramPacket(op.getByteBuf(), msg.sender()));
 			break;
-
+		case ALL_DOODLE_DATAS:
+			AllDoodleDatas.decode(rp, client.getPlayers());
+			break;
 		default:
 			break;
 		}

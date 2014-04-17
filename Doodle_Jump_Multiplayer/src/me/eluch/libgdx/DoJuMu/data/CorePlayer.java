@@ -1,5 +1,6 @@
 package me.eluch.libgdx.DoJuMu.data;
 
+import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleGenderType;
 
 public class CorePlayer {
@@ -8,6 +9,7 @@ public class CorePlayer {
 	protected String name;
 	protected DoodleGenderType genderType;
 	protected long ping;
+	protected DoodleBasic doodle;
 
 	public CorePlayer() {
 	}
@@ -34,7 +36,7 @@ public class CorePlayer {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public DoodleGenderType getGenderType() {
 		return genderType;
 	}
@@ -49,6 +51,14 @@ public class CorePlayer {
 
 	public void setPing(long ping) {
 		this.ping = ping;
+	}
+
+	public DoodleBasic getDoodle() {
+		return doodle;
+	}
+
+	public void setDoodle(DoodleBasic doodle) {
+		this.doodle = doodle;
 	}
 
 }

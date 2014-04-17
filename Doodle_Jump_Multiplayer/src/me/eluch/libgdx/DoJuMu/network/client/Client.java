@@ -46,9 +46,13 @@ public class Client {
 	public void stop() {
 		if (tcp.thread.isAlive())
 			tcp.stopServer();
+		stopUDP();
+		connectionStatus = ConnectionStatus.NOT_CONNECTED;
+	}
+
+	public void stopUDP() {
 		if (udp.thread.isAlive())
 			udp.stopServer();
-		connectionStatus = ConnectionStatus.NOT_CONNECTED;
 	}
 
 	public Channel getTcpChannel() {

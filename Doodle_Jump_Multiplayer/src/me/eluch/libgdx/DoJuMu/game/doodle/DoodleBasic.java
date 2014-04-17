@@ -1,0 +1,72 @@
+package me.eluch.libgdx.DoJuMu.game.doodle;
+
+import me.eluch.libgdx.DoJuMu.Res;
+import me.eluch.libgdx.DoJuMu.game.GameObject;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
+
+public class DoodleBasic extends GameObject {
+
+	protected final String name;
+	protected DoodleGenderType character;
+	protected boolean facingRight = true;
+	protected boolean jumping = true;
+	protected boolean alive = true;
+	protected final boolean transparent;
+
+	public DoodleBasic(String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
+		this.name = name;
+		this.character = genderType;
+		rec = new Rectangle(startX, startY, Res._characters.getWidth(), Res._characters.getHeight());
+		this.transparent = transparent;
+	}
+
+	public void setX(float x) {
+		rec.x = x;
+	}
+
+	public void setY(float y) {
+		rec.y = y;
+	}
+
+	public void setXY(float x, float y) {
+		setX(x);
+		setY(y);
+	}
+
+	public boolean isFacingRight() {
+		return facingRight;
+	}
+
+	public void setFacingRight(boolean facingRight) {
+		this.facingRight = facingRight;
+	}
+
+	public boolean isJumping() {
+		return jumping;
+	}
+
+	public void setJumping(boolean jumping) {
+		this.jumping = jumping;
+	}
+
+	public boolean isAlive() {
+		return alive;
+	}
+
+	public void setAlive(boolean alive) {
+		this.alive = alive;
+	}
+
+	public void draw(SpriteBatch batch, Rectangle scrR) {
+		if (rec.overlaps(scrR)) {
+			if (facingRight) {
+				batch.draw((transparent ? Res._characters_t : Res._characters).getSpecificImage(character.ordinal() * 2 + (jumping ? 0 : 1)), rec.x, rec.y);
+			} else {
+				batch.draw((transparent ? Res._characters_t : Res._characters).getSpecificImage(character.ordinal() * 2 + (jumping ? 0 : 1)), rec.x + rec.width, rec.y,
+						-Res._characters.getWidth(), Res._characters.getHeight());
+			}
+		}
+	}
+}

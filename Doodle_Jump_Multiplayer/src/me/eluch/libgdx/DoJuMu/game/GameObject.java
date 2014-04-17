@@ -24,4 +24,8 @@ public abstract class GameObject {
 	public final Rectangle getRec() {
 		return rec;
 	}
+
+	public Effect getEffect() {
+		return effect;
+	}
 }
