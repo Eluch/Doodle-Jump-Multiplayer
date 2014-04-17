@@ -16,7 +16,8 @@ public class Options {
 	public static final int MAXPLAYERS = 13; //13 The correct max
 	public static final long DISCOVER_TIMEOUT = 1000;
 	public static final int PING_FREQUENCY = 3000;
-	public static final int GAME_PLACE_WIDTH = 360;
+	public static final int GAME_PLACE_WIDTH = 480;
+	public static final int GAME_PLACE_HEIGHT = 720;
 
 	private static String name;
 	private static boolean sound;

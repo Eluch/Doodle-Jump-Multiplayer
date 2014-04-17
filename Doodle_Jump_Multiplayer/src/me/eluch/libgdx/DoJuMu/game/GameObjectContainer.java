@@ -33,7 +33,7 @@ public class GameObjectContainer {
 	protected ArrayList<Item> items = new ArrayList<>();
 
 	protected DoodleFull myDoodle;
-	protected Rectangle scrR = new Rectangle(0, 0, Options.ScreenRes.width / 2, Options.ScreenRes.height); // Screen Rectangle
+	protected Rectangle scrR = new Rectangle(-100, 0, Options.GAME_PLACE_WIDTH + 200, Options.GAME_PLACE_HEIGHT); // Screen Rectangle
 
 	public GameObjectContainer(CorePlayerContainer<?> playerC) { // CONSTRUCTOR
 
@@ -82,7 +82,19 @@ public class GameObjectContainer {
 					x.effect = Effect.NOTHING;
 				}
 			});
+			for (Floor floor : floors) {
+				floor.update(scrR, myDoodle.getFootRect(), !myDoodle.isJumping());
+			}
 			myDoodle.update(delta);
+
+			while (myDoodle.rec.y > (scrR.y + Options.GAME_PLACE_HEIGHT / 2)) {
+				scrR.y += 5;
+			}
+
+			if (myDoodle.rec.y < scrR.y) {
+				myDoodle.setAlive(false);
+				myDoodle.setY(myDoodle.getMaxHeight());
+			}
 		}
 	}
 

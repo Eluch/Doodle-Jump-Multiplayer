@@ -22,6 +22,7 @@ public final class DoodleFull extends DoodleBasic {
 	private Rectangle doodleLegRect;
 	private float hSpeed = 0; // horizontalSpeed
 	private float vSpeed = V_MAXSPEED;
+	private int maxHeight = 0;
 
 	public DoodleFull(String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
 		super(name, startX, startY, genderType, transparent);
@@ -40,14 +41,20 @@ public final class DoodleFull extends DoodleBasic {
 	@Override
 	public void setY(float y) {
 		rec.y = doodleLegRect.y = y;
+		if (rec.y > maxHeight)
+			maxHeight = (int) rec.y;
+	}
+
+	public int getMaxHeight() {
+		return maxHeight;
 	}
 
 	private void goLeft() {
 		if (hSpeed == 0)
-			hSpeed -= 1;
-		else if (hSpeed <= -1)
+			hSpeed -= 1.5f;
+		else if (hSpeed <= -1.5f)
 			hSpeed *= H_ACCELERATION;
-		else if (hSpeed > 0 && hSpeed < 1)
+		else if (hSpeed > 0 && hSpeed < 1.5f)
 			hSpeed = 0;
 		else if (hSpeed > 0)
 			hSpeed /= H_FORCESLOWING;
@@ -58,10 +65,10 @@ public final class DoodleFull extends DoodleBasic {
 
 	private void goRight() {
 		if (hSpeed == 0)
-			hSpeed += 1;
-		else if (hSpeed >= 1)
+			hSpeed += 1.5f;
+		else if (hSpeed >= 1.5f)
 			hSpeed *= H_ACCELERATION;
-		else if (hSpeed < 0 && hSpeed > -1)
+		else if (hSpeed < 0 && hSpeed > -1.5f)
 			hSpeed = 0;
 		else if (hSpeed < 0)
 			hSpeed /= H_FORCESLOWING;
@@ -104,32 +111,33 @@ public final class DoodleFull extends DoodleBasic {
 	}
 
 	public void update(float delta) {
+		if (alive) {
+			//Vertically moving
+			if (jumping)
+				jump();
+			else
+				fall();
+			setY(rec.y + vSpeed);
 
-		//Vertically moving
-		if (jumping)
-			jump();
-		else
-			fall();
-		setY(rec.y + vSpeed);
+			//Horizontally moving
+			if (Gdx.input.isKeyPressed(Keys.A))
+				goLeft();
+			if (Gdx.input.isKeyPressed(Keys.D))
+				goRight();
+			if (!Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.D))
+				slowDown();
+			setX(rec.x + hSpeed);
 
-		//Horizontally moving
-		if (Gdx.input.isKeyPressed(Keys.A))
-			goLeft();
-		if (Gdx.input.isKeyPressed(Keys.D))
-			goRight();
-		if (!Gdx.input.isKeyPressed(Keys.A) && !Gdx.input.isKeyPressed(Keys.D))
-			slowDown();
-		setX(rec.x + hSpeed);
+			// If doodle is on the edge of the screen:
+			if (rec.x <= -Res._characters.getWidth())
+				setX(ScreenRes.width / 2);
+			else if (rec.x >= ScreenRes.width / 2)
+				setX(-Res._characters.getWidth());
 
-		// If doodle is on the edge of the screen:
-		if (rec.x <= -Res._characters.getWidth())
-			setX(ScreenRes.width / 2);
-		else if (rec.x >= ScreenRes.width / 2)
-			setX(-Res._characters.getWidth());
-
-		if (hSpeed < 0)
-			facingRight = false;
-		else if (hSpeed > 0)
-			facingRight = true;
+			if (hSpeed < 0)
+				facingRight = false;
+			else if (hSpeed > 0)
+				facingRight = true;
+		}
 	}
 }

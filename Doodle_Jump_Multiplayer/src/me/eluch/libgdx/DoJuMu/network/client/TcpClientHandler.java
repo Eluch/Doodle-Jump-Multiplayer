@@ -6,8 +6,11 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.data.CorePlayer;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
+import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.packets.AllPlayers;
+import me.eluch.libgdx.DoJuMu.network.packets.DiedDoodle;
+import me.eluch.libgdx.DoJuMu.network.packets.DoodleDatasEE;
 import me.eluch.libgdx.DoJuMu.network.packets.OnePlayerConnected;
 import me.eluch.libgdx.DoJuMu.network.packets.OnePlayerDisconnected;
 import me.eluch.libgdx.DoJuMu.network.packets.PingDatas;
@@ -70,6 +73,16 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 				break;
 			case GAME_STARTING:
 				client.getGame().setScreen(new GameScreen(client.getGame(), client.getCamera(), client.getBatch(), GameRole.CLIENT, client));
+				break;
+			case A_PLAYER_DIED:
+				DoodleDatasEE data = DiedDoodle.decode(iPacket);
+				if (data.id != client.getPlayers().getMySelf().getId()) {
+					DoodleBasic d = client.getPlayers().getPlayerByID(data.id).getDoodle();
+					d.setXY(data.x, data.y);
+					d.setAlive(data.alive);
+					d.setFacingRight(data.facingRight);
+					d.setJumping(data.jumping);
+				}
 				break;
 			default:
 				break;

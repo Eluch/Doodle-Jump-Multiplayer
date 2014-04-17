@@ -7,14 +7,14 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Floor extends GameObject {
-	
+
 	public Floor(int x, int y) {
 		rec = new Rectangle(x, y, Res._floorSprite.getWidth(), Res._floorSprite.getHeight());
 	}
 
 	public final void update(Rectangle scrR, Rectangle doodleFootRectangle, boolean doodleFalling) {
 		if (rec.overlaps(scrR) && need2Show) {
-
+			onScreen();
 			if (doodleFalling) {
 				if (rec.overlaps(doodleFootRectangle))
 					doodleHitFloor();

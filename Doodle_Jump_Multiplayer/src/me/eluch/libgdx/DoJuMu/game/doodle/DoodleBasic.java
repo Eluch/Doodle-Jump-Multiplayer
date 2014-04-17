@@ -62,10 +62,14 @@ public class DoodleBasic extends GameObject {
 	public void draw(SpriteBatch batch, Rectangle scrR) {
 		if (rec.overlaps(scrR)) {
 			if (facingRight) {
-				batch.draw((transparent ? Res._characters_t : Res._characters).getSpecificImage(character.ordinal() * 2 + (jumping ? 0 : 1)), rec.x, rec.y);
+				batch.draw((transparent ? Res._characters_t : Res._characters).getSpecificImage(character.ordinal() * 2 + (jumping ? 0 : 1)), rec.x, rec.y - scrR.y);
+				if (!alive)
+					batch.draw(Res._deadEye.getTexture(), rec.x, rec.y - scrR.y);
 			} else {
-				batch.draw((transparent ? Res._characters_t : Res._characters).getSpecificImage(character.ordinal() * 2 + (jumping ? 0 : 1)), rec.x + rec.width, rec.y,
+				batch.draw((transparent ? Res._characters_t : Res._characters).getSpecificImage(character.ordinal() * 2 + (jumping ? 0 : 1)), rec.x + rec.width, rec.y - scrR.y,
 						-Res._characters.getWidth(), Res._characters.getHeight());
+				if (!alive)
+					batch.draw(Res._deadEye.getTexture(), rec.x + rec.width, rec.y - scrR.y, -Res._deadEye.getWidth(), Res._deadEye.getHeight());
 			}
 		}
 	}

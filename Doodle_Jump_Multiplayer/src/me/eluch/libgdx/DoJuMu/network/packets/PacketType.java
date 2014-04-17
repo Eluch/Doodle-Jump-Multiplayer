@@ -22,5 +22,7 @@ public enum PacketType {
 	GAME_STARTING,
 	MY_DOODLE_DATAS,
 	ALL_DOODLE_DATAS,
+	I_DIED,
+	A_PLAYER_DIED,
 
 }

@@ -1,10 +1,14 @@
 package me.eluch.libgdx.DoJuMu.network.client;
 
+import java.net.InetSocketAddress;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import io.netty.channel.socket.DatagramPacket;
 import me.eluch.libgdx.DoJuMu.data.CorePlayer;
 import me.eluch.libgdx.DoJuMu.data.CorePlayerContainer;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
@@ -61,6 +65,14 @@ public class Client {
 
 	public Channel getUdpChannel() {
 		return udp.getChannel();
+	}
+
+	public void sendWithTCP(ByteBuf byteBuf) {
+		getTcpChannel().writeAndFlush(byteBuf);
+	}
+
+	public void sendWithUDP(ByteBuf byteBuf) {
+		getUdpChannel().writeAndFlush(new DatagramPacket(byteBuf, (InetSocketAddress) getTcpChannel().remoteAddress()));
 	}
 
 	public static String getErrorMsg() {

@@ -8,6 +8,10 @@ import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.data.ServerPlayer;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.packets.AllPlayers;
+import me.eluch.libgdx.DoJuMu.network.packets.DiedDoodle;
+import me.eluch.libgdx.DoJuMu.network.packets.DoodleDatasE;
+import me.eluch.libgdx.DoJuMu.network.packets.DoodleDatasEE;
+import me.eluch.libgdx.DoJuMu.network.packets.MyDoodleDatas;
 import me.eluch.libgdx.DoJuMu.network.packets.OnePlayerConnected;
 import me.eluch.libgdx.DoJuMu.network.packets.OnePlayerDisconnected;
 import me.eluch.libgdx.DoJuMu.network.packets.PacketType;
@@ -73,6 +77,16 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 				break;
 			case REQUEST_ALL_PLAYERS:
 				ctx.writeAndFlush(AllPlayers.encode(server.getPlayers()));
+				break;
+			case I_DIED:
+				DoodleDatasE dd = MyDoodleDatas.decodeDied(iPacket);
+				ServerPlayer p = server.getPlayers().getPlayerByChannel(ctx.channel());
+				p.getDoodle().setXY(dd.x, dd.y);
+				p.getDoodle().setFacingRight(dd.facingRight);
+				p.getDoodle().setJumping(dd.jumping);
+				p.getDoodle().setAlive(dd.alive);
+				DoodleDatasEE data = new DoodleDatasEE(dd, p.getId());
+				server.sendToAllPlayersWithTCP(DiedDoodle.encode(data));
 				break;
 			default:
 				break;

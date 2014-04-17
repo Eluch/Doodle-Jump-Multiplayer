@@ -1,22 +1,23 @@
 package me.eluch.libgdx.DoJuMu.screens;
 
-import java.net.InetSocketAddress;
-
-import io.netty.channel.socket.DatagramPacket;
 import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.GameObjectContainer;
+import me.eluch.libgdx.DoJuMu.game.GameObjectGenerator;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
+import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.client.Client;
 import me.eluch.libgdx.DoJuMu.network.packets.AllDoodleDatas;
+import me.eluch.libgdx.DoJuMu.network.packets.DiedDoodle;
+import me.eluch.libgdx.DoJuMu.network.packets.DoodleDatasEE;
 import me.eluch.libgdx.DoJuMu.network.packets.MyDoodleDatas;
 import me.eluch.libgdx.DoJuMu.network.server.Server;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -36,7 +37,9 @@ public class GameScreen implements Screen {
 	private Server server;
 	private Client client;
 
+	private GameObjectGenerator generator = null;
 	private GameObjectContainer gameObjects;
+	private boolean myDeathSendedToOthers = false;
 
 	public GameScreen(final Game game, final OrthographicCamera camera, final SpriteBatch batch, GameRole role, Object connection) {
 		if (!(connection instanceof Server) && !(connection instanceof Client)) {
@@ -57,6 +60,7 @@ public class GameScreen implements Screen {
 		if (connection instanceof Server && this.role == GameRole.SERVER) {
 			server = (Server) connection;
 			gameObjects = new GameObjectContainer(server.getPlayers());
+			generator = new GameObjectGenerator(gameObjects, server);
 		} else if (connection instanceof Client && this.role == GameRole.CLIENT) {
 			client = (Client) connection;
 			gameObjects = new GameObjectContainer(client.getPlayers());
@@ -86,9 +90,20 @@ public class GameScreen implements Screen {
 		switch (role) {
 		case SERVER:
 			server.sendToAllPlayersWithUDP(AllDoodleDatas.encode(server.getPlayers().getPlayers()));
+			if (!gameObjects.getMyDoodle().isAlive() && !myDeathSendedToOthers) {
+				DoodleBasic d = gameObjects.getMyDoodle();
+				server.sendToAllPlayersWithTCP(DiedDoodle.encode(new DoodleDatasEE(d.getRec().x, d.getRec().y, d.isFacingRight(), d.isJumping(), d.isAlive(), server.getPlayers()
+						.getMySelf().getId())));
+				myDeathSendedToOthers = true;
+			}
 			break;
 		case CLIENT:
-			client.getUdpChannel().writeAndFlush(new DatagramPacket(MyDoodleDatas.encode(gameObjects.getMyDoodle()), (InetSocketAddress) client.getTcpChannel().remoteAddress()));
+			if (gameObjects.getMyDoodle().isAlive())
+				client.sendWithUDP(MyDoodleDatas.encode(gameObjects.getMyDoodle()));
+			else if (!gameObjects.getMyDoodle().isAlive() && !myDeathSendedToOthers) {
+				client.sendWithTCP(MyDoodleDatas.encodeDied(gameObjects.getMyDoodle()));
+				myDeathSendedToOthers = true;
+			}
 			break;
 		}
 

@@ -32,6 +32,7 @@ public class Res {
 	public static final LoadedImage _transpartentPixel;
 	public static final LoadedImage _serverPicker;
 	public static final LoadedImage _spacerPixel;
+	public static final LoadedImage _deadEye;
 
 	public static final AnimatedImage _button;
 	public static final AnimatedImage _floorSprite;
@@ -71,6 +72,7 @@ public class Res {
 		_transpartentPixel = new LoadedImage("images/etc/transpix.png", true);
 		_serverPicker = new LoadedImage("images/etc/ServerPicker.png");
 		_spacerPixel = new LoadedImage("images/etc/spacerpixel.png", true);
+		_deadEye = new LoadedImage("images/player/Dead_eye.png");
 
 		_button = new AnimatedImage("images/etc/button.png", 2, 1, 10);
 		_floorSprite = new AnimatedImage("images/objects/floorSprite.png", 6, 1, 10);
