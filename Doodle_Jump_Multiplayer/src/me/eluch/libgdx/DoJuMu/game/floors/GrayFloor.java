@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class GrayFloor extends Floor {
 
-	public static final int MAX_LIFT = 100;
+	public static final int MAX_LIFT = 75;
 
 	private boolean goingUP;
 	private float currentLift;
@@ -16,7 +16,7 @@ public class GrayFloor extends Floor {
 
 	public GrayFloor(int x, int y, float speed) {
 		super(x, y);
-		currentLift = Res.rand.nextInt(MAX_LIFT + 1);
+		currentLift = MAX_LIFT - Res.rand.nextInt(MAX_LIFT * 2 + 2);
 		this.speed = speed;
 	}
 
@@ -24,14 +24,14 @@ public class GrayFloor extends Floor {
 	protected void onScreen() {
 		if (goingUP) {
 			currentLift += speed;
-			rec.x += speed;
+			rec.y += speed;
 			if (currentLift >= MAX_LIFT) {
 				goingUP = false;
 			}
 		} else {
 			currentLift -= speed;
-			rec.x -= speed;
-			if (currentLift <= MAX_LIFT) {
+			rec.y -= speed;
+			if (currentLift <= -MAX_LIFT) {
 				goingUP = true;
 			}
 		}

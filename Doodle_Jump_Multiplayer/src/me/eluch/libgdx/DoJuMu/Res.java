@@ -37,7 +37,6 @@ public class Res {
 	public static final AnimatedImage _button;
 	public static final AnimatedImage _floorSprite;
 	public static final AnimatedImage _jetpackhalf;
-	public static final AnimatedImage _magicfloor;
 	public static final AnimatedImage _portal_blue;
 	public static final AnimatedImage _portal_orange;
 	public static final AnimatedImage _propellerhat;
@@ -77,7 +76,6 @@ public class Res {
 		_button = new AnimatedImage("images/etc/button.png", 2, 1, 10);
 		_floorSprite = new AnimatedImage("images/objects/floorSprite.png", 6, 1, 10);
 		_jetpackhalf = new AnimatedImage("images/objects/jetpackhalf.png", 1, 6, 10);
-		_magicfloor = new AnimatedImage("images/objects/magicfloor.png", 3, 1, 10);
 		_portal_blue = new AnimatedImage("images/objects/portal_blue.png", 3, 1, 10);
 		_portal_orange = new AnimatedImage("images/objects/portal_orange.png", 3, 1, 10);
 		_propellerhat = new AnimatedImage("images/objects/propellerhat.png", 2, 2, 10);

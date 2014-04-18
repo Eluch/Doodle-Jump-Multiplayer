@@ -14,8 +14,9 @@ public class BlueFloor extends Floor {
 	private boolean travellingRight;
 	private float speed;
 
-	public BlueFloor(int x, int y) {
+	public BlueFloor(int x, int y, float speed) {
 		super(x, y);
+		this.speed = speed;
 		travellingRight = new Random().nextBoolean();
 	}
 

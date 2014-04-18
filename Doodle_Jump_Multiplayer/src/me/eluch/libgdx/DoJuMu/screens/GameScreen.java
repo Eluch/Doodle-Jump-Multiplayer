@@ -96,6 +96,7 @@ public class GameScreen implements Screen {
 						.getMySelf().getId())));
 				myDeathSendedToOthers = true;
 			}
+			generator.checkForNeedGeneration();
 			break;
 		case CLIENT:
 			if (gameObjects.getMyDoodle().isAlive())

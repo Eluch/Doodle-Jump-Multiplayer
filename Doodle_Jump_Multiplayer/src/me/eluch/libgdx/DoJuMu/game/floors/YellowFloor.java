@@ -10,9 +10,9 @@ public class YellowFloor extends Floor {
 
 	private int lifeSpan;
 
-	public YellowFloor(int x, int y) {
+	public YellowFloor(int x, int y, int lifeSpan) {
 		super(x, y);
-		lifeSpan = 500;
+		this.lifeSpan = lifeSpan;
 	}
 
 	@Override
