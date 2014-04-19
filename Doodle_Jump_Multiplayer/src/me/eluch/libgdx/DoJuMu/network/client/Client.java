@@ -1,17 +1,18 @@
 package me.eluch.libgdx.DoJuMu.network.client;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
+import io.netty.channel.socket.DatagramPacket;
+
 import java.net.InetSocketAddress;
+
+import me.eluch.libgdx.DoJuMu.data.CorePlayer;
+import me.eluch.libgdx.DoJuMu.data.CorePlayerContainer;
+import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import io.netty.buffer.ByteBuf;
-import io.netty.channel.Channel;
-import io.netty.channel.socket.DatagramPacket;
-import me.eluch.libgdx.DoJuMu.data.CorePlayer;
-import me.eluch.libgdx.DoJuMu.data.CorePlayerContainer;
-import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 
 public class Client {
 

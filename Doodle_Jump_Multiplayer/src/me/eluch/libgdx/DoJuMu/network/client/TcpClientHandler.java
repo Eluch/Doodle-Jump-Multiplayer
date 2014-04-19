@@ -7,6 +7,14 @@ import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.data.CorePlayer;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
+import me.eluch.libgdx.DoJuMu.game.floors.BlueFloor;
+import me.eluch.libgdx.DoJuMu.game.floors.BrownFloor;
+import me.eluch.libgdx.DoJuMu.game.floors.Floor;
+import me.eluch.libgdx.DoJuMu.game.floors.FloorType;
+import me.eluch.libgdx.DoJuMu.game.floors.GrayFloor;
+import me.eluch.libgdx.DoJuMu.game.floors.GreenFloor;
+import me.eluch.libgdx.DoJuMu.game.floors.WhiteFloor;
+import me.eluch.libgdx.DoJuMu.game.floors.YellowFloor;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.packets.AllPlayers;
 import me.eluch.libgdx.DoJuMu.network.packets.DiedDoodle;
@@ -84,9 +92,38 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 					d.setJumping(data.jumping);
 				}
 				break;
+			case FLOOR:
+				FloorType ft = FloorType.values()[iPacket.readInt()];
+				Floor f = null;
+				switch (ft) {
+				case BLUE:
+					f = BlueFloor.decode(iPacket);
+					break;
+				case BROWN:
+					f = BrownFloor.decode(iPacket);
+					break;
+				case GRAY:
+					f = GrayFloor.decode(iPacket);
+					break;
+				case GREEN:
+					f = GreenFloor.decode(iPacket);
+					break;
+				case WHITE:
+					f = WhiteFloor.decode(iPacket);
+					break;
+				case YELLOW:
+					f = YellowFloor.decode(iPacket);
+					break;
+				}
+				if (f != null)
+					System.out.println("C : " + f.getRec().y); /////////////////////////////////////////////////////////
+				//TODO add data
+				break;
 			default:
+				System.err.println("INVALID PACKAGE");
 				break;
 			}
+			//System.out.println(buf.isReadable());
 		}
 	}
 

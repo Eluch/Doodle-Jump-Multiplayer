@@ -26,14 +26,14 @@ public class GameObjectContainer {
 	private boolean running = false;
 	private boolean rPressed = false;
 
-	protected ArrayList<DoodleBasic> doodles = new ArrayList<>();
-	protected ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	protected ArrayList<BlackHole> blackHoles = new ArrayList<>();
-	protected ArrayList<Floor> floors = new ArrayList<>();
-	protected ArrayList<Item> items = new ArrayList<>();
+	private ArrayList<DoodleBasic> doodles = new ArrayList<>();
+	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private ArrayList<BlackHole> blackHoles = new ArrayList<>();
+	private ArrayList<Floor> floors = new ArrayList<>();
+	private ArrayList<Item> items = new ArrayList<>();
 
-	protected DoodleFull myDoodle;
-	protected Rectangle scrR = new Rectangle(-100, 0, Options.GAME_PLACE_WIDTH + 200, Options.GAME_PLACE_HEIGHT); // Screen Rectangle
+	private DoodleFull myDoodle;
+	private Rectangle scrR = new Rectangle(-100, 0, Options.GAME_PLACE_WIDTH + 200, Options.GAME_PLACE_HEIGHT); // Screen Rectangle
 
 	public GameObjectContainer(CorePlayerContainer<?> playerC) { // CONSTRUCTOR
 
@@ -108,6 +108,14 @@ public class GameObjectContainer {
 
 	public int getPatternSliding() {
 		return (int) (scrR.x % Res._pattern.getHeight());
+	}
+
+	public ArrayList<Floor> getFloors() {
+		return floors;
+	}
+
+	public ArrayList<DoodleBasic> getDoodles() {
+		return doodles;
 	}
 
 }

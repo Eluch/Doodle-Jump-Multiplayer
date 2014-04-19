@@ -9,7 +9,7 @@ public abstract class Validation {
 	public static ByteBuf encodeStep1() {
 		WriteOnlyPacket op = new WriteOnlyPacket(PacketType.VALIDATING);
 		op.writeString(Options.getHash());
-		op.writeInt(Options.VERSION);
+		op.writeString(Options.VERSION);
 		op.writeString(Options.getName() + "_VALID"); //TODO remove the suffix
 		op.writeInt(Options.getCharacter().ordinal());
 		return op.getByteBuf();
@@ -17,7 +17,7 @@ public abstract class Validation {
 
 	public static ValidationDatas decodeStep1(ReadOnlyPacket readOnlyPacket) {
 		String hash = readOnlyPacket.readString();
-		int version = readOnlyPacket.readInt();
+		String version = readOnlyPacket.readString();
 		String name = readOnlyPacket.readString();
 		DoodleGenderType genderType = DoodleGenderType.values()[readOnlyPacket.readInt()];
 		return new ValidationDatas(hash, version, name, genderType);

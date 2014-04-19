@@ -67,8 +67,9 @@ public final class GameObjectGenerator {
 			if (!need2Gen)
 				if (r.nextInt() % 3 == 0) {
 					BrownFloor f = new BrownFloor(x, y);
-					gameObjects.floors.add(f);
-					//TODO send
+					gameObjects.getFloors().add(f);
+					System.out.println("S:" + f.getRec().y);
+					server.sendToAllPlayersWithTCP(f.encode());
 				}
 
 			if (need2Gen) {
@@ -100,17 +101,18 @@ public final class GameObjectGenerator {
 
 				//TODO generate items
 				if (f != null) {
-					gameObjects.floors.add(f);
+					gameObjects.getFloors().add(f);
 					highest_jumpable = y;
-					//TODO send
+					System.out.println("S:" + f.getRec().y);
+					server.sendToAllPlayersWithTCP(f.encode());
 				}
 			}
 		}
 	}
 
 	public void checkForNeedGeneration() {
-		int highest = (int) gameObjects.myDoodle.rec.y;
-		for (DoodleBasic d : gameObjects.doodles) {
+		int highest = (int) gameObjects.getMyDoodle().rec.y;
+		for (DoodleBasic d : gameObjects.getDoodles()) {
 			if (d.rec.y > highest) {
 				highest = (int) d.rec.y;
 			}

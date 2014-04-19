@@ -41,6 +41,7 @@ public class TcpClient implements Runnable, NetworkThread {
 			b.channel(NioSocketChannel.class);
 			b.option(ChannelOption.SO_KEEPALIVE, true);
 			b.handler(new ChannelInitializer<SocketChannel>() {
+				@Override
 				protected void initChannel(SocketChannel ch) throws Exception {
 					ch.pipeline().addLast(new TcpClientHandler(client));
 				}

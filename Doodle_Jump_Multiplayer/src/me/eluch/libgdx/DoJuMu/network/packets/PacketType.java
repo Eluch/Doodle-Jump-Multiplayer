@@ -24,5 +24,6 @@ public enum PacketType {
 	ALL_DOODLE_DATAS,
 	I_DIED,
 	A_PLAYER_DIED,
+	FLOOR,
 
 }

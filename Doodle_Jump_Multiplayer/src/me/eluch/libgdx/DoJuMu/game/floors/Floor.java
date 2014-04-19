@@ -1,5 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.floors;
 
+import io.netty.buffer.ByteBuf;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.GameObject;
 
@@ -33,5 +34,7 @@ public abstract class Floor extends GameObject {
 	}
 
 	protected abstract void render(SpriteBatch batch, Rectangle scrR);
+
+	public abstract ByteBuf encode();
 
 }

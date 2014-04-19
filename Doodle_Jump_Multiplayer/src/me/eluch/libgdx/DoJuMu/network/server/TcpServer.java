@@ -20,7 +20,7 @@ public class TcpServer implements Runnable, NetworkThread {
 	private Channel channel;
 
 	public final Thread thread;
-	
+
 	private final Server server;
 
 	public TcpServer(int port, Server server) {

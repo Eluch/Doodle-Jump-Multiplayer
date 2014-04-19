@@ -53,7 +53,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 			switch (iPacket.getType()) {
 			case VALIDATING:
 				ValidationDatas datas = Validation.decodeStep1(iPacket);
-				if (datas.version != Options.VERSION) {
+				if (!datas.version.equals(Options.VERSION)) {
 					WriteOnlyPacket op = new WriteOnlyPacket(PacketType.WRONG_VERSION);
 					ctx.writeAndFlush(op.getByteBuf());
 					ctx.close();
@@ -91,7 +91,6 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 			default:
 				break;
 			}
-
 		}
 	}
 

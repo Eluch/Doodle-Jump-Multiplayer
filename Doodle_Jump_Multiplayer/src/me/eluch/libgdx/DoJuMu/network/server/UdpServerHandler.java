@@ -1,5 +1,6 @@
 package me.eluch.libgdx.DoJuMu.network.server;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.socket.DatagramPacket;
@@ -26,7 +27,8 @@ public class UdpServerHandler extends SimpleChannelInboundHandler<DatagramPacket
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, DatagramPacket msg) throws UnknownHostException, InterruptedException {
 
-		ReadOnlyPacket iPacket = new ReadOnlyPacket(msg.content());
+		ByteBuf buf = msg.content();
+		ReadOnlyPacket iPacket = new ReadOnlyPacket(buf);
 
 		switch (iPacket.getType()) {
 		case DISCOVER_BROADCAST:
