@@ -7,6 +7,7 @@ import me.eluch.libgdx.DoJuMu.Options.ScreenRes;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleFull;
+import me.eluch.libgdx.DoJuMu.gfx.LoadedFont;
 
 public final class DoodleScore {
 
@@ -53,10 +54,21 @@ public final class DoodleScore {
 	}
 
 	public void draw(SpriteBatch batch) {
+		LoadedFont font;
+		if (isMyself)
+			if (doodle.isAlive())
+				font = Res._scoreFontBoldB;
+			else
+				font = Res._scoreFontBoldR;
+		else if (doodle.isAlive())
+			font = Res._scoreFontB;
+		else
+			font = Res._scoreFontR;
+
 		if (!isMyself) {
 			batch.draw(Res._posArrow_large.getSpecificImage(higher ? 0 : 1), Options.GAME_PLACE_WIDTH + 20, y);
 		}
-		(isMyself ? Res._scoreFontBold : Res._scoreFont).drawLeft(batch, doodle.getName(), Options.GAME_PLACE_WIDTH + 50, y);
-		(isMyself ? Res._scoreFontBold : Res._scoreFont).drawRight(batch, Integer.toString((int) doodle.getMaxHeight()), ScreenRes.width - 10, y);
+		font.drawLeft(batch, doodle.getName(), Options.GAME_PLACE_WIDTH + 50, y);
+		font.drawRight(batch, Integer.toString((int) doodle.getMaxHeight()), ScreenRes.width - 10, y);
 	}
 }

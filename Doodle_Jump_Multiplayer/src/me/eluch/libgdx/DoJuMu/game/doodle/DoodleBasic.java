@@ -14,7 +14,7 @@ public class DoodleBasic extends GameObject {
 	protected boolean jumping = true;
 	protected boolean alive = true;
 	protected final boolean transparent;
-	
+
 	protected float maxHeight = 0; //Maximum Y coordinate of doodle
 
 	public DoodleBasic(String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
@@ -75,6 +75,9 @@ public class DoodleBasic extends GameObject {
 
 	public void draw(SpriteBatch batch, Rectangle scrR) {
 		if (rec.overlaps(scrR)) {
+			if (!(this instanceof DoodleFull)) {
+				Res._doodleNameFont.drawCenter(batch, name, rec.x + Res._characters.getWidth() / 2, Res._characters.getHeight() + rec.y - scrR.y + Res._doodleNameFont.getSize());
+			}
 			if (facingRight) {
 				batch.draw((transparent ? Res._characters_t : Res._characters).getSpecificImage(character.ordinal() * 2 + (jumping ? 0 : 1)), rec.x, rec.y - scrR.y);
 				if (!alive)

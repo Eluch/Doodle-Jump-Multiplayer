@@ -92,10 +92,14 @@ public class GameScreen implements Screen {
 			game.setScreen(new MainMenuScreen(game, camera, batch));
 		} //
 		if (role == GameRole.CLIENT && client.getFloorBuffer().size() > 0) { // copy floors from buffer
-			ArrayList<Floor> cutFloor = new ArrayList<>();
-			cutFloor.addAll(client.getFloorBuffer());
-			gameObjects.getFloors().addAll(cutFloor);
-			client.getFloorBuffer().removeAll(cutFloor);
+			try { // sometime it's raise an error. I don't know why.
+				ArrayList<Floor> cutFloor = new ArrayList<>();
+				cutFloor.addAll(client.getFloorBuffer());
+				gameObjects.getFloors().addAll(cutFloor);
+				client.getFloorBuffer().removeAll(cutFloor);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				System.err.println("Error at floor buffer copy: " + e.getMessage());
+			}
 		} //
 		gameObjects.update(delta);
 
