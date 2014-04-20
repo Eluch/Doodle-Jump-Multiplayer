@@ -14,6 +14,8 @@ public class DoodleBasic extends GameObject {
 	protected boolean jumping = true;
 	protected boolean alive = true;
 	protected final boolean transparent;
+	
+	protected float maxHeight = 0; //Maximum Y coordinate of doodle
 
 	public DoodleBasic(String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
 		this.name = name;
@@ -57,6 +59,14 @@ public class DoodleBasic extends GameObject {
 
 	public void setAlive(boolean alive) {
 		this.alive = alive;
+	}
+
+	public float getMaxHeight() {
+		return maxHeight;
+	}
+
+	public void setMaxHeight(float maxHeight) {
+		this.maxHeight = maxHeight;
 	}
 
 	public void draw(SpriteBatch batch, Rectangle scrR) {

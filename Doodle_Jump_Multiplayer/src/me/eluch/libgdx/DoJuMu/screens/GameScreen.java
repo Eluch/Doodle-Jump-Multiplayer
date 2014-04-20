@@ -1,11 +1,14 @@
 package me.eluch.libgdx.DoJuMu.screens;
 
+import java.util.ArrayList;
+
 import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.GameObjectContainer;
 import me.eluch.libgdx.DoJuMu.game.GameObjectGenerator;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
+import me.eluch.libgdx.DoJuMu.game.floors.Floor;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.client.Client;
 import me.eluch.libgdx.DoJuMu.network.packets.AllDoodleDatas;
@@ -68,13 +71,13 @@ public class GameScreen implements Screen {
 	}
 
 	private void update(float delta) {
-		if (role == GameRole.CLIENT) {
+		if (role == GameRole.CLIENT) { // Check if the server is still running
 			if (client.getConnectionStatus() == ConnectionStatus.NOT_CONNECTED) {
 				client.stop();
 				client.getGame().setScreen(new MainMenuScreen(client.getGame(), client.getCamera(), client.getBatch()));
 			}
-		}
-		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) {
+		} //
+		if (Gdx.input.isKeyPressed(Keys.ESCAPE)) { // Check if pressed escape to quit game
 			switch (role) {
 			case CLIENT:
 				client.stop();
@@ -84,7 +87,13 @@ public class GameScreen implements Screen {
 				break;
 			}
 			game.setScreen(new MainMenuScreen(game, camera, batch));
-		}
+		} //
+		if (role == GameRole.CLIENT && client.getFloorBuffer().size() > 0) { // copy floors from buffer
+			ArrayList<Floor> cutFloor = new ArrayList<>();
+			cutFloor.addAll(client.getFloorBuffer());
+			gameObjects.getFloors().addAll(cutFloor);
+			client.getFloorBuffer().removeAll(cutFloor);
+		} //
 		gameObjects.update(delta);
 
 		switch (role) {
@@ -92,8 +101,8 @@ public class GameScreen implements Screen {
 			server.sendToAllPlayersWithUDP(AllDoodleDatas.encode(server.getPlayers().getPlayers()));
 			if (!gameObjects.getMyDoodle().isAlive() && !myDeathSendedToOthers) {
 				DoodleBasic d = gameObjects.getMyDoodle();
-				server.sendToAllPlayersWithTCP(DiedDoodle.encode(new DoodleDatasEE(d.getRec().x, d.getRec().y, d.isFacingRight(), d.isJumping(), d.isAlive(), server.getPlayers()
-						.getMySelf().getId())));
+				server.sendToAllPlayersWithTCP(DiedDoodle.encode(new DoodleDatasEE(d.getRec().x, d.getRec().y, d.getMaxHeight(), d.isFacingRight(), d.isJumping(), d.isAlive(),
+						server.getPlayers().getMySelf().getId())));
 				myDeathSendedToOthers = true;
 			}
 			generator.checkForNeedGeneration();

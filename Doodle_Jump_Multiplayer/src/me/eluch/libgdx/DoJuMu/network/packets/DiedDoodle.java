@@ -11,6 +11,7 @@ public class DiedDoodle {
 		WriteOnlyPacket op = new WriteOnlyPacket(PacketType.A_PLAYER_DIED);
 		op.writeFloat(data.x);
 		op.writeFloat(data.y);
+		op.writeFloat(data.maxHeight);
 		op.writeBoolean(data.facingRight);
 		op.writeBoolean(data.jumping);
 		op.writeBoolean(data.alive);
@@ -22,12 +23,13 @@ public class DiedDoodle {
 	public static DoodleDatasEE decode(ReadOnlyPacket p) {
 		float x = p.readFloat();
 		float y = p.readFloat();
+		float maxHeight = p.readFloat();
 		boolean facingRight = p.readBoolean();
 		boolean jumping = p.readBoolean();
 		boolean alive = p.readBoolean();
 		int id = p.readInt();
 
-		return new DoodleDatasEE(x, y, facingRight, jumping, alive, id);
+		return new DoodleDatasEE(x, y, maxHeight, facingRight, jumping, alive, id);
 	}
 
 }

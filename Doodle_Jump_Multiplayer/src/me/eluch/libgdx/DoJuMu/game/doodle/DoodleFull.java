@@ -22,7 +22,6 @@ public final class DoodleFull extends DoodleBasic {
 	private Rectangle doodleLegRect;
 	private float hSpeed = 0; // horizontalSpeed
 	private float vSpeed = V_MAXSPEED;
-	private int maxHeight = 0;
 
 	public DoodleFull(String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
 		super(name, startX, startY, genderType, transparent);
@@ -42,11 +41,7 @@ public final class DoodleFull extends DoodleBasic {
 	public void setY(float y) {
 		rec.y = doodleLegRect.y = y;
 		if (rec.y > maxHeight)
-			maxHeight = (int) rec.y;
-	}
-
-	public int getMaxHeight() {
-		return maxHeight;
+			maxHeight = rec.y;
 	}
 
 	private void goLeft() {

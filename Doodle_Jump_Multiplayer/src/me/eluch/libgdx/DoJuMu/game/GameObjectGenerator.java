@@ -68,7 +68,6 @@ public final class GameObjectGenerator {
 				if (r.nextInt() % 3 == 0) {
 					BrownFloor f = new BrownFloor(x, y);
 					gameObjects.getFloors().add(f);
-					System.out.println("S:" + f.getRec().y);
 					server.sendToAllPlayersWithTCP(f.encode());
 				}
 
@@ -103,7 +102,6 @@ public final class GameObjectGenerator {
 				if (f != null) {
 					gameObjects.getFloors().add(f);
 					highest_jumpable = y;
-					System.out.println("S:" + f.getRec().y);
 					server.sendToAllPlayersWithTCP(f.encode());
 				}
 			}

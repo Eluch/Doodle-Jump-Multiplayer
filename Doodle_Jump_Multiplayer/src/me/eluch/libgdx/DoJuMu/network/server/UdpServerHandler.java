@@ -48,6 +48,7 @@ public class UdpServerHandler extends SimpleChannelInboundHandler<DatagramPacket
 			if (d.isAlive()) {
 				DoodleDatas dd = MyDoodleDatas.decode(iPacket);
 				d.setXY(dd.x, dd.y);
+				d.setMaxHeight(dd.maxHeight);
 				d.setFacingRight(dd.facingRight);
 				d.setJumping(dd.jumping);
 			}

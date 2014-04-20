@@ -93,7 +93,7 @@ public class GameObjectContainer {
 
 			if (myDoodle.rec.y < scrR.y) {
 				myDoodle.setAlive(false);
-				myDoodle.setY(myDoodle.getMaxHeight());
+				myDoodle.setXY(Options.GAME_PLACE_WIDTH - 1.5f * Res._characters.getWidth(), myDoodle.getMaxHeight());
 			}
 		}
 	}
@@ -107,7 +107,7 @@ public class GameObjectContainer {
 	}
 
 	public int getPatternSliding() {
-		return (int) (scrR.x % Res._pattern.getHeight());
+		return (int) (scrR.y % Res._pattern.getHeight());
 	}
 
 	public ArrayList<Floor> getFloors() {

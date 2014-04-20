@@ -82,6 +82,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 				DoodleDatasE dd = MyDoodleDatas.decodeDied(iPacket);
 				ServerPlayer p = server.getPlayers().getPlayerByChannel(ctx.channel());
 				p.getDoodle().setXY(dd.x, dd.y);
+				p.getDoodle().setMaxHeight(dd.maxHeight);
 				p.getDoodle().setFacingRight(dd.facingRight);
 				p.getDoodle().setJumping(dd.jumping);
 				p.getDoodle().setAlive(dd.alive);

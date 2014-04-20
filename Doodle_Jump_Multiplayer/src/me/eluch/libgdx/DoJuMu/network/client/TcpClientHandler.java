@@ -87,6 +87,7 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 				if (data.id != client.getPlayers().getMySelf().getId()) {
 					DoodleBasic d = client.getPlayers().getPlayerByID(data.id).getDoodle();
 					d.setXY(data.x, data.y);
+					d.setMaxHeight(data.maxHeight);
 					d.setAlive(data.alive);
 					d.setFacingRight(data.facingRight);
 					d.setJumping(data.jumping);
@@ -115,9 +116,9 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 					f = YellowFloor.decode(iPacket);
 					break;
 				}
-				if (f != null)
-					System.out.println("C : " + f.getRec().y); /////////////////////////////////////////////////////////
-				//TODO add data
+				if (f != null) {
+					client.getFloorBuffer().add(f);
+				}
 				break;
 			default:
 				System.err.println("INVALID PACKAGE");

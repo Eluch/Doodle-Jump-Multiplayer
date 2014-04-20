@@ -12,6 +12,7 @@ public class MyDoodleDatas {
 		WriteOnlyPacket op = new WriteOnlyPacket(PacketType.MY_DOODLE_DATAS);
 		op.writeFloat(myDoodle.getRec().x);
 		op.writeFloat(myDoodle.getRec().y);
+		op.writeFloat(myDoodle.getMaxHeight());
 		op.writeBoolean(myDoodle.isFacingRight());
 		op.writeBoolean(myDoodle.isJumping());
 
@@ -21,16 +22,18 @@ public class MyDoodleDatas {
 	public static DoodleDatas decode(ReadOnlyPacket p) {
 		float x = p.readFloat();
 		float y = p.readFloat();
+		float maxHeight = p.readFloat();
 		boolean facingRight = p.readBoolean();
 		boolean jumping = p.readBoolean();
 
-		return new DoodleDatas(x, y, facingRight, jumping);
+		return new DoodleDatas(x, y, maxHeight, facingRight, jumping);
 	}
 
 	public static ByteBuf encodeDied(DoodleBasic myDoodle) {
 		WriteOnlyPacket op = new WriteOnlyPacket(PacketType.I_DIED);
 		op.writeFloat(myDoodle.getRec().x);
 		op.writeFloat(myDoodle.getRec().y);
+		op.writeFloat(myDoodle.getMaxHeight());
 		op.writeBoolean(myDoodle.isFacingRight());
 		op.writeBoolean(myDoodle.isJumping());
 		op.writeBoolean(myDoodle.isAlive());
@@ -41,10 +44,11 @@ public class MyDoodleDatas {
 	public static DoodleDatasE decodeDied(ReadOnlyPacket p) {
 		float x = p.readFloat();
 		float y = p.readFloat();
+		float maxHeight = p.readFloat();
 		boolean facingRight = p.readBoolean();
 		boolean jumping = p.readBoolean();
 		boolean alive = p.readBoolean();
 
-		return new DoodleDatasE(x, y, facingRight, jumping, alive);
+		return new DoodleDatasE(x, y, maxHeight, facingRight, jumping, alive);
 	}
 }
