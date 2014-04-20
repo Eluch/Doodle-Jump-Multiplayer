@@ -10,7 +10,7 @@ public abstract class Validation {
 		WriteOnlyPacket op = new WriteOnlyPacket(PacketType.VALIDATING);
 		op.writeString(Options.getHash());
 		op.writeString(Options.VERSION);
-		op.writeString(Options.getName() + (Options.DEBUG ? "_VALID" : "")); //TODO NOTE DEBUG
+		op.writeString(Options.getName() + (Options.DEBUG ? "_D" : "")); //TODO NOTE DEBUG
 		op.writeInt(Options.getCharacter().ordinal());
 		return op.getByteBuf();
 	}

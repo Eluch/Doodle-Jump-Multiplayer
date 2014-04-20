@@ -68,7 +68,7 @@ public class Server {
 	public void sendToAllPlayersWithTCP(ByteBuf byteBuf) { //except the server
 		for (ServerPlayer player : players.getPlayers()) {
 			if (player != players.getMySelf()) {
-				player.getChannelToPlayer().writeAndFlush(byteBuf);
+				player.getChannelToPlayer().writeAndFlush(byteBuf.copy());
 			}
 		}
 	}
@@ -76,7 +76,7 @@ public class Server {
 	public void sendToAllPlayersWithUDP(ByteBuf byteBuf) { //except the server
 		for (ServerPlayer player : players.getPlayers()) {
 			if (player != players.getMySelf()) {
-				getUdpChannel().writeAndFlush(new DatagramPacket(byteBuf, player.getIp()));
+				getUdpChannel().writeAndFlush(new DatagramPacket(byteBuf.copy(), player.getIp()));
 			}
 		}
 	}
