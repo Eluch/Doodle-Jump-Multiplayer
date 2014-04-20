@@ -9,6 +9,7 @@ import me.eluch.libgdx.DoJuMu.game.GameObjectGenerator;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
+import me.eluch.libgdx.DoJuMu.game.score.ScoreHandler;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.client.Client;
 import me.eluch.libgdx.DoJuMu.network.packets.AllDoodleDatas;
@@ -43,6 +44,7 @@ public class GameScreen implements Screen {
 	private GameObjectGenerator generator = null;
 	private GameObjectContainer gameObjects;
 	private boolean myDeathSendedToOthers = false;
+	private ScoreHandler scoreHandler;
 
 	public GameScreen(final Game game, final OrthographicCamera camera, final SpriteBatch batch, GameRole role, Object connection) {
 		if (!(connection instanceof Server) && !(connection instanceof Client)) {
@@ -68,6 +70,7 @@ public class GameScreen implements Screen {
 			client = (Client) connection;
 			gameObjects = new GameObjectContainer(client.getPlayers());
 		}
+		scoreHandler = new ScoreHandler(gameObjects.getMyDoodle(), gameObjects.getDoodles());
 	}
 
 	private void update(float delta) {
@@ -116,7 +119,7 @@ public class GameScreen implements Screen {
 			}
 			break;
 		}
-
+		scoreHandler.update();
 	}
 
 	@Override
@@ -136,6 +139,7 @@ public class GameScreen implements Screen {
 			gameObjects.render(batch);
 			batch.draw(Res._clearpattern.getTexture(), camera.viewportWidth / 2, 0, Res._clearpattern.getWidth() * dividedWidthSP, Res._clearpattern.getHeight() * dividedHeightSP,
 					0, dividedHeightSP, dividedWidthSP, 0);
+			scoreHandler.draw(batch);
 			batch.draw(Res._spacerPixel.getTexture(), camera.viewportWidth / 2, 0, 10, camera.viewportHeight, 0, 1, 1, 0);
 		}
 		batch.end();

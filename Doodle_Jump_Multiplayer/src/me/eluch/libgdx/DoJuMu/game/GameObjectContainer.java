@@ -67,6 +67,19 @@ public class GameObjectContainer {
 		return myDoodle;
 	}
 
+	private void floorCleanup() {
+		ArrayList<Floor> del = null;
+		for (Floor floor : floors) {
+			if (floor.rec.y < scrR.y - 100 || !floor.need2Show) {
+				if (del == null)
+					del = new ArrayList<>();
+				del.add(floor);
+			}
+		}
+		if (del != null)
+			floors.removeAll(del);
+	}
+
 	public void update(float delta) {
 		if (Gdx.input.isKeyPressed(Keys.R) && !rPressed) {
 			rPressed = true;
@@ -87,8 +100,8 @@ public class GameObjectContainer {
 			}
 			myDoodle.update(delta);
 
-			while (myDoodle.rec.y > (scrR.y + Options.GAME_PLACE_HEIGHT / 2)) {
-				scrR.y += 5;
+			if (myDoodle.rec.y > (scrR.y + Options.GAME_PLACE_HEIGHT / 2)) { // scrR update
+				scrR.y = myDoodle.rec.y - Options.GAME_PLACE_HEIGHT / 2;
 			}
 
 			if (myDoodle.rec.y < scrR.y) {
@@ -96,6 +109,7 @@ public class GameObjectContainer {
 				myDoodle.setXY(Options.GAME_PLACE_WIDTH - 1.5f * Res._characters.getWidth(), myDoodle.getMaxHeight());
 			}
 		}
+		floorCleanup();
 	}
 
 	public void render(SpriteBatch batch) {

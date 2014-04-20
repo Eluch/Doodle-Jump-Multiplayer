@@ -32,7 +32,8 @@ public class MainMenuScreen implements Screen {
 		dividedWidth = (int) (camera.viewportWidth / Res._pattern.getWidth()) + 1;
 		dividedHeight = (int) (camera.viewportHeight / Res._pattern.getHeight()) + 1;
 
-		menu = new MenuHandler(Layout.Vertical, Handle.KeyboardAndMouse, (int) (camera.viewportWidth / 2) - Res._button.getWidth() / 2, (int) (camera.viewportHeight - Res._logo.getHeight() - 100));
+		menu = new MenuHandler(Layout.Vertical, Handle.KeyboardAndMouse, (int) (camera.viewportWidth / 2) - Res._button.getWidth() / 2, (int) (camera.viewportHeight
+				- Res._logo.getHeight() - 100));
 		menu.addMenuItem("Join Game", Res._button, Res._buttonFont, () -> {
 			game.setScreen(new JoinScreen(game, camera, batch));
 		});
@@ -44,7 +45,7 @@ public class MainMenuScreen implements Screen {
 		});
 		menu.addMenuItem("Credits", Res._button, Res._buttonFont, () -> {
 			game.setScreen(new StartScreen(game, camera, batch, StartType.credits));
-		}); // TODO to_loading_screen
+		});
 		menu.addMenuItem("Exit", Res._button, Res._buttonFont, () -> {
 			Gdx.app.exit();
 		});

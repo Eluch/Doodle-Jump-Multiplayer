@@ -18,6 +18,8 @@ public class Res {
 	public static final LoadedFont _buttonFont;
 	public static final LoadedFont _optionsFont;
 	public static final LoadedFont _serverListFont;
+	public static final LoadedFont _scoreFont;
+	public static final LoadedFont _scoreFontBold;
 
 	public static final LoadedImage _madnessMe;
 	public static final LoadedImage _blackhole;
@@ -57,6 +59,8 @@ public class Res {
 		_buttonFont = new LoadedFont("fonts/ARIAL.TTF", 24, Color.BLACK);
 		_optionsFont = new LoadedFont("fonts/ARIAL.TTF", 28, Color.BLUE);
 		_serverListFont = new LoadedFont("fonts/ARIAL.TTF", 18, Color.WHITE);
+		_scoreFont = new LoadedFont("fonts/ARIAL.TTF", 24, Color.BLACK);
+		_scoreFontBold = new LoadedFont("fonts/ARIALBD.TTF", 24, Color.BLACK);
 
 		_madnessMe = new LoadedImage("images/etc/MADNESS.PNG");
 		_blackhole = new LoadedImage("images/enemy/blackhole.png");

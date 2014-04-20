@@ -69,6 +69,10 @@ public class DoodleBasic extends GameObject {
 		this.maxHeight = maxHeight;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	public void draw(SpriteBatch batch, Rectangle scrR) {
 		if (rec.overlaps(scrR)) {
 			if (facingRight) {

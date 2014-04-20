@@ -107,7 +107,6 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 			if (server.getGameState() == GameState.LOBBY) {
 				server.getPlayers().removePlayer(player);
 				server.sendToAllPlayersWithTCP(OnePlayerDisconnected.encode(player.getId()));
-				// TODO Send to all client that one of them dcd..
 			} else if (server.getGameState() == GameState.IN_GAME) {
 				player.getDoodle().setAlive(false);
 			}
