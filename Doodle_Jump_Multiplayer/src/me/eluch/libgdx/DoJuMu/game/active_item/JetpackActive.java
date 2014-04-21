@@ -19,6 +19,7 @@ public final class JetpackActive extends ActiveItem {
 	public JetpackActive(DoodleFull doodle) {
 		super(doodle);
 		this.currentSpeed = doodle.getvSpeed();
+		doodle.setJumping(true);
 	}
 
 	@Override

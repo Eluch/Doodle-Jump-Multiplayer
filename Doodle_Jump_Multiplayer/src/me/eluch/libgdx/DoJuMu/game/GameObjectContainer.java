@@ -14,8 +14,6 @@ import me.eluch.libgdx.DoJuMu.game.active_item.SpringShoeActive;
 import me.eluch.libgdx.DoJuMu.game.active_item.TrampolineActive;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleFull;
-import me.eluch.libgdx.DoJuMu.game.enemy_obj.BlackHole;
-import me.eluch.libgdx.DoJuMu.game.enemy_obj.Enemy;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
 import me.eluch.libgdx.DoJuMu.game.floors.GreenFloor;
 import me.eluch.libgdx.DoJuMu.game.item.Item;
@@ -32,8 +30,8 @@ public class GameObjectContainer {
 	private boolean rPressed = false;
 
 	private final ArrayList<DoodleBasic> doodles = new ArrayList<>();
-	private final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	private final ArrayList<BlackHole> blackHoles = new ArrayList<>();
+	//private final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	//private final ArrayList<BlackHole> blackHoles = new ArrayList<>();
 	private final ArrayList<Floor> floors = new ArrayList<>();
 	private final ArrayList<Item> items = new ArrayList<>();
 

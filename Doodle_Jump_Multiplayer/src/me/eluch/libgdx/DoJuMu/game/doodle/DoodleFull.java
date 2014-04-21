@@ -150,6 +150,14 @@ public final class DoodleFull extends DoodleBasic {
 		vSpeed = V_MAXSPEED;
 	}
 
+	public void verticalMove() {
+		if (jumping)
+			jump();
+		else
+			fall();
+		setY(rec.y + vSpeed);
+	}
+
 	public void update(float delta) {
 		if (shielded) {
 			shieldedTime += delta;
@@ -167,11 +175,7 @@ public final class DoodleFull extends DoodleBasic {
 				activeItem.update(delta);
 			} else {
 				//Vertically moving
-				if (jumping)
-					jump();
-				else
-					fall();
-				setY(rec.y + vSpeed);
+				verticalMove();
 			}
 
 			//Horizontally moving

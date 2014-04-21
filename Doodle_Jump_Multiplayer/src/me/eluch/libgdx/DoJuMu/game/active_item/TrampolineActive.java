@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public final class TrampolineActive extends ActiveItem {
+	
+	private static int MAXSPEED = 35;
+	private float currentSpeed = MAXSPEED;
 
 	public TrampolineActive(DoodleFull doodle) {
 		super(doodle);
@@ -13,14 +16,19 @@ public final class TrampolineActive extends ActiveItem {
 
 	@Override
 	public void update(float delta) {
-		// TODO Auto-generated method stub
-
+		if (currentSpeed > 0) {
+			currentSpeed -= 0.5;
+			if (currentSpeed > 0)
+				doodle.getRec().y += currentSpeed;
+		} else {
+			doodle.setJumping(false);
+			doodle.setvSpeed(0);
+			this.destroy = true;
+		}
 	}
 
 	@Override
 	public void draw(SpriteBatch batch, Rectangle scrR) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

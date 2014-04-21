@@ -44,7 +44,7 @@ public final class GameObjectGenerator {
 	private int c_gray = 6000;
 	private int c_white = 2000;
 
-	private static final int ITEM_GEN_CHANCE = 20;
+	private static final int ITEM_GEN_CHANCE = 15;
 	private final int c_jetpack = 1;
 	private final int c_propellerHat = 3;
 	private final int c_shield = 5;
@@ -97,11 +97,11 @@ public final class GameObjectGenerator {
 				switch (floorType) {
 				case BLUE:
 					generateItem = true;
-					f = new BlueFloor(x, y, generateCounter * 0.5f);
+					f = new BlueFloor(x, y, generateCounter * 0.4f);
 					break;
 				case GRAY:
 					generateItem = true;
-					f = new GrayFloor(x, y, generateCounter * 0.3f);
+					f = new GrayFloor(x, y, generateCounter * 0.2f);
 					break;
 				case GREEN:
 					generateItem = true;
