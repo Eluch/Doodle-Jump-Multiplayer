@@ -18,6 +18,7 @@ public final class JetpackActive extends ActiveItem {
 
 	public JetpackActive(DoodleFull doodle) {
 		super(doodle);
+		doodle.setvSpeed(0);
 		this.currentSpeed = doodle.getvSpeed();
 		doodle.setJumping(true);
 	}
@@ -29,11 +30,11 @@ public final class JetpackActive extends ActiveItem {
 			if (currentSpeed > MAXSPEED)
 				currentSpeed = MAXSPEED;
 			currentLift += currentSpeed;
-			doodle.getRec().y += currentSpeed;
+			doodle.setY(doodle.getRec().y + currentSpeed);
 		} else {
 			if (currentSpeed > 0) {
 				currentSpeed -= 0.3f;
-				doodle.getRec().y += currentSpeed;
+				doodle.setY(doodle.getRec().y + currentSpeed);
 			} else {
 				doodle.setvSpeed(0);
 				doodle.setJumping(false);

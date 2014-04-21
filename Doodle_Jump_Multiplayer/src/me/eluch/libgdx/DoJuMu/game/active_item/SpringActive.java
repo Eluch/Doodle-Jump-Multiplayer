@@ -12,6 +12,7 @@ public final class SpringActive extends ActiveItem {
 
 	public SpringActive(DoodleFull doodle) {
 		super(doodle);
+		this.overrideable = true;
 	}
 
 	@Override
@@ -19,7 +20,7 @@ public final class SpringActive extends ActiveItem {
 		if (currentSpeed > 0) {
 			currentSpeed -= 0.5;
 			if (currentSpeed > 0)
-				doodle.getRec().y += currentSpeed;
+				doodle.setY(doodle.getRec().y + currentSpeed);
 		} else {
 			doodle.setJumping(false);
 			doodle.setvSpeed(0);

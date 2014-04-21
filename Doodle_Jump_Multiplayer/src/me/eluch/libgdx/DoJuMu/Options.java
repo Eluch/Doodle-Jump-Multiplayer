@@ -10,10 +10,10 @@ import com.badlogic.gdx.Preferences;
 
 public class Options {
 
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 	public static final int SERVER_PORT = 16160;
 	public static final int CLIENT_PORT = 16161;
-	public static final String VERSION = "0.8.6";
+	public static final String VERSION = "0.9.2";
 	public static final int MAXPLAYERS = 13; //13 The correct max
 	public static final long DISCOVER_TIMEOUT = 1000;
 	public static final int PING_FREQUENCY = 3000;

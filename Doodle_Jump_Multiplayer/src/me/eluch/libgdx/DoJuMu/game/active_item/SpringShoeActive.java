@@ -30,7 +30,7 @@ public final class SpringShoeActive extends ActiveItem {
 			if (currentSpeed > 0) {
 				currentSpeed -= 0.5;
 				if (currentSpeed > 0)
-					doodle.getRec().y += currentSpeed;
+					doodle.setY(doodle.getRec().y + currentSpeed);
 			} else {
 				doodle.setJumping(false);
 				doodle.setvSpeed(0);
