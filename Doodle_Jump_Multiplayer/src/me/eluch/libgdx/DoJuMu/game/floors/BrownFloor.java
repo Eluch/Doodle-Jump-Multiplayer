@@ -31,7 +31,7 @@ public final class BrownFloor extends Floor {
 
 	@Override
 	public ByteBuf encode() {
-		WriteOnlyPacket p = new WriteOnlyPacket(PacketType.FLOOR);
+		WriteOnlyPacket p = new WriteOnlyPacket(PacketType.NEW_FLOOR);
 		p.writeInt(FloorType.BROWN.ordinal());
 		p.writeInt((int) rec.x);
 		p.writeInt((int) rec.y);

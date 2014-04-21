@@ -7,6 +7,11 @@ import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.data.CorePlayer;
 import me.eluch.libgdx.DoJuMu.data.CorePlayerContainer;
+import me.eluch.libgdx.DoJuMu.game.active_item.JetpackActive;
+import me.eluch.libgdx.DoJuMu.game.active_item.PropellerHatActive;
+import me.eluch.libgdx.DoJuMu.game.active_item.SpringActive;
+import me.eluch.libgdx.DoJuMu.game.active_item.SpringShoeActive;
+import me.eluch.libgdx.DoJuMu.game.active_item.TrampolineActive;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleFull;
 import me.eluch.libgdx.DoJuMu.game.enemy_obj.BlackHole;
@@ -26,11 +31,11 @@ public class GameObjectContainer {
 	private boolean running = false;
 	private boolean rPressed = false;
 
-	private ArrayList<DoodleBasic> doodles = new ArrayList<>();
-	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();
-	private ArrayList<BlackHole> blackHoles = new ArrayList<>();
-	private ArrayList<Floor> floors = new ArrayList<>();
-	private ArrayList<Item> items = new ArrayList<>();
+	private final ArrayList<DoodleBasic> doodles = new ArrayList<>();
+	private final ArrayList<Enemy> enemies = new ArrayList<Enemy>();
+	private final ArrayList<BlackHole> blackHoles = new ArrayList<>();
+	private final ArrayList<Floor> floors = new ArrayList<>();
+	private final ArrayList<Item> items = new ArrayList<>();
 
 	private DoodleFull myDoodle;
 	private Rectangle scrR = new Rectangle(-100, 0, Options.GAME_PLACE_WIDTH + 200, Options.GAME_PLACE_HEIGHT); // Screen Rectangle
@@ -81,6 +86,19 @@ public class GameObjectContainer {
 			floors.removeAll(del);
 	}
 
+	private void itemCleanup() {
+		ArrayList<Item> del = null;
+		for (Item item : items) {
+			if (item.rec.y < scrR.y - 100 || !item.need2Show) {
+				if (del == null)
+					del = new ArrayList<>();
+				del.add(item);
+			}
+		}
+		if (del != null)
+			items.removeAll(del);
+	}
+
 	public int getPatternSliding() {
 		return (int) (scrR.y % Res._pattern.getHeight());
 	}
@@ -102,6 +120,10 @@ public class GameObjectContainer {
 		return y;
 	}
 
+	public ArrayList<Item> getItems() {
+		return items;
+	}
+
 	public void update(float delta) {
 		if (Gdx.input.isKeyPressed(Keys.R) && !rPressed) {
 			rPressed = true;
@@ -109,7 +131,7 @@ public class GameObjectContainer {
 		} else if (!Gdx.input.isKeyPressed(Keys.R) && rPressed)
 			rPressed = false;
 
-		if (running || !Options.DEBUG) {
+		if (running || !Options.DEBUG) { // RUNNING PART
 			floors.forEach(x -> {
 				x.update(scrR, myDoodle.getFootRect(), !myDoodle.isJumping());
 				if (x.effect == Effect.COMMON_JUMP_CAUSER) {
@@ -117,6 +139,33 @@ public class GameObjectContainer {
 					x.effect = Effect.NOTHING;
 				}
 			});
+			items.forEach(x -> {
+				x.update(scrR, myDoodle.getRec(), myDoodle.getFootRect(), !myDoodle.isJumping());
+				if (x.getEffect() == Effect.SHIELD_EQUIPPING)
+					myDoodle.setShielded(true);
+				if (x.getEffect() != Effect.NOTHING) {
+					switch (x.getEffect()) {
+					case JETPACK_EQUIPPING:
+						myDoodle.setActiveItem(new JetpackActive(myDoodle));
+						break;
+					case PROPELLER_HAT_EQUIPPING:
+						myDoodle.setActiveItem(new PropellerHatActive(myDoodle));
+						break;
+					case SPRING_JUMP:
+						myDoodle.setActiveItem(new SpringActive(myDoodle));
+						break;
+					case SPRING_SHOE_EQUIPPING:
+						myDoodle.setActiveItem(new SpringShoeActive(myDoodle));
+						break;
+					case TRAMPOLINE_JUMP:
+						myDoodle.setActiveItem(new TrampolineActive(myDoodle));
+						break;
+					default:
+						break;
+					}
+				}
+			});
+			itemCleanup();
 			for (Floor floor : floors) {
 				floor.update(scrR, myDoodle.getFootRect(), !myDoodle.isJumping());
 			}
@@ -144,9 +193,8 @@ public class GameObjectContainer {
 	}
 
 	public void render(SpriteBatch batch) {
-		floors.forEach(x -> {
-			x.draw(batch, scrR);
-		});
+		floors.forEach(x -> x.draw(batch, scrR));
+		items.forEach(x -> x.draw(batch, scrR));
 		myDoodle.draw(batch, scrR);
 		doodles.forEach(x -> x.draw(batch, scrR));
 	}

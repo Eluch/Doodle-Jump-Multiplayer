@@ -15,6 +15,14 @@ import me.eluch.libgdx.DoJuMu.game.floors.GrayFloor;
 import me.eluch.libgdx.DoJuMu.game.floors.GreenFloor;
 import me.eluch.libgdx.DoJuMu.game.floors.WhiteFloor;
 import me.eluch.libgdx.DoJuMu.game.floors.YellowFloor;
+import me.eluch.libgdx.DoJuMu.game.item.Item;
+import me.eluch.libgdx.DoJuMu.game.item.ItemType;
+import me.eluch.libgdx.DoJuMu.game.item.Jetpack;
+import me.eluch.libgdx.DoJuMu.game.item.PropellerHat;
+import me.eluch.libgdx.DoJuMu.game.item.Shield;
+import me.eluch.libgdx.DoJuMu.game.item.Spring;
+import me.eluch.libgdx.DoJuMu.game.item.SpringShoe;
+import me.eluch.libgdx.DoJuMu.game.item.Trampoline;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.packets.AllPlayers;
 import me.eluch.libgdx.DoJuMu.network.packets.DiedDoodle;
@@ -29,6 +37,7 @@ import me.eluch.libgdx.DoJuMu.screens.GameScreen;
 public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 
 	private final Client client;
+	private Floor lastArrivedFloor = null;
 
 	public TcpClientHandler(Client client) {
 		this.client = client;
@@ -93,7 +102,7 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 					d.setJumping(data.jumping);
 				}
 				break;
-			case FLOOR:
+			case NEW_FLOOR:
 				FloorType ft = FloorType.values()[iPacket.readInt()];
 				Floor f = null;
 				switch (ft) {
@@ -118,6 +127,37 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 				}
 				if (f != null) {
 					client.getFloorBuffer().add(f);
+					lastArrivedFloor = f;
+				}
+				break;
+			case NEW_ITEM:
+				ItemType it = ItemType.values()[iPacket.readInt()];
+				Item i = null;
+				switch (it) {
+				case JETPACK:
+					i = Jetpack.decode(iPacket, lastArrivedFloor);
+					break;
+				case PROPELLER_HAT:
+					i = PropellerHat.decode(iPacket, lastArrivedFloor);
+					break;
+				case SHIELD:
+					i = Shield.decode(iPacket, lastArrivedFloor);
+					break;
+				case SPRING:
+					i = Spring.decode(iPacket, lastArrivedFloor);
+					break;
+				case SPRING_SHOE:
+					i = SpringShoe.decode(iPacket, lastArrivedFloor);
+					break;
+				case TRAMPOLINE:
+					i = Trampoline.decode(iPacket, lastArrivedFloor);
+					break;
+				default:
+					System.err.println("TcpClientHandler - unhandled Item");
+					break;
+				}
+				if (i != null) {
+					client.getItemBuffer().add(i);
 				}
 				break;
 			default:

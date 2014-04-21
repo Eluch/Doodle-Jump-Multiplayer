@@ -2,10 +2,12 @@ package me.eluch.libgdx.DoJuMu.game.doodle;
 
 import me.eluch.libgdx.DoJuMu.Options.ScreenRes;
 import me.eluch.libgdx.DoJuMu.data.CorePlayer;
+import me.eluch.libgdx.DoJuMu.game.active_item.ActiveItem;
 import me.eluch.libgdx.DoJuMu.Res;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public final class DoodleFull extends DoodleBasic {
@@ -23,6 +25,13 @@ public final class DoodleFull extends DoodleBasic {
 	private Rectangle doodleLegRect;
 	private float hSpeed = 0; // horizontalSpeed
 	private float vSpeed = V_MAXSPEED;
+
+	private boolean shielded = false;
+	private float shieldedTime = 0f;
+	private static final float MAX_SHILDED_TIME = 15f;
+	private static final float SHILDED_ALMOST_END_TIME = MAX_SHILDED_TIME - 3f;
+
+	private ActiveItem activeItem;
 
 	public DoodleFull(CorePlayer owner, String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
 		super(owner, name, startX, startY, genderType, transparent);
@@ -43,6 +52,41 @@ public final class DoodleFull extends DoodleBasic {
 		rec.y = doodleLegRect.y = y;
 		if (rec.y > maxHeight)
 			maxHeight = rec.y;
+	}
+
+	public boolean isShielded() {
+		return shielded;
+	}
+
+	public void setShielded(boolean shielded) {
+		this.shielded = shielded;
+		if (shielded)
+			this.shieldedTime = 0;
+	}
+
+	public boolean itCanPickupItem() {
+		if (activeItem != null)
+			return activeItem.isOverrideable();
+		return true;
+	}
+
+	public void setActiveItem(ActiveItem activeItem) {
+		if (this.activeItem != null)
+			if (!this.activeItem.isOverrideable())
+				return;
+		this.activeItem = activeItem;
+	}
+
+	public float getvSpeed() {
+		return vSpeed;
+	}
+
+	public void setvSpeed(float vSpeed) {
+		if (vSpeed > V_MAXSPEED)
+			vSpeed = V_MAXSPEED;
+		else if (vSpeed < -V_MAX_FALLSPEED)
+			vSpeed = -V_MAX_FALLSPEED;
+		this.vSpeed = vSpeed;
 	}
 
 	private void goLeft() {
@@ -107,13 +151,28 @@ public final class DoodleFull extends DoodleBasic {
 	}
 
 	public void update(float delta) {
+		if (shielded) {
+			shieldedTime += delta;
+		}
+		if (shielded && shieldedTime > MAX_SHILDED_TIME)
+			shielded = false;
+
 		if (alive) {
-			//Vertically moving
-			if (jumping)
-				jump();
-			else
-				fall();
-			setY(rec.y + vSpeed);
+			if (activeItem != null) {
+				if (activeItem.shouldDestroy())
+					activeItem = null;
+			}
+
+			if (activeItem != null) {
+				activeItem.update(delta);
+			} else {
+				//Vertically moving
+				if (jumping)
+					jump();
+				else
+					fall();
+				setY(rec.y + vSpeed);
+			}
 
 			//Horizontally moving
 			if (Gdx.input.isKeyPressed(Keys.A))
@@ -134,6 +193,18 @@ public final class DoodleFull extends DoodleBasic {
 				facingRight = false;
 			else if (hSpeed > 0)
 				facingRight = true;
+		}
+	}
+
+	@Override
+	public void draw(SpriteBatch batch, Rectangle scrR) {
+		super.draw(batch, scrR);
+		if (this.rec.overlaps(scrR)) {
+			if (shielded)
+				batch.draw((shieldedTime >= SHILDED_ALMOST_END_TIME ? Res._shieldActive.getNextImage() : Res._shieldActive.getSpecificImage(0)),
+						this.rec.x - Res._characters.getWidth() / 2, this.rec.y - Res._characters.getHeight() / 4 - scrR.y);
+			if (activeItem != null)
+				activeItem.draw(batch, scrR);
 		}
 	}
 }

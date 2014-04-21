@@ -9,6 +9,7 @@ import me.eluch.libgdx.DoJuMu.game.GameObjectGenerator;
 import me.eluch.libgdx.DoJuMu.game.GameRole;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleBasic;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
+import me.eluch.libgdx.DoJuMu.game.item.Item;
 import me.eluch.libgdx.DoJuMu.game.score.ScoreHandler;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 import me.eluch.libgdx.DoJuMu.network.client.Client;
@@ -95,12 +96,17 @@ public class GameScreen implements Screen {
 			}
 			game.setScreen(new MainMenuScreen(game, camera, batch));
 		} //
-		if (role == GameRole.CLIENT && client.getFloorBuffer().size() > 0) { // copy floors from buffer
+		if (role == GameRole.CLIENT && client.getFloorBuffer().size() > 0) { // copy floors and items from buffer
 			try { // sometime it's raise an error. I don't know why.
 				ArrayList<Floor> cutFloor = new ArrayList<>();
 				cutFloor.addAll(client.getFloorBuffer());
 				gameObjects.getFloors().addAll(cutFloor);
 				client.getFloorBuffer().removeAll(cutFloor);
+				////
+				ArrayList<Item> cutItem = new ArrayList<>();
+				cutItem.addAll(client.getItemBuffer());
+				gameObjects.getItems().addAll(cutItem);
+				client.getFloorBuffer().removeAll(cutItem);
 			} catch (ArrayIndexOutOfBoundsException e) {
 				System.err.println("Error at floor buffer copy: " + e.getMessage());
 			}

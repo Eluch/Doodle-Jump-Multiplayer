@@ -38,7 +38,7 @@ public class Res {
 	public static final LoadedImage _pattern;
 	public static final LoadedImage _clearpattern;
 	public static final LoadedImage _jetpackfull;
-	public static final LoadedImage _protectionbubbleitem;
+	public static final LoadedImage _shieldItem;
 	public static final LoadedImage _transpartentPixel;
 	public static final LoadedImage _serverPicker;
 	public static final LoadedImage _spacerPixel;
@@ -50,7 +50,7 @@ public class Res {
 	public static final AnimatedImage _portal_blue;
 	public static final AnimatedImage _portal_orange;
 	public static final AnimatedImage _propellerhat;
-	public static final AnimatedImage _protectionbubbleactive;
+	public static final AnimatedImage _shieldActive;
 	public static final AnimatedImage _reverse;
 	public static final AnimatedImage _spring;
 	public static final AnimatedImage _springshoe;
@@ -87,7 +87,7 @@ public class Res {
 		_clearpattern = new LoadedImage("images/etc/clearpattern.png", true);
 		_pattern = new LoadedImage("images/etc/pattern.png", true);
 		_jetpackfull = new LoadedImage("images/objects/jetpackfull.png");
-		_protectionbubbleitem = new LoadedImage("images/objects/protectionbubbleitem.png");
+		_shieldItem = new LoadedImage("images/objects/protectionbubbleitem.png");
 		_transpartentPixel = new LoadedImage("images/etc/transpix.png", true);
 		_serverPicker = new LoadedImage("images/etc/ServerPicker.png");
 		_spacerPixel = new LoadedImage("images/etc/spacerpixel.png", true);
@@ -95,11 +95,11 @@ public class Res {
 
 		_button = new AnimatedImage("images/etc/button.png", 2, 1, 10);
 		_floorSprite = new AnimatedImage("images/objects/floorSprite.png", 6, 1, 10);
-		_jetpackhalf = new AnimatedImage("images/objects/jetpackhalf.png", 1, 6, 10);
+		_jetpackhalf = new AnimatedImage("images/objects/jetpackhalf.png", 1, 6, 5);
 		_portal_blue = new AnimatedImage("images/objects/portal_blue.png", 3, 1, 10);
 		_portal_orange = new AnimatedImage("images/objects/portal_orange.png", 3, 1, 10);
-		_propellerhat = new AnimatedImage("images/objects/propellerhat.png", 2, 2, 10);
-		_protectionbubbleactive = new AnimatedImage("images/objects/protectionbubbleactive.png", 1, 2, 10);
+		_propellerhat = new AnimatedImage("images/objects/propellerhat.png", 2, 2, 5);
+		_shieldActive = new AnimatedImage("images/objects/protectionbubbleactive.png", 1, 2, 10);
 		_reverse = new AnimatedImage("images/objects/reverse.png", 2, 2, 10);
 		_spring = new AnimatedImage("images/objects/spring.png", 1, 2, 10);
 		_springshoe = new AnimatedImage("images/objects/springshoe.png", 2, 1, 10);

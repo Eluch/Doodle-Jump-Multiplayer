@@ -1,5 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.item;
 
+import io.netty.buffer.ByteBuf;
 import me.eluch.libgdx.DoJuMu.game.GameObject;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
 
@@ -7,8 +8,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
 public abstract class Item extends GameObject { //Not equipped, just on the game ground
-	
-	protected static final int OFFSET = 7;
 
 	protected final Floor bindedFloor;
 
@@ -24,6 +23,7 @@ public abstract class Item extends GameObject { //Not equipped, just on the game
 
 	public final void update(Rectangle scrR, Rectangle doodleRectangle, Rectangle doodleFootRectangle, boolean doodleFalling) {
 		if (scrR.overlaps(rec) && need2Show) {
+			updatePos();
 			if (rec.overlaps(doodleRectangle))
 				itemHitDoodle();
 			if (rec.overlaps(doodleFootRectangle) && doodleFalling)
@@ -42,5 +42,7 @@ public abstract class Item extends GameObject { //Not equipped, just on the game
 	}
 
 	protected abstract void render(SpriteBatch batch, Rectangle scrR);
+	
+	public abstract ByteBuf encode();
 
 }

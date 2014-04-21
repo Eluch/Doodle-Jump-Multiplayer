@@ -13,6 +13,14 @@ import me.eluch.libgdx.DoJuMu.game.floors.GrayFloor;
 import me.eluch.libgdx.DoJuMu.game.floors.GreenFloor;
 import me.eluch.libgdx.DoJuMu.game.floors.WhiteFloor;
 import me.eluch.libgdx.DoJuMu.game.floors.YellowFloor;
+import me.eluch.libgdx.DoJuMu.game.item.Item;
+import me.eluch.libgdx.DoJuMu.game.item.ItemType;
+import me.eluch.libgdx.DoJuMu.game.item.Jetpack;
+import me.eluch.libgdx.DoJuMu.game.item.PropellerHat;
+import me.eluch.libgdx.DoJuMu.game.item.Shield;
+import me.eluch.libgdx.DoJuMu.game.item.Spring;
+import me.eluch.libgdx.DoJuMu.game.item.SpringShoe;
+import me.eluch.libgdx.DoJuMu.game.item.Trampoline;
 import me.eluch.libgdx.DoJuMu.network.server.Server;
 
 public final class GameObjectGenerator {
@@ -35,6 +43,14 @@ public final class GameObjectGenerator {
 	private int c_yellow = 1000;
 	private int c_gray = 6000;
 	private int c_white = 2000;
+
+	private static final int ITEM_GEN_CHANCE = 20;
+	private final int c_jetpack = 1;
+	private final int c_propellerHat = 3;
+	private final int c_shield = 5;
+	private final int c_spring = 20;
+	private final int c_springShoe = 7;
+	private final int c_trampoline = 10;
 
 	public GameObjectGenerator(GameObjectContainer gameObjects, Server server) {
 		this.gameObjects = gameObjects;
@@ -72,19 +88,23 @@ public final class GameObjectGenerator {
 				}
 
 			if (need2Gen) {
-				int rInt = r.nextInt(changeAndGetChances());
+				boolean generateItem = false;
+				int rInt = r.nextInt(changeAndGetFloorChances());
 
-				FloorType type = getTypeFromChance(rInt);
+				FloorType floorType = getTypeFromFloorChance(rInt);
 				Floor f = null;
 
-				switch (type) {
+				switch (floorType) {
 				case BLUE:
+					generateItem = true;
 					f = new BlueFloor(x, y, generateCounter * 0.5f);
 					break;
 				case GRAY:
+					generateItem = true;
 					f = new GrayFloor(x, y, generateCounter * 0.3f);
 					break;
 				case GREEN:
+					generateItem = true;
 					f = new GreenFloor(x, y);
 					break;
 				case WHITE:
@@ -94,15 +114,51 @@ public final class GameObjectGenerator {
 					f = new YellowFloor(x, y, 500 + generation_rate);
 					break;
 				default:
+					System.err.println("Generator error: Floor default statement reached.");
 					break;
-
 				}
 
-				//TODO generate items
 				if (f != null) {
 					gameObjects.getFloors().add(f);
 					highest_jumpable = y;
 					server.sendToAllPlayersWithTCP(f.encode());
+
+					if (generateItem) {
+						int genChance = r.nextInt() % ITEM_GEN_CHANCE; // 1 to ITEM_GEN_CHANCE to generate item
+						if (genChance == 1) {
+							rInt = r.nextInt(getItemChances());
+							ItemType itemType = getTypeFromItemChance(rInt);
+							Item item = null;
+							switch (itemType) {
+							case JETPACK:
+								item = new Jetpack(f);
+								break;
+							case PROPELLER_HAT:
+								item = new PropellerHat(f);
+								break;
+							case SHIELD:
+								item = new Shield(f);
+								break;
+							case SPRING:
+								item = new Spring(f);
+								break;
+							case SPRING_SHOE:
+								item = new SpringShoe(f);
+								break;
+							case TRAMPOLINE:
+								item = new Trampoline(f);
+								break;
+							default:
+								System.err.println("Generator error: Item default statement reached.");
+								break;
+							}
+
+							if (item != null) {
+								gameObjects.getItems().add(item);
+								server.sendToAllPlayersWithTCP(item.encode());
+							}
+						}
+					}
 				}
 			}
 		}
@@ -120,7 +176,7 @@ public final class GameObjectGenerator {
 			generate();
 	}
 
-	private int changeAndGetChances() {
+	private int changeAndGetFloorChances() {
 		if (++cPrescaler >= C_PRESCALER_TARGET) {
 			cPrescaler = 0;
 			c_green -= 5;
@@ -136,7 +192,7 @@ public final class GameObjectGenerator {
 		return (c_green + c_blue + c_yellow + c_gray + c_white);
 	}
 
-	private FloorType getTypeFromChance(int num) {
+	private FloorType getTypeFromFloorChance(int num) {
 
 		if (c_green >= num)
 			return FloorType.GREEN;
@@ -156,5 +212,30 @@ public final class GameObjectGenerator {
 		return FloorType.GREEN; //If something went wrong
 
 		// green, blue, yellow, gray, white <-- Chances in order
+	}
+
+	private int getItemChances() {
+		return (c_jetpack + c_propellerHat + c_shield + c_spring + c_springShoe + c_trampoline);
+	}
+
+	private ItemType getTypeFromItemChance(int num) {
+		if (c_jetpack >= num)
+			return ItemType.JETPACK;
+		num -= c_jetpack;
+		if (c_propellerHat >= num)
+			return ItemType.PROPELLER_HAT;
+		num -= c_propellerHat;
+		if (c_shield >= num)
+			return ItemType.SHIELD;
+		num -= c_shield;
+		if (c_spring >= num)
+			return ItemType.SPRING;
+		num -= c_spring;
+		if (c_springShoe >= num)
+			return ItemType.SPRING_SHOE;
+		num -= c_springShoe;
+		if (c_trampoline >= num)
+			return ItemType.TRAMPOLINE;
+		return ItemType.SPRING;
 	}
 }

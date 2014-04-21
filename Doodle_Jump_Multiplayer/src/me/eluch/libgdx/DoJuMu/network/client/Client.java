@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import me.eluch.libgdx.DoJuMu.data.CorePlayer;
 import me.eluch.libgdx.DoJuMu.data.CorePlayerContainer;
 import me.eluch.libgdx.DoJuMu.game.floors.Floor;
+import me.eluch.libgdx.DoJuMu.game.item.Item;
 import me.eluch.libgdx.DoJuMu.network.ConnectionStatus;
 
 import com.badlogic.gdx.Game;
@@ -28,6 +29,7 @@ public class Client {
 
 	private final CorePlayerContainer<CorePlayer> players;
 	private final ArrayList<Floor> floorBuffer = new ArrayList<>();
+	private final ArrayList<Item> itemBuffer = new ArrayList<>();
 
 	private static String errorMsg = null;
 
@@ -44,6 +46,7 @@ public class Client {
 
 	public void start() {
 		floorBuffer.clear();
+		itemBuffer.clear();
 		if (!tcp.thread.isAlive())
 			tcp.thread.start();
 		if (!udp.thread.isAlive())
@@ -56,6 +59,7 @@ public class Client {
 		stopUDP();
 		connectionStatus = ConnectionStatus.NOT_CONNECTED;
 		floorBuffer.clear();
+		itemBuffer.clear();
 	}
 
 	public void stopUDP() {
@@ -119,5 +123,9 @@ public class Client {
 
 	public ArrayList<Floor> getFloorBuffer() {
 		return floorBuffer;
+	}
+
+	public ArrayList<Item> getItemBuffer() {
+		return itemBuffer;
 	}
 }

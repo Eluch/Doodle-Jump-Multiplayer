@@ -33,7 +33,7 @@ public final class WhiteFloor extends Floor {
 
 	@Override
 	public ByteBuf encode() {
-		WriteOnlyPacket p = new WriteOnlyPacket(PacketType.FLOOR);
+		WriteOnlyPacket p = new WriteOnlyPacket(PacketType.NEW_FLOOR);
 		p.writeInt(FloorType.WHITE.ordinal());
 		p.writeInt((int) rec.x);
 		p.writeInt((int) rec.y);
