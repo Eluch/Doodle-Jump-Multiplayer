@@ -17,6 +17,18 @@ public final class ScoreHandler {
 		doodles.forEach(x -> scores.add(new DoodleScore(x)));
 	}
 
+	public boolean isEveryOneDied() {
+		for (DoodleScore score : scores) {
+			if (score.getDoodle().isAlive())
+				return false;
+		}
+		return true;
+	}
+
+	public String getWinnerName() {
+		return scores.get(0).getDoodle().getName();
+	}
+
 	public void update() { //make the order
 		scores.sort(new Comparator<DoodleScore>() {
 			@Override

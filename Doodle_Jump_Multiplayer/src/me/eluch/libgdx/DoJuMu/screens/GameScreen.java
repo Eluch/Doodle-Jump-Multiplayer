@@ -46,6 +46,8 @@ public class GameScreen implements Screen {
 	private boolean myDeathSendedToOthers = false;
 	private ScoreHandler scoreHandler;
 
+	private boolean everyone_dead = false;
+
 	public GameScreen(final Game game, final OrthographicCamera camera, final SpriteBatch batch, GameRole role, Object connection) {
 		if (!(connection instanceof Server) && !(connection instanceof Client)) {
 			System.err.println("Got wrong connection! Should be Server or Client");
@@ -74,7 +76,9 @@ public class GameScreen implements Screen {
 	}
 
 	private void update(float delta) {
-		if (role == GameRole.CLIENT) { // Check if the server is still running
+		everyone_dead = scoreHandler.isEveryOneDied();
+
+		if (role == GameRole.CLIENT && !everyone_dead) { // Check if the server is still running
 			if (client.getConnectionStatus() == ConnectionStatus.NOT_CONNECTED) {
 				client.stop();
 				client.getGame().setScreen(new MainMenuScreen(client.getGame(), client.getCamera(), client.getBatch()));
@@ -145,6 +149,13 @@ public class GameScreen implements Screen {
 					0, dividedHeightSP, dividedWidthSP, 0);
 			scoreHandler.draw(batch);
 			batch.draw(Res._spacerPixel.getTexture(), camera.viewportWidth / 2, 0, 10, camera.viewportHeight, 0, 1, 1, 0);
+			if (everyone_dead) {
+				Res._winnerFontR.drawCenter(batch, "Game is Over!", Options.GAME_PLACE_WIDTH / 2, Options.GAME_PLACE_HEIGHT / 2 + 200);
+				Res._winnerFontR.drawCenter(batch, "The winner is:", Options.GAME_PLACE_WIDTH / 2, Options.GAME_PLACE_HEIGHT / 2 + 150);
+				Res._winnerFontR.drawCenter(batch, scoreHandler.getWinnerName().equals(gameObjects.getMyDoodle().getName()) ? "You!" : scoreHandler.getWinnerName(),
+						Options.GAME_PLACE_WIDTH / 2, Options.GAME_PLACE_HEIGHT / 2 + 100);
+				Res._winnerFontB.drawCenter(batch, "Press ESC to QUIT", Options.GAME_PLACE_WIDTH / 2, Options.GAME_PLACE_HEIGHT / 2);
+			}
 		}
 		batch.end();
 	}

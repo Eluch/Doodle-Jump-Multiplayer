@@ -34,6 +34,7 @@ public class GameObjectContainer {
 
 	private DoodleFull myDoodle;
 	private Rectangle scrR = new Rectangle(-100, 0, Options.GAME_PLACE_WIDTH + 200, Options.GAME_PLACE_HEIGHT); // Screen Rectangle
+	private float afterDeadDelta = 0;
 
 	public GameObjectContainer(CorePlayerContainer<?> playerC) { // CONSTRUCTOR
 
@@ -80,6 +81,27 @@ public class GameObjectContainer {
 			floors.removeAll(del);
 	}
 
+	public int getPatternSliding() {
+		return (int) (scrR.y % Res._pattern.getHeight());
+	}
+
+	public ArrayList<Floor> getFloors() {
+		return floors;
+	}
+
+	public ArrayList<DoodleBasic> getDoodles() {
+		return doodles;
+	}
+
+	public float getHighestAliveDoodleY() {
+		float y = -1;
+		for (DoodleBasic doodle : doodles) {
+			if (doodle.getRec().y > y && doodle.isAlive())
+				y = doodle.getRec().y;
+		}
+		return y;
+	}
+
 	public void update(float delta) {
 		if (Gdx.input.isKeyPressed(Keys.R) && !rPressed) {
 			rPressed = true;
@@ -87,7 +109,7 @@ public class GameObjectContainer {
 		} else if (!Gdx.input.isKeyPressed(Keys.R) && rPressed)
 			rPressed = false;
 
-		if (running) {
+		if (running || !Options.DEBUG) {
 			floors.forEach(x -> {
 				x.update(scrR, myDoodle.getFootRect(), !myDoodle.isJumping());
 				if (x.effect == Effect.COMMON_JUMP_CAUSER) {
@@ -100,16 +122,25 @@ public class GameObjectContainer {
 			}
 			myDoodle.update(delta);
 
-			if (myDoodle.rec.y > (scrR.y + Options.GAME_PLACE_HEIGHT / 2)) { // scrR update
+			if (myDoodle.isAlive() && myDoodle.rec.y > (scrR.y + Options.GAME_PLACE_HEIGHT / 2)) { // scrR update
 				scrR.y = myDoodle.rec.y - Options.GAME_PLACE_HEIGHT / 2;
+			} else if (!myDoodle.isAlive()) {
+				if (afterDeadDelta < 2.5f)
+					afterDeadDelta += delta;
+				else {
+					float y = getHighestAliveDoodleY();
+					if (y != -1)
+						if (y > (scrR.y + Options.GAME_PLACE_HEIGHT / 2)) { // scrR update to highest alive player after dead
+							scrR.y = y - Options.GAME_PLACE_HEIGHT / 2;
+						}
+				}
 			}
-
 			if (myDoodle.rec.y < scrR.y) {
 				myDoodle.setAlive(false);
 				myDoodle.setXY(myDoodle.getRec().x, myDoodle.getMaxHeight());
 			}
+			floorCleanup();
 		}
-		floorCleanup();
 	}
 
 	public void render(SpriteBatch batch) {
@@ -118,18 +149,6 @@ public class GameObjectContainer {
 		});
 		myDoodle.draw(batch, scrR);
 		doodles.forEach(x -> x.draw(batch, scrR));
-	}
-
-	public int getPatternSliding() {
-		return (int) (scrR.y % Res._pattern.getHeight());
-	}
-
-	public ArrayList<Floor> getFloors() {
-		return floors;
-	}
-
-	public ArrayList<DoodleBasic> getDoodles() {
-		return doodles;
 	}
 
 }
