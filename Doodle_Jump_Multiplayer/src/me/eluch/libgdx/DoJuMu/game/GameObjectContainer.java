@@ -37,15 +37,15 @@ public class GameObjectContainer {
 
 	public GameObjectContainer(CorePlayerContainer<?> playerC) { // CONSTRUCTOR
 
-		DoodleFull myDoodle = new DoodleFull(playerC.getMySelf().getName(), new Random().nextInt(Options.ScreenRes.width / 2 - Res._characters.getWidth()), 30,
-				Options.getCharacter(), false);
+		DoodleFull myDoodle = new DoodleFull(playerC.getMySelf(), playerC.getMySelf().getName(), new Random().nextInt(Options.ScreenRes.width / 2 - Res._characters.getWidth()),
+				30, Options.getCharacter(), false);
 		this.myDoodle = myDoodle;
 
 		playerC.getMySelf().setDoodle(myDoodle);
 
 		for (CorePlayer p : playerC.getPlayers()) {
 			if (p.getDoodle() == null) {
-				p.setDoodle(new DoodleBasic(p.getName(), 10, 30, p.getGenderType(), true));
+				p.setDoodle(new DoodleBasic(p, p.getName(), 10, 30, p.getGenderType(), true));
 				doodles.add(p.getDoodle());
 			}
 		}
@@ -106,7 +106,7 @@ public class GameObjectContainer {
 
 			if (myDoodle.rec.y < scrR.y) {
 				myDoodle.setAlive(false);
-				myDoodle.setXY(Options.GAME_PLACE_WIDTH - 1.5f * Res._characters.getWidth(), myDoodle.getMaxHeight());
+				myDoodle.setXY(myDoodle.getRec().x, myDoodle.getMaxHeight());
 			}
 		}
 		floorCleanup();

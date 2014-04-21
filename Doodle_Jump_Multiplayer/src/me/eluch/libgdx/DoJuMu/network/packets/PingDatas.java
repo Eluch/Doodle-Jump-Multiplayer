@@ -28,7 +28,7 @@ public abstract class PingDatas {
 			ping = packet.readLong();
 			player = players.getPlayerByID(id);
 			if (player != null) {
-				player.setPing(ping);
+				player.setPing((int) ping);
 			}
 		}
 	}

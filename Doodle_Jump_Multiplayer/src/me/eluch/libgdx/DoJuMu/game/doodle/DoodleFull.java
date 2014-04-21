@@ -1,6 +1,7 @@
 package me.eluch.libgdx.DoJuMu.game.doodle;
 
 import me.eluch.libgdx.DoJuMu.Options.ScreenRes;
+import me.eluch.libgdx.DoJuMu.data.CorePlayer;
 import me.eluch.libgdx.DoJuMu.Res;
 
 import com.badlogic.gdx.Gdx;
@@ -23,8 +24,8 @@ public final class DoodleFull extends DoodleBasic {
 	private float hSpeed = 0; // horizontalSpeed
 	private float vSpeed = V_MAXSPEED;
 
-	public DoodleFull(String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
-		super(name, startX, startY, genderType, transparent);
+	public DoodleFull(CorePlayer owner, String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
+		super(owner, name, startX, startY, genderType, transparent);
 		doodleLegRect = new Rectangle(startX, startY, Res._characters.getWidth(), 10);
 	}
 

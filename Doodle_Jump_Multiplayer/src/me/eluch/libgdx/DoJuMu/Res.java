@@ -23,6 +23,9 @@ public class Res {
 	public static final LoadedFont _scoreFontR;
 	public static final LoadedFont _scoreFontBoldR;
 	public static final LoadedFont _doodleNameFont;
+	public static final LoadedFont _pingFontR;
+	public static final LoadedFont _pingFontY;
+	public static final LoadedFont _pingFontG;
 
 	public static final LoadedImage _madnessMe;
 	public static final LoadedImage _blackhole;
@@ -67,6 +70,9 @@ public class Res {
 		_scoreFontR = new LoadedFont("fonts/ARIAL.TTF", 24, "DD0000");
 		_scoreFontBoldR = new LoadedFont("fonts/ARIALBD.TTF", 24, "DD0000");
 		_doodleNameFont = new LoadedFont("fonts/ARIAL.TTF", 18, Color.BLACK);
+		_pingFontR = new LoadedFont("fonts/ARIAL.TTF", 8, "AA0000");
+		_pingFontY = new LoadedFont("fonts/ARIAL.TTF", 8, "AAAA00");
+		_pingFontG = new LoadedFont("fonts/ARIAL.TTF", 8, "00AA00");
 
 		_madnessMe = new LoadedImage("images/etc/MADNESS.PNG");
 		_blackhole = new LoadedImage("images/enemy/blackhole.png");

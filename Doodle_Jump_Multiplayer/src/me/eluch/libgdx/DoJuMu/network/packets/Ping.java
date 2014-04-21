@@ -35,7 +35,7 @@ public class Ping {
 					for (ServerPlayer player : server.getPlayers().getPlayers()) {
 						if (player != server.getPlayers().getMySelf()) {
 							if (player.getPingReceived() > player.getPingSent())
-								player.setPing(player.getPingReceived() - player.getPingSent());
+								player.setPing((int) (player.getPingReceived() - player.getPingSent()));
 							else
 								player.setPing(-1);
 						}

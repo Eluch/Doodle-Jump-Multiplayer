@@ -65,9 +65,13 @@ public final class DoodleScore {
 		else
 			font = Res._scoreFontR;
 
+		int ping = doodle.getOwner().getPing();
+
 		if (!isMyself) {
 			batch.draw(Res._posArrow_large.getSpecificImage(higher ? 0 : 1), Options.GAME_PLACE_WIDTH + 20, y);
 		}
+		(ping == -1 || ping > 100 ? Res._pingFontR : ping > 30 ? Res._pingFontY : Res._pingFontG).drawLeft(batch, "ping: " + doodle.getOwner().getPing() + " ms",
+				Options.GAME_PLACE_WIDTH + 55, y + 22);
 		font.drawLeft(batch, doodle.getName(), Options.GAME_PLACE_WIDTH + 50, y);
 		font.drawRight(batch, Integer.toString((int) doodle.getMaxHeight()), ScreenRes.width - 10, y);
 	}

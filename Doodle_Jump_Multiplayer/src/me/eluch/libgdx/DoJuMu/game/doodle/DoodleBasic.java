@@ -1,6 +1,7 @@
 package me.eluch.libgdx.DoJuMu.game.doodle;
 
 import me.eluch.libgdx.DoJuMu.Res;
+import me.eluch.libgdx.DoJuMu.data.CorePlayer;
 import me.eluch.libgdx.DoJuMu.game.GameObject;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,9 +16,12 @@ public class DoodleBasic extends GameObject {
 	protected boolean alive = true;
 	protected final boolean transparent;
 
+	protected final CorePlayer owner;
+
 	protected float maxHeight = 0; //Maximum Y coordinate of doodle
 
-	public DoodleBasic(String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
+	public DoodleBasic(CorePlayer owner, String name, int startX, int startY, DoodleGenderType genderType, boolean transparent) {
+		this.owner = owner;
 		this.name = name;
 		this.character = genderType;
 		rec = new Rectangle(startX, startY, Res._characters.getWidth(), Res._characters.getHeight());
@@ -71,6 +75,10 @@ public class DoodleBasic extends GameObject {
 
 	public String getName() {
 		return name;
+	}
+
+	public CorePlayer getOwner() {
+		return owner;
 	}
 
 	public void draw(SpriteBatch batch, Rectangle scrR) {

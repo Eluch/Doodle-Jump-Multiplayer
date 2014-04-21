@@ -8,7 +8,7 @@ public class CorePlayer {
 	protected int id;
 	protected String name;
 	protected DoodleGenderType genderType;
-	protected long ping;
+	protected int ping;
 	protected DoodleBasic doodle;
 
 	public CorePlayer() {
@@ -45,11 +45,11 @@ public class CorePlayer {
 		this.genderType = genderType;
 	}
 
-	public long getPing() {
+	public int getPing() {
 		return ping;
 	}
 
-	public void setPing(long ping) {
+	public void setPing(int ping) {
 		this.ping = ping;
 	}
 
