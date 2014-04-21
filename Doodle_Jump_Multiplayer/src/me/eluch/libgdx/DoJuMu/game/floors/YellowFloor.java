@@ -22,13 +22,16 @@ public final class YellowFloor extends Floor {
 	@Override
 	protected void onScreen() {
 		lifeSpan--;
-		if (lifeSpan <= 0)
+		if (lifeSpan <= 0){
+			Res._s_boom_yellow.play();
 			need2Show = false;
+		}
 	}
 
 	@Override
 	protected void doodleHitFloor() {
 		effect = Effect.COMMON_JUMP_CAUSER;
+		Res._s_jump.play();
 	}
 
 	@Override

@@ -48,6 +48,7 @@ public class GameScreen implements Screen {
 	private ScoreHandler scoreHandler;
 
 	private boolean everyone_dead = false;
+	private boolean everyone_dead_sound = false;
 
 	public GameScreen(final Game game, final OrthographicCamera camera, final SpriteBatch batch, GameRole role, Object connection) {
 		if (!(connection instanceof Server) && !(connection instanceof Client)) {
@@ -74,10 +75,15 @@ public class GameScreen implements Screen {
 			gameObjects = new GameObjectContainer(client.getPlayers());
 		}
 		scoreHandler = new ScoreHandler(gameObjects.getMyDoodle(), gameObjects.getDoodles());
+		Res._s_start.play();
 	}
 
 	private void update(float delta) {
 		everyone_dead = scoreHandler.isEveryOneDied();
+		if (!everyone_dead_sound && everyone_dead) {
+			Res._s_gameOver.play();
+			everyone_dead_sound = true;
+		}
 
 		if (role == GameRole.CLIENT && !everyone_dead) { // Check if the server is still running
 			if (client.getConnectionStatus() == ConnectionStatus.NOT_CONNECTED) {
@@ -117,6 +123,7 @@ public class GameScreen implements Screen {
 		case SERVER:
 			server.sendToAllPlayersWithUDP(AllDoodleDatas.encode(server.getPlayers().getPlayers()));
 			if (!gameObjects.getMyDoodle().isAlive() && !myDeathSendedToOthers) {
+				Res._s_gameOver.play();
 				DoodleBasic d = gameObjects.getMyDoodle();
 				server.sendToAllPlayersWithTCP(DiedDoodle.encode(new DoodleDatasEE(d.getRec().x, d.getRec().y, d.getMaxHeight(), d.isFacingRight(), d.isJumping(), d.isAlive(),
 						server.getPlayers().getMySelf().getId())));

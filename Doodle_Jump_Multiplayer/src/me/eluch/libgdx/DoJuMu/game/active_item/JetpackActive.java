@@ -21,6 +21,7 @@ public final class JetpackActive extends ActiveItem {
 		doodle.setvSpeed(0);
 		this.currentSpeed = doodle.getvSpeed();
 		doodle.setJumping(true);
+		Res._s_rocket.play();
 	}
 
 	@Override

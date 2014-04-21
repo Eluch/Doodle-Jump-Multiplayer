@@ -22,6 +22,7 @@ public final class BrownFloor extends Floor {
 	@Override
 	protected void doodleHitFloor() {
 		need2Show = false;
+		Res._s_wood_break.play();
 	}
 
 	@Override

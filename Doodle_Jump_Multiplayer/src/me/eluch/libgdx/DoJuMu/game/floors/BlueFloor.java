@@ -43,6 +43,7 @@ public final class BlueFloor extends Floor {
 	@Override
 	protected void doodleHitFloor() {
 		effect = Effect.COMMON_JUMP_CAUSER;
+		Res._s_jump.play();
 	}
 
 	@Override

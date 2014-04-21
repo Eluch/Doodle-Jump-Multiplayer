@@ -2,6 +2,8 @@ package me.eluch.libgdx.DoJuMu;
 
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 
 import me.eluch.libgdx.DoJuMu.gfx.AnimatedImage;
@@ -62,6 +64,18 @@ public class Res {
 	public static final AnimatedImage _posArrow_large;
 	public static final AnimatedImage _posArrow_small;
 
+	public static final Sound _s_boom_yellow;
+	public static final Sound _s_click;
+	public static final Sound _s_gameOver;
+	public static final Sound _s_jump_white;
+	public static final Sound _s_jump;
+	public static final Sound _s_propeller;
+	public static final Sound _s_rocket;
+	public static final Sound _s_spring;
+	public static final Sound _s_start;
+	public static final Sound _s_trampoline;
+	public static final Sound _s_wood_break;
+
 	static {
 		_startScreenFont = new LoadedFont("fonts/ARIALBD.TTF", 24, Color.RED);
 		_buttonFont = new LoadedFont("fonts/ARIAL.TTF", 24, Color.BLACK);
@@ -110,6 +124,18 @@ public class Res {
 		_shoot = new AnimatedImage("images/player/shoot.png", 2, 2, 10);
 		_posArrow_large = new AnimatedImage("images/etc/posarrow_large.png", 1, 2, 10);
 		_posArrow_small = new AnimatedImage("images/etc/posarrow_small.png", 1, 2, 10);
+
+		_s_boom_yellow = Gdx.audio.newSound(Gdx.files.internal("sounds/boom_yellow.mp3"));
+		_s_click = Gdx.audio.newSound(Gdx.files.internal("sounds/click.mp3"));
+		_s_gameOver = Gdx.audio.newSound(Gdx.files.internal("sounds/gameover.mp3"));
+		_s_jump_white = Gdx.audio.newSound(Gdx.files.internal("sounds/jump.mp3"));
+		_s_jump = Gdx.audio.newSound(Gdx.files.internal("sounds/jump_white.mp3"));
+		_s_propeller = Gdx.audio.newSound(Gdx.files.internal("sounds/propeller.mp3"));
+		_s_rocket = Gdx.audio.newSound(Gdx.files.internal("sounds/rocket.mp3"));
+		_s_spring = Gdx.audio.newSound(Gdx.files.internal("sounds/spring.mp3"));
+		_s_start = Gdx.audio.newSound(Gdx.files.internal("sounds/start.mp3"));
+		_s_trampoline = Gdx.audio.newSound(Gdx.files.internal("sounds/trampoline.mp3"));
+		_s_wood_break = Gdx.audio.newSound(Gdx.files.internal("sounds/wood_break.mp3"));
 	}
 
 	public static void load() {

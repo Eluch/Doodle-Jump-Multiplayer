@@ -22,6 +22,7 @@ public final class WhiteFloor extends Floor {
 
 	@Override
 	protected void doodleHitFloor() {
+		Res._s_jump_white.play();
 		effect = Effect.COMMON_JUMP_CAUSER;
 		need2Show = false;
 	}
