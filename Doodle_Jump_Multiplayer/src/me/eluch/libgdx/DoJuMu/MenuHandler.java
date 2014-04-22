@@ -167,10 +167,11 @@ public class MenuHandler {
 		if (Gdx.input.isButtonPressed(Input.Buttons.LEFT) && !leftClicked) {
 			leftClicked = true;
 		} else if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && leftClicked) {
-			if (items.get(selected).rec.overlaps(mouseRect))
+			if (items.get(selected).rec.overlaps(mouseRect)) {
 				if (Options.isSoundEnabled())
 					Res._s_click.play();
-			items.get(selected).action.run();
+				items.get(selected).action.run();
+			}
 			leftClicked = false;
 		}
 	}

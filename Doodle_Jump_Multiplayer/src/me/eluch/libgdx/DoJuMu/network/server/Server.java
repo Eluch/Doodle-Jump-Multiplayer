@@ -4,8 +4,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.socket.DatagramPacket;
 import me.eluch.libgdx.DoJuMu.GameState;
+import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.data.ServerPlayer;
 import me.eluch.libgdx.DoJuMu.data.ServerPlayerContainer;
+import me.eluch.libgdx.DoJuMu.network.UpnpHander;
 import me.eluch.libgdx.DoJuMu.network.packets.Ping;
 
 public class Server {
@@ -30,6 +32,8 @@ public class Server {
 	}
 
 	public void start() {
+		if (Options.isUpnpEnabled())
+			UpnpHander.map();
 		if (!tcp.thread.isAlive())
 			tcp.thread.start();
 		if (!udp.thread.isAlive())
@@ -38,6 +42,8 @@ public class Server {
 	}
 
 	public void stop() {
+		if (Options.isUpnpEnabled())
+			UpnpHander.unmap();
 		ping.stop();
 		if (tcp.thread.isAlive())
 			tcp.stopServer();

@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="C:/Users/Ferenc/Desktop/libgdx-0.9.9/extensions/gdx-freetype/gdx-freetype.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Ferenc/Desktop/libgdx-0.9.9/extensions/gdx-freetype/gdx-freetype-natives.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Netty"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/weupnp"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
