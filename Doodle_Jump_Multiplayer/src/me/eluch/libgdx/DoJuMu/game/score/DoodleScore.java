@@ -35,6 +35,10 @@ public final class DoodleScore {
 		return doodle;
 	}
 
+	public int getPlacement() {
+		return placement;
+	}
+
 	public void setPlacement(int placement) {
 		this.placement = placement;
 	}

@@ -160,7 +160,7 @@ public class GameScreen implements Screen {
 			gameObjects.render(batch);
 			batch.draw(Res._clearpattern.getTexture(), camera.viewportWidth / 2, 0, Res._clearpattern.getWidth() * dividedWidthSP, Res._clearpattern.getHeight() * dividedHeightSP,
 					0, dividedHeightSP, dividedWidthSP, 0);
-			scoreHandler.draw(batch);
+			scoreHandler.draw(batch, gameObjects.getScrR());
 			batch.draw(Res._spacerPixel.getTexture(), camera.viewportWidth / 2, 0, 10, camera.viewportHeight, 0, 1, 1, 0);
 			if (everyone_dead) {
 				Res._winnerFontR.drawCenter(batch, "Game is Over!", Options.GAME_PLACE_WIDTH / 2, Options.GAME_PLACE_HEIGHT / 2 + 200);

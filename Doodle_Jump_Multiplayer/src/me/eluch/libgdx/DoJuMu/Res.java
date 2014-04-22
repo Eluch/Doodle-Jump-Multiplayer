@@ -30,6 +30,8 @@ public class Res {
 	public static final LoadedFont _pingFontG;
 	public static final LoadedFont _winnerFontR;
 	public static final LoadedFont _winnerFontB;
+	public static final LoadedFont _frontDoodleFont;
+	public static final LoadedFont _behindDoodleFont;
 
 	public static final LoadedImage _madnessMe;
 	public static final LoadedImage _blackhole;
@@ -91,6 +93,8 @@ public class Res {
 		_pingFontG = new LoadedFont("fonts/ARIAL.TTF", 8, "00AA00");
 		_winnerFontR = new LoadedFont("fonts/ARIALBD.TTF", 32, Color.RED);
 		_winnerFontB = new LoadedFont("fonts/ARIALBD.TTF", 32, Color.BLACK);
+		_frontDoodleFont = new LoadedFont("fonts/ARIALBD.TTF", 16, "DD0000");
+		_behindDoodleFont = new LoadedFont("fonts/ARIALBD.TTF", 16, "00AA00");
 
 		_madnessMe = new LoadedImage("images/etc/MADNESS.PNG");
 		_blackhole = new LoadedImage("images/enemy/blackhole.png");

@@ -31,7 +31,7 @@ public final class GameObjectGenerator {
 	private final Random r = new Random();
 
 	private final int GENERATE_SAMETIME = 10000;
-	private final int MAX_NOGENERATE = 150;
+	private final int MAX_NOGENERATE = 125; //150 Default
 	private int highest_jumpable = 200;
 	private int generateCounter = 0; //counts as many times as generate() run.
 	private int generation_rate = 50;
@@ -51,6 +51,8 @@ public final class GameObjectGenerator {
 	private final int c_spring = 20;
 	private final int c_springShoe = 7;
 	private final int c_trampoline = 10;
+
+	private boolean lastWasWhite = false;
 
 	public GameObjectGenerator(GameObjectContainer gameObjects, Server server) {
 		this.gameObjects = gameObjects;
@@ -88,30 +90,38 @@ public final class GameObjectGenerator {
 				}
 
 			if (need2Gen) {
+				int rInt;
 				boolean generateItem = false;
-				int rInt = r.nextInt(changeAndGetFloorChances());
-
-				FloorType floorType = getTypeFromFloorChance(rInt);
+				FloorType floorType;
 				Floor f = null;
+				do {
+					rInt = r.nextInt(changeAndGetFloorChances());
+					floorType = getTypeFromFloorChance(rInt);
+				} while (lastWasWhite && floorType == FloorType.GRAY);
 
 				switch (floorType) {
 				case BLUE:
 					generateItem = true;
+					lastWasWhite = false;
 					f = new BlueFloor(x, y, generateCounter * 0.4f);
 					break;
 				case GRAY:
 					generateItem = true;
+					lastWasWhite = false;
 					f = new GrayFloor(x, y, generateCounter * 0.2f);
 					break;
 				case GREEN:
 					generateItem = true;
+					lastWasWhite = false;
 					f = new GreenFloor(x, y);
 					break;
 				case WHITE:
 					f = new WhiteFloor(x, y);
+					lastWasWhite = true;
 					break;
 				case YELLOW:
 					f = new YellowFloor(x, y, 500 + generation_rate);
+					lastWasWhite = false;
 					break;
 				default:
 					System.err.println("Generator error: Floor default statement reached.");

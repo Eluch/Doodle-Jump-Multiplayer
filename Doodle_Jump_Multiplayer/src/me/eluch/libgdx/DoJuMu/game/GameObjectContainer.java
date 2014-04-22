@@ -36,7 +36,7 @@ public class GameObjectContainer {
 	private final ArrayList<Item> items = new ArrayList<>();
 
 	private DoodleFull myDoodle;
-	private Rectangle scrR = new Rectangle(-100, 0, Options.GAME_PLACE_WIDTH + 200, Options.GAME_PLACE_HEIGHT); // Screen Rectangle
+	private final Rectangle scrR = new Rectangle(-100, 0, Options.GAME_PLACE_WIDTH + 200, Options.GAME_PLACE_HEIGHT); // Screen Rectangle
 	private float afterDeadDelta = 0;
 
 	public GameObjectContainer(CorePlayerContainer<?> playerC) { // CONSTRUCTOR
@@ -120,6 +120,10 @@ public class GameObjectContainer {
 
 	public ArrayList<Item> getItems() {
 		return items;
+	}
+
+	public Rectangle getScrR() {
+		return scrR;
 	}
 
 	public void update(float delta) {
