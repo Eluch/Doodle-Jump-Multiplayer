@@ -53,6 +53,8 @@ public class UdpServerHandler extends SimpleChannelInboundHandler<DatagramPacket
 				d.setJumping(dd.jumping);
 			}
 			break;
+		case KEEP_ALIVE:
+			break;
 		default:
 			System.err.println("Invalid packet!");
 			break;

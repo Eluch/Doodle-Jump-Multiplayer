@@ -26,5 +26,6 @@ public enum PacketType {
 	A_PLAYER_DIED,
 	NEW_FLOOR,
 	NEW_ITEM,
+	KEEP_ALIVE,
 
 }
