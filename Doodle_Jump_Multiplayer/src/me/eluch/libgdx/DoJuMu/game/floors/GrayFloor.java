@@ -1,6 +1,7 @@
 package me.eluch.libgdx.DoJuMu.game.floors;
 
 import io.netty.buffer.ByteBuf;
+import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.Effect;
 import me.eluch.libgdx.DoJuMu.network.packets.PacketType;
@@ -44,7 +45,8 @@ public final class GrayFloor extends Floor {
 	@Override
 	protected void doodleHitFloor() {
 		effect = Effect.COMMON_JUMP_CAUSER;
-		Res._s_jump.play();
+		if (Options.isSoundEnabled())
+			Res._s_jump.play();
 	}
 
 	@Override

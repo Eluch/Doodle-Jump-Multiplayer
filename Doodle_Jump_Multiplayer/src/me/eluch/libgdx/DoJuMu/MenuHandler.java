@@ -146,7 +146,8 @@ public class MenuHandler {
 		if (Gdx.input.isKeyPressed(Keys.ENTER) && !enterPressed) {
 			enterPressed = true;
 		} else if (!Gdx.input.isKeyPressed(Keys.ENTER) && enterPressed) {
-			Res._s_click.play();
+			if (Options.isSoundEnabled())
+				Res._s_click.play();
 			items.get(selected).action.run();
 			enterPressed = false;
 		}
@@ -167,8 +168,9 @@ public class MenuHandler {
 			leftClicked = true;
 		} else if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT) && leftClicked) {
 			if (items.get(selected).rec.overlaps(mouseRect))
-				Res._s_click.play();
-				items.get(selected).action.run();
+				if (Options.isSoundEnabled())
+					Res._s_click.play();
+			items.get(selected).action.run();
 			leftClicked = false;
 		}
 	}

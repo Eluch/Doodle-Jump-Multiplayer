@@ -1,5 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.active_item;
 
+import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleFull;
 
@@ -23,8 +24,10 @@ public final class SpringShoeActive extends ActiveItem {
 	public void update(float delta) {
 		if (doodle.isJumping()) { //jumping
 			if (!jumpingWithShoe) {
-				Res._s_spring.stop();
-				Res._s_spring.play(0.35f);
+				if (Options.isSoundEnabled()) {
+					Res._s_spring.stop();
+					Res._s_spring.play(0.35f);
+				}
 				jumpingWithShoe = true;
 				currentJumpCount++;
 				currentSpeed = MAXSPEED;

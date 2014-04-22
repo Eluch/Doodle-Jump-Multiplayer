@@ -1,6 +1,7 @@
 package me.eluch.libgdx.DoJuMu.game.floors;
 
 import io.netty.buffer.ByteBuf;
+import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.Effect;
 import me.eluch.libgdx.DoJuMu.network.packets.PacketType;
@@ -22,7 +23,8 @@ public final class WhiteFloor extends Floor {
 
 	@Override
 	protected void doodleHitFloor() {
-		Res._s_jump_white.play();
+		if (Options.isSoundEnabled())
+			Res._s_jump_white.play();
 		effect = Effect.COMMON_JUMP_CAUSER;
 		need2Show = false;
 	}

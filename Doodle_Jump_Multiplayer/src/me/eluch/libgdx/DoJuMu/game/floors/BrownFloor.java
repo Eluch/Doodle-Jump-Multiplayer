@@ -1,6 +1,7 @@
 package me.eluch.libgdx.DoJuMu.game.floors;
 
 import io.netty.buffer.ByteBuf;
+import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.network.packets.PacketType;
 import me.eluch.libgdx.DoJuMu.network.packets.ReadOnlyPacket;
@@ -22,7 +23,8 @@ public final class BrownFloor extends Floor {
 	@Override
 	protected void doodleHitFloor() {
 		need2Show = false;
-		Res._s_wood_break.play();
+		if (Options.isSoundEnabled())
+			Res._s_wood_break.play();
 	}
 
 	@Override

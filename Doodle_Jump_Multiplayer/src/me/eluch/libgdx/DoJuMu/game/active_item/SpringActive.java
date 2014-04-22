@@ -1,5 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.active_item;
 
+import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleFull;
 
@@ -14,8 +15,10 @@ public final class SpringActive extends ActiveItem {
 	public SpringActive(DoodleFull doodle) {
 		super(doodle);
 		this.overrideable = true;
-		Res._s_spring.stop();
-		Res._s_spring.play(0.35f);
+		if (Options.isSoundEnabled()) {
+			Res._s_spring.stop();
+			Res._s_spring.play(0.35f);
+		}
 	}
 
 	@Override

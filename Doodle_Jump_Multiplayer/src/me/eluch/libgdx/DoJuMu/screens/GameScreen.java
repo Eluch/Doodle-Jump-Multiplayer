@@ -75,13 +75,15 @@ public class GameScreen implements Screen {
 			gameObjects = new GameObjectContainer(client.getPlayers());
 		}
 		scoreHandler = new ScoreHandler(gameObjects.getMyDoodle(), gameObjects.getDoodles());
-		Res._s_start.play();
+		if (Options.isSoundEnabled())
+			Res._s_start.play();
 	}
 
 	private void update(float delta) {
 		everyone_dead = scoreHandler.isEveryOneDied();
 		if (!everyone_dead_sound && everyone_dead) {
-			Res._s_gameOver.play();
+			if (Options.isSoundEnabled())
+				Res._s_gameOver.play();
 			everyone_dead_sound = true;
 		}
 
@@ -123,7 +125,8 @@ public class GameScreen implements Screen {
 		case SERVER:
 			server.sendToAllPlayersWithUDP(AllDoodleDatas.encode(server.getPlayers().getPlayers()));
 			if (!gameObjects.getMyDoodle().isAlive() && !myDeathSendedToOthers) {
-				Res._s_gameOver.play();
+				if (Options.isSoundEnabled())
+					Res._s_gameOver.play();
 				DoodleBasic d = gameObjects.getMyDoodle();
 				server.sendToAllPlayersWithTCP(DiedDoodle.encode(new DoodleDatasEE(d.getRec().x, d.getRec().y, d.getMaxHeight(), d.isFacingRight(), d.isJumping(), d.isAlive(),
 						server.getPlayers().getMySelf().getId())));

@@ -1,5 +1,6 @@
 package me.eluch.libgdx.DoJuMu.game.active_item;
 
+import me.eluch.libgdx.DoJuMu.Options;
 import me.eluch.libgdx.DoJuMu.Res;
 import me.eluch.libgdx.DoJuMu.game.doodle.DoodleFull;
 
@@ -22,7 +23,8 @@ public final class PropellerHatActive extends ActiveItem {
 		doodle.setvSpeed(0);
 		this.currentSpeed = doodle.getvSpeed();
 		doodle.setJumping(true);
-		Res._s_propeller.play();
+		if (Options.isSoundEnabled())
+			Res._s_propeller.play();
 	}
 
 	@Override
