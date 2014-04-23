@@ -13,7 +13,7 @@ public class Options {
 	public static final boolean DEBUG = false;
 	public static final int SERVER_PORT = 16160;
 	public static final int CLIENT_PORT = 16161;
-	public static final String VERSION = "0.9.10";
+	public static final String VERSION = "0.9.11";
 	public static final int MAXPLAYERS = 13; //13 The correct max
 	public static final long DISCOVER_TIMEOUT = 1000;
 	public static final int PING_FREQUENCY = 3000;
@@ -24,6 +24,7 @@ public class Options {
 	private static boolean sound;
 	private static boolean upnp;
 	private static DoodleGenderType character;
+	private static String lastIP;
 
 	private static int randomKey;
 
@@ -47,6 +48,9 @@ public class Options {
 		if (!prefs.contains("character")) {
 			prefs.putInteger("character", 0);
 		}
+		if (!prefs.contains("lastIP")) {
+			prefs.putString("lastIP", "127.0.0.1");
+		}
 		if (!prefs.contains("randomKey")) {
 			prefs.putInteger("randomKey", new Random(System.currentTimeMillis()).nextInt());
 		}
@@ -54,6 +58,7 @@ public class Options {
 		sound = prefs.getBoolean("sound");
 		upnp = prefs.getBoolean("upnp");
 		character = DoodleGenderType.values()[prefs.getInteger("character")];
+		lastIP = prefs.getString("lastIP");
 		randomKey = prefs.getInteger("randomKey");
 		prefs.flush();
 	}
@@ -122,6 +127,16 @@ public class Options {
 
 	public static String getHash() {
 		return name.substring(0, 1) + randomKey + name.substring(name.length() - 1);
+	}
+
+	public static String getLastIP() {
+		return lastIP;
+	}
+
+	public static void setLastIP(String lastIP) {
+		Options.lastIP = lastIP;
+		prefs.putString("lastIP", lastIP);
+		prefs.flush();
 	}
 
 	// Additional classes, enums

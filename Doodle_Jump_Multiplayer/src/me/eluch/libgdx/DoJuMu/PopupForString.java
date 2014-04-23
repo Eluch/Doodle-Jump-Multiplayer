@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input.TextInputListener;
 public class PopupForString {
 
 	private boolean inProgress;
+	private boolean forced = false;
 	private String val;
 
 	public PopupForString() {
@@ -17,6 +18,7 @@ public class PopupForString {
 		if (inProgress)
 			return;
 		inProgress = true;
+		forced = false;
 		TextInputListener inputListener = new TextInputListener() {
 
 			@Override
@@ -47,6 +49,11 @@ public class PopupForString {
 
 	public void setValForced(String val) {
 		this.val = val;
+		this.forced = true;
+	}
+
+	public boolean isForced() {
+		return forced;
 	}
 
 }

@@ -53,7 +53,7 @@ public class JoinScreen implements Screen {
 			ipPopup.setValForced(serverList.getSelectedIp());
 		});
 		menu.addMenuItem("Join by IP", Res._button, Res._buttonFont, () -> {
-			ipPopup.call("Enter that IP what you want to connect to:", serverList.getSelectedIp());
+			ipPopup.call("Enter that IP what you want to connect to:", Options.getLastIP());
 		});
 		menu.addMenuItem("Search on LAN", Res._button, Res._buttonFont, () -> {
 			serverList.clearServerItems();
@@ -87,6 +87,8 @@ public class JoinScreen implements Screen {
 			System.out.println("GOT IP TO CONNECT TO: " + host);
 			if (host.matches(ipRegex) || host.matches(hostRegex)) {
 				// MATCHES!!
+				if (!ipPopup.isForced())
+					Options.setLastIP(host);
 				client = new Client(game, camera, batch, host, Options.SERVER_PORT, true);
 
 			} else
