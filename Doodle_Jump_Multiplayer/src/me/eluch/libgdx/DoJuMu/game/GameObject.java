@@ -28,4 +28,8 @@ public abstract class GameObject {
 	public Effect getEffect() {
 		return effect;
 	}
+
+	public void resetEffect() {
+		this.effect = Effect.NOTHING;
+	}
 }

@@ -29,6 +29,7 @@ import me.eluch.libgdx.DoJuMu.network.packets.DiedDoodle;
 import me.eluch.libgdx.DoJuMu.network.packets.DoodleDatasEE;
 import me.eluch.libgdx.DoJuMu.network.packets.OnePlayerConnected;
 import me.eluch.libgdx.DoJuMu.network.packets.OnePlayerDisconnected;
+import me.eluch.libgdx.DoJuMu.network.packets.PacketType;
 import me.eluch.libgdx.DoJuMu.network.packets.PingDatas;
 import me.eluch.libgdx.DoJuMu.network.packets.ReadOnlyPacket;
 import me.eluch.libgdx.DoJuMu.network.packets.Validation;
@@ -37,7 +38,6 @@ import me.eluch.libgdx.DoJuMu.screens.GameScreen;
 public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 
 	private final Client client;
-	private Floor lastArrivedFloor = null;
 
 	public TcpClientHandler(Client client) {
 		this.client = client;
@@ -127,37 +127,40 @@ public class TcpClientHandler extends ChannelInboundHandlerAdapter {
 				}
 				if (f != null) {
 					client.getFloorBuffer().add(f);
-					lastArrivedFloor = f;
-				}
-				break;
-			case NEW_ITEM:
-				ItemType it = ItemType.values()[iPacket.readInt()];
-				Item i = null;
-				switch (it) {
-				case JETPACK:
-					i = Jetpack.decode(iPacket, lastArrivedFloor);
-					break;
-				case PROPELLER_HAT:
-					i = PropellerHat.decode(iPacket, lastArrivedFloor);
-					break;
-				case SHIELD:
-					i = Shield.decode(iPacket, lastArrivedFloor);
-					break;
-				case SPRING:
-					i = Spring.decode(iPacket, lastArrivedFloor);
-					break;
-				case SPRING_SHOE:
-					i = SpringShoe.decode(iPacket, lastArrivedFloor);
-					break;
-				case TRAMPOLINE:
-					i = Trampoline.decode(iPacket, lastArrivedFloor);
-					break;
-				default:
-					System.err.println("TcpClientHandler - unhandled Item");
-					break;
-				}
-				if (i != null) {
-					client.getItemBuffer().add(i);
+
+					if (buf.readableBytes() > 0) {
+						ReadOnlyPacket itemPacket = new ReadOnlyPacket(buf);
+						if (itemPacket.getType() == PacketType.NEW_ITEM) {
+							ItemType it = ItemType.values()[iPacket.readInt()];
+							Item i = null;
+							switch (it) {
+							case JETPACK:
+								i = Jetpack.decode(iPacket, f);
+								break;
+							case PROPELLER_HAT:
+								i = PropellerHat.decode(iPacket, f);
+								break;
+							case SHIELD:
+								i = Shield.decode(iPacket, f);
+								break;
+							case SPRING:
+								i = Spring.decode(iPacket, f);
+								break;
+							case SPRING_SHOE:
+								i = SpringShoe.decode(iPacket, f);
+								break;
+							case TRAMPOLINE:
+								i = Trampoline.decode(iPacket, f);
+								break;
+							default:
+								System.err.println("TcpClientHandler - unhandled Item");
+								break;
+							}
+							if (i != null) {
+								client.getItemBuffer().add(i);
+							}
+						}
+					}
 				}
 				break;
 			default:

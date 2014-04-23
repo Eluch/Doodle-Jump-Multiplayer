@@ -74,7 +74,7 @@ public class GameObjectContainer {
 	private void floorCleanup() {
 		ArrayList<Floor> del = null;
 		for (Floor floor : floors) {
-			if (floor.rec.y < scrR.y - 100 || !floor.need2Show) {
+			if (floor.rec.y < getCleanupY() || !floor.need2Show) {
 				if (del == null)
 					del = new ArrayList<>();
 				del.add(floor);
@@ -87,7 +87,7 @@ public class GameObjectContainer {
 	private void itemCleanup() {
 		ArrayList<Item> del = null;
 		for (Item item : items) {
-			if (item.rec.y < scrR.y - 100 || !item.need2Show) {
+			if (item.rec.y < getCleanupY() || !item.need2Show) {
 				if (del == null)
 					del = new ArrayList<>();
 				del.add(item);
@@ -109,12 +109,35 @@ public class GameObjectContainer {
 		return doodles;
 	}
 
-	public float getHighestAliveDoodleY() {
+	private float getHighestAliveDoodleY() {
 		float y = -1;
 		for (DoodleBasic doodle : doodles) {
 			if (doodle.getRec().y > y && doodle.isAlive())
 				y = doodle.getRec().y;
 		}
+		return y;
+	}
+
+	private float getLowestAliveDoodleY() {
+		float y = -1;
+		boolean found = false;
+		for (DoodleBasic doodle : doodles) {
+			if (!found && doodle.isAlive()) {
+				y = doodle.getRec().y;
+				found = true;
+			}
+			if (doodle.getRec().y < y && doodle.isAlive())
+				y = doodle.getRec().y;
+		}
+		return y;
+	}
+
+	private float getCleanupY() {
+		float y = getLowestAliveDoodleY();
+		if (y == -1 || (y != -1 && y > scrR.y - 100))
+			y = scrR.y - 100;
+		else
+			y -= 200;
 		return y;
 	}
 
@@ -165,6 +188,7 @@ public class GameObjectContainer {
 					default:
 						break;
 					}
+					x.resetEffect();
 				}
 			});
 			itemCleanup();
@@ -179,7 +203,10 @@ public class GameObjectContainer {
 				if (afterDeadDelta < 2.5f)
 					afterDeadDelta += delta;
 				else {
+
 					float y = getHighestAliveDoodleY();
+					if (scrR.y - 100 > y && y != -1)
+						scrR.y = y;
 					if (y != -1)
 						if (y > (scrR.y + Options.GAME_PLACE_HEIGHT / 2)) { // scrR update to highest alive player after dead
 							scrR.y = y - Options.GAME_PLACE_HEIGHT / 2;

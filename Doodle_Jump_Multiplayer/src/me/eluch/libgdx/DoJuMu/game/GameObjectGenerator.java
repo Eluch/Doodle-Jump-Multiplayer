@@ -131,14 +131,14 @@ public final class GameObjectGenerator {
 				if (f != null) {
 					gameObjects.getFloors().add(f);
 					highest_jumpable = y;
-					server.sendToAllPlayersWithTCP(f.encode());
 
+					Item item = null;
 					if (generateItem) {
 						int genChance = r.nextInt() % ITEM_GEN_CHANCE; // 1 to ITEM_GEN_CHANCE to generate item
 						if (genChance == 1) {
 							rInt = r.nextInt(getItemChances());
 							ItemType itemType = getTypeFromItemChance(rInt);
-							Item item = null;
+
 							switch (itemType) {
 							case JETPACK:
 								item = new Jetpack(f);
@@ -165,10 +165,13 @@ public final class GameObjectGenerator {
 
 							if (item != null) {
 								gameObjects.getItems().add(item);
-								server.sendToAllPlayersWithTCP(item.encode());
 							}
 						}
-					}
+					} // End of item generation
+					if (item == null)
+						server.sendToAllPlayersWithTCP(f.encode());
+					else
+						server.sendToAllPlayersWithTCP(f.encode().writeBytes(item.encode()));
 				}
 			}
 		}
