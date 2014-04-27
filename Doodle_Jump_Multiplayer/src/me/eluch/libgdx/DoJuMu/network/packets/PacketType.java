@@ -1,7 +1,6 @@
 package me.eluch.libgdx.DoJuMu.network.packets;
 
 public enum PacketType {
-
 	UNKNOWN,
 	DISCOVER_BROADCAST,
 	SERVER_DATAS,
@@ -27,5 +26,4 @@ public enum PacketType {
 	NEW_FLOOR,
 	NEW_ITEM,
 	KEEP_ALIVE,
-
 }

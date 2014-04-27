@@ -51,5 +51,4 @@ public class WriteOnlyPacket {
 		return buf;
 		// return buf.copy();
 	}
-
 }

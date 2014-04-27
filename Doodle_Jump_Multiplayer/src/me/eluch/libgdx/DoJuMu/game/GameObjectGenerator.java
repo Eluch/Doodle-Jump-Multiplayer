@@ -31,41 +31,43 @@ public final class GameObjectGenerator {
 	private final Random r = new Random();
 
 	private final int GENERATE_SAMETIME = 10000;
-	private final int MAX_NOGENERATE = 125; //150 Default
+	private final int MAX_NOGENERATE = 150; //150 Default
 	private int highest_jumpable = 200;
 	private int generateCounter = 0; //counts as many times as generate() run.
 	private int generation_rate = 50;
+	private final int GENERATION_RATE_INCREMENT = 2;
 
-	private int cPrescaler = 0; //c like chance to
-	private final int C_PRESCALER_TARGET = 20;
-	private int c_green = 10000;
-	private int c_blue = 7000;
-	private int c_yellow = 1000;
-	private int c_gray = 6000;
-	private int c_white = 2000;
+	private final float blue_speed_multiper = 0.5f;
+	private final float gray_speed_multiper = 0.3f;
+
+	private int cfPrescaler = 0; //c like chance to
+	private final int CF_PRESCALER_TARGET = 20;
+	private int cf_green = 10000;
+	private int cf_blue = 7000;
+	private int cf_yellow = 1000;
+	private int cf_gray = 6000;
+	private int cf_white = 2000;
 
 	private static final int ITEM_GEN_CHANCE = 15;
-	private final int c_jetpack = 1;
-	private final int c_propellerHat = 3;
-	private final int c_shield = 5;
-	private final int c_spring = 20;
-	private final int c_springShoe = 7;
-	private final int c_trampoline = 10;
+	private final int ci_jetpack = 1;
+	private final int ci_propellerHat = 3;
+	private final int ci_shield = 5;
+	private final int ci_spring = 20;
+	private final int ci_springShoe = 7;
+	private final int ci_trampoline = 10;
 
 	private boolean lastWasWhite = false;
 
 	public GameObjectGenerator(GameObjectContainer gameObjects, Server server) {
 		this.gameObjects = gameObjects;
 		this.server = server;
-
-		generate();
 	}
 
 	private void generate() {
 		generateCounter++;
-		generation_rate += 5;
-		if (generation_rate > 150)
-			generation_rate = 150;
+		generation_rate += GENERATION_RATE_INCREMENT;
+		if (generation_rate > MAX_NOGENERATE)
+			generation_rate = MAX_NOGENERATE;
 		int from = highest_jumpable;
 		int to = from + GENERATE_SAMETIME;
 		boolean need2Gen;
@@ -103,12 +105,12 @@ public final class GameObjectGenerator {
 				case BLUE:
 					generateItem = true;
 					lastWasWhite = false;
-					f = new BlueFloor(x, y, generateCounter * 0.4f);
+					f = new BlueFloor(x, y, generateCounter * blue_speed_multiper);
 					break;
 				case GRAY:
 					generateItem = true;
 					lastWasWhite = false;
-					f = new GrayFloor(x, y, generateCounter * 0.2f);
+					f = new GrayFloor(x, y, generateCounter * gray_speed_multiper);
 					break;
 				case GREEN:
 					generateItem = true;
@@ -190,64 +192,61 @@ public final class GameObjectGenerator {
 	}
 
 	private int changeAndGetFloorChances() {
-		if (++cPrescaler >= C_PRESCALER_TARGET) {
-			cPrescaler = 0;
-			c_green -= 5;
-			if (c_green < 1000)
-				c_green = 1000;
-			c_blue += 7;
-			c_yellow += 10;
-			if (c_yellow > c_blue / 2)
-				c_yellow = c_blue / 2;
-			c_gray += 5;
-			c_white += 6;
+		if (++cfPrescaler >= CF_PRESCALER_TARGET) {
+			cfPrescaler = 0;
+			cf_green -= 5;
+			if (cf_green < 1000)
+				cf_green = 1000;
+			cf_blue += 7;
+			cf_yellow += 10;
+			if (cf_yellow > cf_blue / 2)
+				cf_yellow = cf_blue / 2;
+			cf_gray += 5;
+			cf_white += 6;
 		}
-		return (c_green + c_blue + c_yellow + c_gray + c_white);
+		return (cf_green + cf_blue + cf_yellow + cf_gray + cf_white);
 	}
 
 	private FloorType getTypeFromFloorChance(int num) {
-
-		if (c_green >= num)
+		if (cf_green >= num)
 			return FloorType.GREEN;
-		num -= c_green;
-		if (c_blue >= num)
+		num -= cf_green;
+		if (cf_blue >= num)
 			return FloorType.BLUE;
-		num -= c_blue;
-		if (c_yellow >= num)
+		num -= cf_blue;
+		if (cf_yellow >= num)
 			return FloorType.YELLOW;
-		num -= c_yellow;
-		if (c_gray >= num)
+		num -= cf_yellow;
+		if (cf_gray >= num)
 			return FloorType.GRAY;
-		num -= c_gray;
-		if (c_white >= num)
+		num -= cf_gray;
+		if (cf_white >= num)
 			return FloorType.WHITE;
-
 		return FloorType.GREEN; //If something went wrong
-
 		// green, blue, yellow, gray, white <-- Chances in order
 	}
 
 	private int getItemChances() {
-		return (c_jetpack + c_propellerHat + c_shield + c_spring + c_springShoe + c_trampoline);
+		return (ci_jetpack + ci_propellerHat + ci_shield + ci_spring + ci_springShoe + ci_trampoline);
 	}
 
 	private ItemType getTypeFromItemChance(int num) {
-		if (c_jetpack >= num)
+		if (ci_jetpack >= num)
 			return ItemType.JETPACK;
-		num -= c_jetpack;
-		if (c_propellerHat >= num)
+		num -= ci_jetpack;
+		if (ci_propellerHat >= num)
 			return ItemType.PROPELLER_HAT;
-		num -= c_propellerHat;
-		if (c_shield >= num)
+		num -= ci_propellerHat;
+		if (ci_shield >= num)
 			return ItemType.SHIELD;
-		num -= c_shield;
-		if (c_spring >= num)
+		num -= ci_shield;
+		if (ci_spring >= num)
 			return ItemType.SPRING;
-		num -= c_spring;
-		if (c_springShoe >= num)
+		num -= ci_spring;
+		if (ci_springShoe >= num)
 			return ItemType.SPRING_SHOE;
-		num -= c_springShoe;
-		if (c_trampoline >= num)
+		num -= ci_springShoe;
+		if (ci_trampoline >= num)
 			return ItemType.TRAMPOLINE;
 		return ItemType.SPRING;
 	}

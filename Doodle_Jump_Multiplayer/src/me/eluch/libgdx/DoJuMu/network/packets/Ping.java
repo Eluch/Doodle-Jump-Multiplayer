@@ -70,5 +70,4 @@ public class Ping {
 			e.printStackTrace();
 		}
 	}
-
 }

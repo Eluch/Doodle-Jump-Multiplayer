@@ -82,7 +82,7 @@ public class JoinScreen implements Screen {
 			}
 		}
 
-		String host = ipPopup.getWalueIfAwailable();
+		String host = ipPopup.getValueIfAwailable();
 		if (host.length() > 0) {
 			System.out.println("GOT IP TO CONNECT TO: " + host);
 			if (host.matches(ipRegex) || host.matches(hostRegex)) {

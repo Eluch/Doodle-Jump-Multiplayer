@@ -29,7 +29,7 @@ public class TcpServerHandler extends ChannelInboundHandlerAdapter {
 	}
 
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+	public void channelActive(ChannelHandlerContext ctx) {
 		System.out.println("Client try to connecting with: " + ctx.channel().remoteAddress().toString());
 		if (server.getGameState() == GameState.IN_GAME) {
 			WriteOnlyPacket op = new WriteOnlyPacket(PacketType.GAME_HAS_ALREADY_STARTED);

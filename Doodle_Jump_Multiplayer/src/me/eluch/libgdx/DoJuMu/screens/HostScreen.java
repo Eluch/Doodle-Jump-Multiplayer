@@ -49,7 +49,7 @@ public class HostScreen implements Screen {
 			game.setScreen(new MainMenuScreen(game, camera, batch));
 		});
 
-		server = new Server(16160, true);
+		server = new Server(Options.SERVER_PORT, true);
 		server.setGameState(GameState.LOBBY);
 
 	}

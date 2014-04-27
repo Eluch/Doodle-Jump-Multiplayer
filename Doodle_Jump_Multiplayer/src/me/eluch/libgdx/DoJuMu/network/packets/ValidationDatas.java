@@ -15,5 +15,4 @@ public class ValidationDatas {
 		this.name = name;
 		this.genderType = genderType;
 	}
-
 }

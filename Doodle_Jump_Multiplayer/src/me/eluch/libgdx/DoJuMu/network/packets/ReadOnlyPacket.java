@@ -47,5 +47,4 @@ public class ReadOnlyPacket {
 		}
 		return s;
 	}
-
 }

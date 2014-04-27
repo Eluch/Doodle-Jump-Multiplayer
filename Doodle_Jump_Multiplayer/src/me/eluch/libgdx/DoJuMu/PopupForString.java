@@ -5,13 +5,11 @@ import com.badlogic.gdx.Input.TextInputListener;
 
 public class PopupForString {
 
-	private boolean inProgress;
+	private boolean inProgress = false;
 	private boolean forced = false;
-	private String val;
+	private String val = "";
 
 	public PopupForString() {
-		inProgress = false;
-		val = "";
 	}
 
 	public void call(String title, String content) {
@@ -38,7 +36,7 @@ public class PopupForString {
 		Gdx.input.getTextInput(inputListener, title, content);
 	}
 
-	public String getWalueIfAwailable() {
+	public String getValueIfAwailable() {
 		if (val.length() > 0) {
 			String tmp = val;
 			val = "";

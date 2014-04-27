@@ -32,5 +32,4 @@ public abstract class Validation {
 	public static int decodeStep2(ReadOnlyPacket iPacket) {
 		return iPacket.readInt();
 	}
-
 }

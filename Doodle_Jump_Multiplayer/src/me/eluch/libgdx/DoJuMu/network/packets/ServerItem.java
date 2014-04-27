@@ -28,5 +28,4 @@ public class ServerItem {
 		String players = packet.readString();
 		return new ServerItem(hoster, ip, players);
 	}
-
 }

@@ -60,11 +60,6 @@ public class GameObjectContainer {
 		floors.add(new GreenFloor(246, 10));
 		floors.add(new GreenFloor(328, 10));
 		floors.add(new GreenFloor(410, 10));
-
-		for (Floor floor : floors) {
-			if (floor.effect == Effect.COMMON_JUMP_CAUSER)
-				myDoodle.setJumping(true);
-		}
 	}
 
 	public DoodleFull getMyDoodle() {
@@ -150,53 +145,51 @@ public class GameObjectContainer {
 	}
 
 	public void update(float delta) {
-		if (Gdx.input.isKeyPressed(Keys.R) && !rPressed) {
-			rPressed = true;
-			running = !running;
-		} else if (!Gdx.input.isKeyPressed(Keys.R) && rPressed)
-			rPressed = false;
+		if (Options.DEBUG) { // Test for DEBUG
+			if (Gdx.input.isKeyPressed(Keys.R) && !rPressed) {
+				rPressed = true;
+				running = !running;
+			} else if (!Gdx.input.isKeyPressed(Keys.R) && rPressed)
+				rPressed = false;
+		}
 
 		if (running || !Options.DEBUG) { // RUNNING PART
 			floors.forEach(x -> {
 				x.update(scrR, myDoodle.getFootRect(), !myDoodle.isJumping());
 				if (x.effect == Effect.COMMON_JUMP_CAUSER) {
 					myDoodle.doJump();
-					x.effect = Effect.NOTHING;
+					x.resetEffect();
 				}
 			});
 			items.forEach(x -> {
 				x.update(scrR, myDoodle.getRec(), myDoodle.getFootRect(), !myDoodle.isJumping());
-				if (x.getEffect() == Effect.SHIELD_EQUIPPING)
+				switch (x.getEffect()) {
+				case SHIELD_EQUIPPING:
 					myDoodle.setShielded(true);
-				if (x.getEffect() != Effect.NOTHING) {
-					switch (x.getEffect()) {
-					case JETPACK_EQUIPPING:
-						myDoodle.setActiveItem(new JetpackActive(myDoodle));
-						break;
-					case PROPELLER_HAT_EQUIPPING:
-						myDoodle.setActiveItem(new PropellerHatActive(myDoodle));
-						break;
-					case SPRING_JUMP:
-						myDoodle.setActiveItem(new SpringActive(myDoodle));
-						break;
-					case SPRING_SHOE_EQUIPPING:
-						myDoodle.setActiveItem(new SpringShoeActive(myDoodle));
-						break;
-					case TRAMPOLINE_JUMP:
-						myDoodle.setActiveItem(new TrampolineActive(myDoodle));
-						break;
-					default:
-						break;
-					}
-					x.resetEffect();
+					break;
+				case JETPACK_EQUIPPING:
+					myDoodle.setActiveItem(new JetpackActive(myDoodle));
+					break;
+				case PROPELLER_HAT_EQUIPPING:
+					myDoodle.setActiveItem(new PropellerHatActive(myDoodle));
+					break;
+				case SPRING_JUMP:
+					myDoodle.setActiveItem(new SpringActive(myDoodle));
+					break;
+				case SPRING_SHOE_EQUIPPING:
+					myDoodle.setActiveItem(new SpringShoeActive(myDoodle));
+					break;
+				case TRAMPOLINE_JUMP:
+					myDoodle.setActiveItem(new TrampolineActive(myDoodle));
+					break;
+				default:
+					break;
 				}
+				x.resetEffect();
 			});
-			itemCleanup();
-			for (Floor floor : floors) {
-				floor.update(scrR, myDoodle.getFootRect(), !myDoodle.isJumping());
-			}
 			myDoodle.update(delta);
 
+			// Codename: SPECTATOR
 			if (myDoodle.isAlive() && myDoodle.rec.y > (scrR.y + Options.GAME_PLACE_HEIGHT / 2)) { // scrR update
 				scrR.y = myDoodle.rec.y - Options.GAME_PLACE_HEIGHT / 2;
 			} else if (!myDoodle.isAlive()) {
@@ -217,6 +210,7 @@ public class GameObjectContainer {
 				myDoodle.setAlive(false);
 				myDoodle.setXY(myDoodle.getRec().x, myDoodle.getMaxHeight());
 			}
+			itemCleanup();
 			floorCleanup();
 		}
 	}
@@ -224,8 +218,8 @@ public class GameObjectContainer {
 	public void render(SpriteBatch batch) {
 		floors.forEach(x -> x.draw(batch, scrR));
 		items.forEach(x -> x.draw(batch, scrR));
-		myDoodle.draw(batch, scrR);
 		doodles.forEach(x -> x.draw(batch, scrR));
+		myDoodle.draw(batch, scrR);
 	}
 
 }

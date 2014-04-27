@@ -15,27 +15,26 @@ public class ServerMenuListHandler {
 
 	private ArrayList<ServerItem> items;
 	private ArrayList<ServerItemPos> itemsPos;
-	private int selected;
+	private int selected = -1;
 	private boolean leftClicked;
 
-	private final int startHosterX;
+	private final int startHostX;
 	private final int startIpX;
 	private final int startPlayersX;
 	private final int startY;
 
-	public ServerMenuListHandler(int startHosterX, int startIpX, int startPlayersX, int startY) {
+	public ServerMenuListHandler(int startHostX, int startIpX, int startPlayersX, int startY) {
 		items = new ArrayList<ServerItem>();
 		itemsPos = new ArrayList<ServerItemPos>();
-		this.startHosterX = startHosterX;
+		this.startHostX = startHostX;
 		this.startIpX = startIpX;
 		this.startPlayersX = startPlayersX;
 		this.startY = startY;
-		selected = -1;
 		leftClicked = false;
 	}
 
 	public void addServerItem(ServerItem item) {
-		itemsPos.add(new ServerItemPos(startHosterX, startIpX, startPlayersX, startY - items.size() * 25));
+		itemsPos.add(new ServerItemPos(startHostX, startIpX, startPlayersX, startY - items.size() * 25));
 		items.add(item);
 		if (selected == -1)
 			selected = 0;
